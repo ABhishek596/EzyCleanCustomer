@@ -59,42 +59,42 @@ const Login = ({navigation, LoginApi, AuthFunction, GoogleLoginApi}) => {
       // LoginApi({...postData, fcm_token: fcm}, navigation, data =>
       //   setLoading(data),
       // );
-      // LoginApi(postData, navigation, data =>
-      //     setLoading(data),
-      //   );
+      LoginApi(postData, navigation, data =>
+          setLoading(data),
+        );
       // const axios = require('axios');
-      let data = JSON.stringify({
-        email: postData.email,
-        password: postData.password,
-      });
+      // let data = JSON.stringify({
+      //   email: postData.email,
+      //   password: postData.password,
+      // });
 
-      let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'http://ezyclean.theprojecttest.xyz/api/login',
-        headers: {
-          'Content-Type': 'application/json',
+      // let config = {
+      //   method: 'post',
+      //   maxBodyLength: Infinity,
+      //   url: 'http://ezyclean.theprojecttest.xyz/api/login',
+      //   headers: {
+      //     'Content-Type': 'application/json',
           
-          // Cookie:
-          //   'XSRF-TOKEN=eyJpdiI6IjVwdGhBWDlKM0dIeDJTeEErdDd3Ync9PSIsInZhbHVlIjoiR0xTblhOZlhpT0xJRXNib3lGN1JuUWpKbUNDSkVSN21ITTNVdXpTV0didGwzVXhTS2t5WFFOMXhvTytyRHFjV2VvYkdHM3d3OE11b1hENkNEc3NNU0Q0WTRQdVVQLzhRcTc4bmNyaWxYMVNkSW81c1FXM0VqVGpnUDlrTjNPcWciLCJtYWMiOiIwYjc3ODRiZTZkZTc2YjRjNjM4ZjZjZjE5ZjQ2NjcwZGJiM2JiMWNiNDY3NjZlZDg2MzA4ZTRlZDkyODYzZjBkIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6InArOFdvNjJQVms2MjdQcTJDRVdwUnc9PSIsInZhbHVlIjoiditPVk5zemNpcjF4ZTJVMWhpN3c5eFpTWUNKUG51VGRORjU0TnpCalBPbDNWaDNwRmJZaW1xRHE0T1ErN3N0V1ZiZ0pGeHFCR2pnOGJUZ1AwR2VVaHRxSW8va1RHQ21OSi9VcWRvVWhYRy80U1FqMFVWbmdFRXlCRm55dTBHZlUiLCJtYWMiOiI5ODIzMWI5MGRhNjZhY2YzYzBjMTc2ZDY4NTQ4ODkwMTIxZTJkZmNkMzgzZjYxODI3MWE3MjdiOWM0OWEwYTMwIiwidGFnIjoiIn0%3D',
-        },
-        data: data,
-      };
+      //     // Cookie:
+      //     //   'XSRF-TOKEN=eyJpdiI6IjVwdGhBWDlKM0dIeDJTeEErdDd3Ync9PSIsInZhbHVlIjoiR0xTblhOZlhpT0xJRXNib3lGN1JuUWpKbUNDSkVSN21ITTNVdXpTV0didGwzVXhTS2t5WFFOMXhvTytyRHFjV2VvYkdHM3d3OE11b1hENkNEc3NNU0Q0WTRQdVVQLzhRcTc4bmNyaWxYMVNkSW81c1FXM0VqVGpnUDlrTjNPcWciLCJtYWMiOiIwYjc3ODRiZTZkZTc2YjRjNjM4ZjZjZjE5ZjQ2NjcwZGJiM2JiMWNiNDY3NjZlZDg2MzA4ZTRlZDkyODYzZjBkIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6InArOFdvNjJQVms2MjdQcTJDRVdwUnc9PSIsInZhbHVlIjoiditPVk5zemNpcjF4ZTJVMWhpN3c5eFpTWUNKUG51VGRORjU0TnpCalBPbDNWaDNwRmJZaW1xRHE0T1ErN3N0V1ZiZ0pGeHFCR2pnOGJUZ1AwR2VVaHRxSW8va1RHQ21OSi9VcWRvVWhYRy80U1FqMFVWbmdFRXlCRm55dTBHZlUiLCJtYWMiOiI5ODIzMWI5MGRhNjZhY2YzYzBjMTc2ZDY4NTQ4ODkwMTIxZTJkZmNkMzgzZjYxODI3MWE3MjdiOWM0OWEwYTMwIiwidGFnIjoiIn0%3D',
+      //   },
+      //   data: data,
+      // };
 
       
-        axios(config)
-        .then(response => {
-          console.log('logindata.........',JSON.stringify(response.data));
-          navigation.navigate('StackNavigator');
-          RNToasty.Success({
-            title: 'User login successfully',
-            duration: 2,
-          }); 
-        })
-        .catch(error => {
-          console.log(error);
-          console.log('loginError.........',JSON.stringify(response.data));
-        });
+        // axios(config)
+        // .then(response => {
+        //   console.log('logindata.........',JSON.stringify(response.data));
+        //   navigation.navigate('StackNavigator');
+        //   RNToasty.Success({
+        //     title: 'User login successfully',
+        //     duration: 2,
+        //   }); 
+        // })
+        // .catch(error => {
+        //   console.log(error);
+        //   console.log('loginError.........',JSON.stringify(response.data));
+        // });
 
       setPostData({
         email: null,

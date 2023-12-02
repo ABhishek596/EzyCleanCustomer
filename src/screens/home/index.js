@@ -24,6 +24,7 @@ import ServiceCard from '../../component/card/ServiceCard';
 // import {GetActiveSubscription} from '../../redux/actions/subscriptionAction';
 // import CustomButton from '../../component/custombutton';
 import LinearGradient from 'react-native-linear-gradient';
+import { useSelector } from 'react-redux';
 
 const OfferItem = ({offer}) => {
   return (
@@ -60,7 +61,11 @@ const Home = ({
   categoryList,
   serviceList,
   GetActiveSubscription,
+  route
 }) => {
+
+  const  data  = route?.params?.data;
+  console.log("userdatattthome", data);
   // messaging().setBackgroundMessageHandler(async remoteMessage => {
   //   // GetNotificationApi(navigation)
   //   console.log('Message handled in the background!', remoteMessage);
@@ -86,6 +91,10 @@ const Home = ({
   // console.log('service list :===>>>>', serviceList);
 
   // console.log("skldjf : ",  userData?.profile_picture?.slice(-10, -4))
+
+  const user = useSelector(state =>state.auth);
+  console.log('userDatassssssss--------',user);
+
 
   return (
     <>

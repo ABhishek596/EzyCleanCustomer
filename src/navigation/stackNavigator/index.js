@@ -3,7 +3,7 @@ import {
   CardStyleInterpolators,
   createStackNavigator,
 } from '@react-navigation/stack';
-import { COLORS, Icons, SIZES, icons, images } from '../../constants';
+import {COLORS, Icons, SIZES, icons, images} from '../../constants';
 import styles from './styles';
 import EditProfile from '../../screens/editProfile';
 import HeaderLeft from '../../component/Header/HeaderLeft';
@@ -63,29 +63,11 @@ const StackNavigator = () => {
           headerShown: false,
         })}
       />
-      {/* <Stack.Screen name="Home" component={home}
-        options={() => ({
-          headerShown: false,
-        })}
-      /> */}
-      {/* 
-      <Stack.Screen
-        name="Category"
-        component={Category}
-        options={({navigation}) => ({
-          header: () => (
-            <HeaderLeft
-              navigation={navigation}
-              title={'Category'}
-              showNotificationButton={true}
-            />
-          ),
-        })}
-      /> */}
+
       <Stack.Screen
         name="AllServices"
         component={AllServices}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
             <HeaderLeft
               navigation={navigation}
@@ -98,7 +80,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Payment"
         component={Payment}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
             <HeaderLeft navigation={navigation} title={'Payment Method'} />
           ),
@@ -107,25 +89,32 @@ const StackNavigator = () => {
       <Stack.Screen
         name="PaymentOnline"
         component={PaymentOnline}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
-            <HeaderLeft navigation={navigation} title={'Payment Method'} showNotificationButton={true} />
+            <HeaderLeft
+              navigation={navigation}
+              title={'Payment Method'}
+              showNotificationButton={true}
+            />
           ),
         })}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="PaymentByCard"
         component={PaymentByCard}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
-            <HeaderLeft navigation={navigation} title={'Payment Method'} showNotificationButton={true} />
+            <HeaderLeft
+              navigation={navigation}
+              title={'Payment Method'}
+              showNotificationButton={true}
+            />
           ),
         })}
       />
       <Stack.Screen
         name="PaymentSuccess"
         component={PaymentSuccess}
-
         options={({navigation}) => ({
           // headerTitle: "Payment Success",
           // headerStyle: styles.headerStyle,
@@ -142,7 +131,11 @@ const StackNavigator = () => {
           // ),
 
           header: () => (
-            <HeaderLeft navigation={navigation} title={'Payment Successful'} showNotificationButton={true} />
+            <HeaderLeft
+              navigation={navigation}
+              title={'Payment Successful'}
+              showNotificationButton={true}
+            />
           ),
         })}
       />
@@ -151,23 +144,14 @@ const StackNavigator = () => {
         component={PaymentFailed}
         options={({navigation}) => ({
           header: () => (
-            <HeaderLeft navigation={navigation} title={'Payment Failed'} showNotificationButton={true}/>
+            <HeaderLeft
+              navigation={navigation}
+              title={'Payment Failed'}
+              showNotificationButton={true}
+            />
           ),
         })}
       />
-      {/* <Stack.Screen name="MyBucket" component={RateList}
-        options={({ navigation }) => ({
-           options={() => ({
-                headerTitle: "Active Order",
-                headerStyle: styles.headerStyle,
-                headerTitleAlign: 'center',
-                headerTintColor: COLORS.white,
-                // headerRight: () => (
-                //   <HeaderRight icon={"clothing"} onPress={() => navigation.navigate("Filter")} />
-                // ),
-              })}
-        })}
-      /> */}
 
       <Stack.Screen
         name="EditProfile"
@@ -179,7 +163,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Notification"
         component={Notification}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
             <HeaderLeft navigation={navigation} title={'Notification'} />
           ),
@@ -188,7 +172,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="ContactUs"
         component={ContactUs}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
             <HeaderLeft navigation={navigation} title={'Contact Us'} />
           ),
@@ -197,16 +181,20 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Discount"
         component={discount}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
-            <HeaderLeft navigation={navigation} title={'Discount'} showNotificationButton={true} />
+            <HeaderLeft
+              navigation={navigation}
+              title={'Discount'}
+              showNotificationButton={true}
+            />
           ),
         })}
       />
       <Stack.Screen
         name="PrivacyPolicy"
         component={PrivacyPolicy}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
             <HeaderLeft navigation={navigation} title={'Privacy Policy'} />
           ),
@@ -215,7 +203,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="AboutUs"
         component={AboutUs}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
             <HeaderLeft navigation={navigation} title={'About Us'} />
           ),
@@ -224,7 +212,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Product"
         component={Product}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
             <HeaderLeft navigation={navigation} title={'Product'} />
           ),
@@ -234,10 +222,16 @@ const StackNavigator = () => {
         name="AddOn"
         component={AddOnScreen}
         options={({navigation}) => ({
-          header: () => <HeaderLeft navigation={navigation} title={'Product'} showNotificationButton={true}/>,
+          header: () => (
+            <HeaderLeft
+              navigation={navigation}
+              title={'Product'}
+              showNotificationButton={true}
+            />
+          ),
         })}
       />
-     <Stack.Screen
+      <Stack.Screen
         name="Invoice"
         component={Invoice}
         options={({navigation}) => ({
@@ -246,83 +240,44 @@ const StackNavigator = () => {
           ),
         })}
       />
-      {/* <Stack.Screen
-        name="CheckOut"
-        component={CheckOut}
-        options={({navigation}) => ({
-          header: () => (
-            <HeaderLeft navigation={navigation} title={'Check Out'} />
-          ),
-        })}
-      /> */}
+
       <Stack.Screen
         name="Address"
         component={Address}
-        options={({ navigation }) => ({
-          header: () => (
-            <HeaderLeft navigation={navigation} title={'Address'} showNotificationButton={true} />
-          ),
-        })}
-      />
-      {/* <Stack.Screen
-        name="AddNewAddress"
-        component={AddNewAddress}
-        options={({navigation, route}) => ({
+        options={({navigation}) => ({
           header: () => (
             <HeaderLeft
               navigation={navigation}
-              title={route?.params?.data ? 'Edit Address' : 'Add New Address'}
-            />
-          ),
-        })}
-      /> */}
-      {/* <Stack.Screen
-        name="AddCurrentAddress"
-        component={addCurrentAddress}
-        options={({navigation, route}) => ({
-          header: () => (
-            <HeaderLeft
-              navigation={navigation}
-              title={
-                route?.params?.data ? 'Edit Address' : 'Add Current Location'
-              }
+              title={'Address'}
+              showNotificationButton={true}
             />
           ),
         })}
       />
-      <Stack.Screen
-        name="EditAddress"
-        component={editAddress}
-        options={({navigation}) => ({
-          header: () => (
-            <HeaderLeft navigation={navigation} title={'Edit Address'} />
-          ),
-        })}
-      /> */}
-      {/* <Stack.Screen
-        name="Schedule"
-        component={schedule}
-        options={({navigation}) => ({
-          header: () => (
-            <HeaderLeft navigation={navigation} title={'Schedule'} />
-          ),
-        })}
-      /> */}
+
       <Stack.Screen
         name="PickupSchedule"
         component={PickupSchedule}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
-            <HeaderLeft navigation={navigation} title={'Pickup Schedule'} showNotificationButton={true} />
+            <HeaderLeft
+              navigation={navigation}
+              title={'Pickup Schedule'}
+              showNotificationButton={true}
+            />
           ),
         })}
       />
       <Stack.Screen
         name="DeliverySchedule"
         component={DeliverySchedule}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
-            <HeaderLeft navigation={navigation} title={'Delivery Schedule'} showNotificationButton={true} />
+            <HeaderLeft
+              navigation={navigation}
+              title={'Delivery Schedule'}
+              showNotificationButton={true}
+            />
           ),
         })}
       />
@@ -338,7 +293,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Faqs"
         component={Faqs}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           header: () => (
             <HeaderLeft
               navigation={navigation}
@@ -351,51 +306,16 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Coupon"
         component={Coupon}
-        options={({ navigation }) => ({
-          header: () => (
-            <HeaderLeft navigation={navigation} title={'Coupon'} showNotificationButton={true} />
-          ),
-        })}
-      />
-      {/* <Stack.Screen
-        name="ActivePlan"
-        component={ActivePlan}
         options={({navigation}) => ({
           header: () => (
             <HeaderLeft
               navigation={navigation}
-              title={'Active Plan'}
+              title={'Coupon'}
               showNotificationButton={true}
             />
           ),
         })}
       />
-      <Stack.Screen           
-        name="QrScreen"
-        component={QrScreen}
-        options={({navigation}) => ({
-          header: () => (
-            <HeaderLeft
-              navigation={navigation}
-              title={'QR'}
-              showNotificationButton={true}
-            />
-          ),
-        })}
-      /> */}
-      {/* <Stack.Screen
-        name="AppointmentCompleted"
-        component={AppointmentCompleted}
-        options={({navigation}) => ({
-          header: () => (
-            <HeaderLeft
-              navigation={navigation}
-              title={'Booking Completed'}
-              showNotificationButton={true}
-            />
-          ),
-        })}
-      /> */}
     </Stack.Navigator>
   );
 };

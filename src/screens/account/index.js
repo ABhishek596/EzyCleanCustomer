@@ -12,15 +12,15 @@ import globalStyles from '../../styles/globalStyles';
 import {COLORS, images} from '../../constants';
 import styles from './styles';
 import Icons from '../../component/Icons';
-// import {connect} from 'react-redux';
-// import {GetUserDataApi, LogoutApi} from '../../redux/actions/authActions';
+import {connect} from 'react-redux';
+import {GetUserDataApi, LogoutApi} from '../../redux/actions/authActions';
 import Loading from '../../component/loading';
 // import {http2} from '../../services/api';
 import LinearGradient from 'react-native-linear-gradient';
-import axios from 'axios';
-import {RNToasty} from 'react-native-toasty';
+import { useSelector } from 'react-redux';
 
 const ScreenNavigation = ({iconName, onPress, children}) => {
+
   return (
     <TouchableOpacity
       style={[
@@ -48,42 +48,33 @@ const Account = ({
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  console.log('GetUserDataApi--------',GetUserDataApi);
+  console.log('userData--------',userData);
 
 
-  const handlesubmit=()=>{
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'http://ezyclean.theprojecttest.xyz/api/logout',
-      headers: {
-        Authorization:
-          'Bearer 56|ZA9BYOLbhMwVRKdglT3LuRY9hgTwZ04k7sYUZEqx646e2a87',
-        // 'Cookie': 'XSRF-TOKEN=eyJpdiI6ImxHaFZ3eU9NMnRBSGZvSlZra0ZiS2c9PSIsInZhbHVlIjoiWWc2dEJBaTlIdnFjM2lSU09YVTkwdDFPRUVUc3F1QUduSWNGRjVaUW95N3dRanlybUxuek9ocjh1N2pCYVcwdFNaR09zS0ttU3J5MmNQTmFjVS9PUVEyUm80SnJyWVR6eXpCMUxFSXhzeGswVXJzSU02cHllSXVwUVAzQ3B2TEwiLCJtYWMiOiJjMzViNjBkNTg4MDU2M2RlNjMwZjVmNmI3M2FmN2ZmZDY5N2U2ZmI0M2ExYmU4MTNjNDM5ZGNkMmNmYWQ4ZWYzIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6Im1iRGZqVi9HdVZtVVF3VjdIZ1RZT1E9PSIsInZhbHVlIjoidXFsT1lrK2VjRUpweWpUemNvVW5oOEl6clVwbnhWU1dRc3pnV1pISXgzU3EzUWlCdCsrNnZBeUd5dmhjTmpzaGozaXpORmhEY2Z2WG5uNUtMbDV0WnE0N0xOSmF3YzdzWFZvWEJKMURPdXpreU9odEtNVTZxSXkydWdMbVRnd2siLCJtYWMiOiIyMzU1NDQxZjJmNTc0ZWY0ZDc4NmFlNzY1NzcwNjdiYjViMzQzYjdkYmM5NWY5YjNiNDg4OGVhNThhNzcxNDBkIiwidGFnIjoiIn0%3D'
-      },
-    };
-
-    
-    axios(config)
-      .then(response => {
-        console.log(JSON.stringify(response.data));
-        navigation.navigate('OnBoardingScreen');
-        RNToasty.Success({
-          title: 'User logout successfully',
-          duration: 2,
-        }); 
-        setIsModalVisible(!isModalVisible);
-      })
-      .catch(error => {
-        console.log('logout Error...............',error);
-      });
-  }
+  const user = useSelector(state =>state.auth);
+  console.log('userDatassssssss--------',user);
+  //   axios(config)
+  //     .then(response => {
+  //       console.log(JSON.stringify(response.data));
+  //       navigation.navigate('OnBoardingScreen');
+  //       RNToasty.Success({
+  //         title: 'User logout successfully',
+  //         duration: 2,
+  //       }); 
+  //       setIsModalVisible(!isModalVisible);
+  //     })
+  //     .catch(error => {
+  //       console.log('logout Error...............',error);
+  //     });
+  // }
 
   const toggleModal = () => {
       setIsModalVisible(!isModalVisible);
   };
-  // useEffect(() => {
-  //   GetUserDataApi();
-  // }, []);
+  useEffect(() => {
+    GetUserDataApi();
+  }, []);
 
   // const ModalView = () => {
   //   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -263,12 +254,15 @@ const Account = ({
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.button1}
-                        onPress={() => {
+                        // onPress={() => {
                           // Handle 'Yes' button click here
-                          handlesubmit();
+                          // handlesubmit
                           // toggleModal();
+                          
                           // navigation.navigate('OnBoardingScreen');
-                        }}>
+                        // }}
+                        onPress={LogoutApi}
+                        >
                         <Text style={styles.yes}>Yes</Text>
                       </TouchableOpacity>
                     </View>
@@ -283,15 +277,15 @@ const Account = ({
   );
 };
 
-// const mapStateToProps = state => ({
-//   userData: state.auth.userData,
-//   loading: state.auth.loading,
-// });
+const mapStateToProps = state => ({
+  userData: state.auth.userData,
+  loading: state.auth.loading,
+});
 
-// const mapDispatchToProps = {
-//   LogoutApi,
-//   GetUserDataApi,
-// };
+const mapDispatchToProps = {
+  LogoutApi,
+  GetUserDataApi,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Account);
-export default Account;
+export default connect(mapStateToProps, mapDispatchToProps)(Account);
+// export default Account;

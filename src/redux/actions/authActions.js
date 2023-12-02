@@ -15,9 +15,9 @@ export const AuthFunction = () => dispatch => {
 };
 
 export const InitialCall = () => async dispatch => {
-  dispatch(GetUserDataApi());
-  dispatch(GetAllCategory());
-  dispatch(GetAllService());
+  // dispatch(GetUserDataApi());
+  // dispatch(GetAllCategory());
+  // dispatch(GetAllService());
   // dispatch(GetAllNotification())
 };
 
@@ -26,7 +26,7 @@ export const SignUpApi = (postData, navigation, cb) => async dispatch => {
 
   cb && cb(true);
   http
-    .post(`customer_register`, postData, formDataHeader)
+    .post(`register`, postData, formDataHeader)
     .then(async response => {
       if (response.data.response) {
         navigation?.goBack();
@@ -59,10 +59,23 @@ export const LoginApi = (postData, navigation, cb) => async dispatch => {
 
   cb && cb(true);
   http
-    .post('otpCode', postData, formDataHeader)
+    .post('login', postData, formDataHeader)
     .then(async response => {
-      console.log('This is response ', response.data);
-      if (response.data.result == 'success') {
+      console.log('This is response ', response.data.data);
+      console.log('This is response status ', response.data.response);
+      if (response.data.response === true) {
+        dispatch({
+          type: AUTH_TOKEN,
+          payload: response.data.data.token,
+        });
+        await AsyncStorage.setItem(
+          '@USER_TOKEN',
+          response.data.data.token,
+        );
+        await AsyncStorage.setItem(
+          '@USER_ID',
+          JSON.stringify(response.data.data.id),
+        );
         // dispatch({
         //   type: AUTH_TOKEN,
         //   payload: response.data.customer_data?.fcm_token,
@@ -77,9 +90,9 @@ export const LoginApi = (postData, navigation, cb) => async dispatch => {
         // );
         // dispatch(InitialCall());
         navigation &&
-          navigation.navigate('Otp', {data: response.data.customer_data});
+        navigation.navigate('StackNavigator', {data: response.data.data});
         RNToasty.Success({
-          title: 'SMS sent successfully.',
+          title: 'User Loggedin successfully.',
           duration: 2,
         });
         cb && cb(false);
