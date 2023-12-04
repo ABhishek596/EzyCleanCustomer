@@ -26,10 +26,12 @@ export const SignUpApi = (postData, navigation, cb) => async dispatch => {
 
   cb && cb(true);
   http
-    .post(`register`, postData, formDataHeader)
+    .post('register', postData, formDataHeader)
     .then(async response => {
-      if (response.data.response) {
+      console.log('registeraallllllllllllll..',JSON.stringify(response.data));
+      if (response.data.message) {
         navigation?.goBack();
+        // navigation.navigate('Login');
         RNToasty.Success({
           title: 'Create account successfully',
           duration: 2,
@@ -251,32 +253,32 @@ export const ForgetPasswordApi =
 
 export const VerifyOtpApi =
   (postData, navigation, userId, cb) => async (dispatch, getState) => {
-    // const userId = await AsyncStorage.getItem("@USER_ID")
-    // const {userData} = getState().auth
-    // console.log("otp userId : ", userId)
+    const userId = await AsyncStorage.getItem("@USER_ID")
+    const {userData} = getState().auth
+    console.log("otp userId : ", userId)
 
     postData = await objectToFormData(postData);
 
     cb && cb(true);
     http
-      .post(`verify_otp`, postData, formDataHeader)
+      .post(`verify-otp`, postData, formDataHeader)
       .then(async response => {
         console.log('verify otp res : ', response.data);
-        if (response.data.response) {
+        if (response.data.message === 'OTP verification successful') {
           dispatch({
             type: AUTH_TOKEN,
-            payload: response.data.data.customer?.token,
+            payload: response.data.token,
           });
           await AsyncStorage.setItem(
             '@USER_TOKEN',
-            response.data.data.customer?.token,
+            response.data.token,
           );
           await AsyncStorage.setItem(
             '@USER_ID',
-            JSON.stringify(response.data.data.customer?.id),
+            JSON.stringify(response.data.user_id),
           );
-          dispatch(InitialCall());
-          navigation?.navigate('StackNavigator');
+          // dispatch(InitialCall());
+          navigation.navigate('StackNavigator');
           RNToasty.Success({
             title: response.data.message,
             duration: 2,
@@ -337,6 +339,53 @@ export const ResetPasswordApi =
       .catch(error => {
         cb && cb(false);
         console.log('reset password  error : ', error);
+        RNToasty.Error({
+          title: error.response?.data?.message,
+          duration: 2,
+        });
+      });
+  };
+
+  export const LoginByOtpApi =
+  (postData, navigation, user_id, cb) => async dispatch => {
+    // const userId = await AsyncStorage.getItem('@USER_ID');
+
+    // user_id = user_id ? user_id : userId;
+
+    postData = await objectToFormData(postData);
+
+    console.log('LoginByOtpApi data userid : ', postData, user_id);
+
+    cb && cb(true);
+    http
+      .post(`generate-otp`, postData, formDataHeader)
+      .then(async response => {
+        console.log('OtpApi data : ', response.data);
+        if (response.data.otp) {
+          console.log('LoginByOtpApi data userid : ', response.data.otp);
+          // if (userId) {
+          //   navigation?.goBack();
+          //   dispatch(GetUserDataApi());
+          // } else {
+          //   navigation?.replace('Login');
+          // }
+          navigation.navigate('Otp', {data:response.data})
+          RNToasty.Success({
+            title: response.data.message,
+            duration: 2,
+          });
+          cb && cb(false);
+        } else {
+          cb && cb(false);
+          RNToasty.Info({
+            title: response.data.message,
+            duration: 2,
+          });
+        }
+      })
+      .catch(error => {
+        cb && cb(false);
+        console.log('reset password  error : ', error.response.data);
         RNToasty.Error({
           title: error.response?.data?.message,
           duration: 2,

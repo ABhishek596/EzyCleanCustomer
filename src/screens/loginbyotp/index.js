@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Linking, StatusBar } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 import Button1 from '../../component/button/Button1';
 // import Icons from '../../component/Icons';
 import InputWithIcon from '../../component/input/InputWithIcon';
@@ -10,6 +10,7 @@ import { COLORS, SIZES } from '../../constants';
 import styles from './styles';
 // import {RNToasty} from 'react-native-toasty';
 import globalStyles from '../../styles/globalStyles';
+import { LoginByOtpApi } from '../../redux/actions/authActions';
 // import {
 //   AuthFunction,
 //   GoogleLoginApi,
@@ -25,7 +26,7 @@ import globalStyles from '../../styles/globalStyles';
 // import Loader from '../../component/Loader/Loader';
 // import messaging from '@react-native-firebase/messaging';
 
-const Logbyotp = ({ navigation, LoginApi, AuthFunction, GoogleLoginApi }) => {
+const Logbyotp = ({ navigation, LoginByOtpApi, AuthFunction, GoogleLoginApi }) => {
   const [loading, setLoading] = useState(false);
   const [secure, setSecure] = useState(true);
   const [fcm, setFcm] = useState();
@@ -52,20 +53,23 @@ const Logbyotp = ({ navigation, LoginApi, AuthFunction, GoogleLoginApi }) => {
   };
 
   const handleSubmit = () => {
-    navigation.navigate('Otp');
-    // if (postData.phone_number) {
-    //   LoginApi({...postData, fcm_token: fcm}, navigation, data =>
-    //     setLoading(data),
-    //   );
-    //   setPostData({
-    //     phone_number: null,
-    //   });
-    // } else {
-    //   RNToasty.Error({
-    //     title: 'Please Enter Mobile Number.',
-    //     duration: 2,
-    //   });
-    // }
+    // navigation.navigate('Otp');
+    if (postData.phone_number!== " ") {
+      // LoginApi({...postData, fcm_token: fcm}, navigation, data =>
+      //   setLoading(data),
+      // );
+      LoginByOtpApi(postData, navigation, data =>
+        setLoading(data),
+      );
+      setPostData({
+        phone_number: null,
+      });
+    } else {
+      RNToasty.Error({
+        title: 'Please Enter Mobile Number.',
+        duration: 2,
+      });
+    }
   };
 
   // useEffect(() => {
@@ -235,14 +239,14 @@ const Logbyotp = ({ navigation, LoginApi, AuthFunction, GoogleLoginApi }) => {
   );
 };
 
-// const mapStateToProps = state => ({});
+const mapStateToProps = state => ({});
 
-// const mapDispatchToProps = {
-//   LoginApi,
-//   AuthFunction,
-//   GoogleLoginApi,
-// };
+const mapDispatchToProps = {
+  LoginByOtpApi,
+  // AuthFunction,
+  // GoogleLoginApi,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Login);
-export default Logbyotp;
+export default connect(mapStateToProps, mapDispatchToProps)(Logbyotp);
+// export default Logbyotp;
 

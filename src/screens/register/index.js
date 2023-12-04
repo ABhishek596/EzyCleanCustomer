@@ -34,7 +34,7 @@ import {
 // import messaging from '@react-native-firebase/messaging';
 import axios from 'axios';
 
-const Register = ({navigation, LoginApi, AuthFunction, GoogleLoginApi}) => {
+const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
   const [loading, setLoading] = useState(false);
   const [secure, setSecure] = useState(true);
   const [branch, setBranch] = useState(true);
@@ -85,6 +85,48 @@ const Register = ({navigation, LoginApi, AuthFunction, GoogleLoginApi}) => {
   //   // }
   // };
 
+  // const handleSubmit = () => {
+  //   console.log('signup postdata ; ', postData);
+  //   // console.log("phone slice : ", postData.phone_with_code?.slice(-10))
+
+  //   if (
+  //     postData.name &&
+  //     postData.email &&
+  //     postData.password &&
+  //     postData.branch &&
+  //     postData.phone_number
+  //   ) {
+  //     // SignUpApi(postData, navigation)
+  //     if (postData.password) {
+  //       // SignUpApi(postData, navigation)
+  //       // SignUpApi({...postData, fcm_token: fcm}, navigation, data =>
+  //       //   setLoading(data),
+  //       // );
+  //       SignUpApi({...postData}, navigation, data =>
+  //         setLoading(data),
+  //       );
+
+  //       setPostData({
+  //         name: null,
+  //         phone_number: null,
+  //         email: null,
+  //         password: null,
+  //         branch: null,
+  //       });
+  //     } else {
+  //       RNToasty.Error({
+  //         title: 'Password and confirm password does not match',
+  //         duration: 2,
+  //       });
+  //     }
+  //   } else {
+  //    RNToasty.Error({
+  //       title: 'Please fill all fields',
+  //       duration: 2,
+  //     });
+  //   }
+  // };
+
   const handleSubmit = () => {
     console.log('signup postdata ; ', postData);
     // console.log("phone slice : ", postData.phone_with_code?.slice(-10))
@@ -98,42 +140,7 @@ const Register = ({navigation, LoginApi, AuthFunction, GoogleLoginApi}) => {
     ) {
       // SignUpApi(postData, navigation)
       if (postData.password) {
-        // SignUpApi(postData, navigation)
-        // SignUpApi({...postData, fcm_token: fcm}, navigation, data =>
-        //   setLoading(data),
-        // );
-        let data = JSON.stringify({
-          "name": postData.name,
-          "email": postData.email,
-          "password": postData.password,
-          "branch":  postData.branch,
-          "phone_number": postData.phone_number
-        });
-        
-        let config = {
-          method: 'post',
-          maxBodyLength: Infinity,
-          url: 'http://ezyclean.theprojecttest.xyz/api/register',
-          headers: { 
-            'Content-Type': 'application/json', 
-            // 'Cookie': 'XSRF-TOKEN=eyJpdiI6IjVwdGhBWDlKM0dIeDJTeEErdDd3Ync9PSIsInZhbHVlIjoiR0xTblhOZlhpT0xJRXNib3lGN1JuUWpKbUNDSkVSN21ITTNVdXpTV0didGwzVXhTS2t5WFFOMXhvTytyRHFjV2VvYkdHM3d3OE11b1hENkNEc3NNU0Q0WTRQdVVQLzhRcTc4bmNyaWxYMVNkSW81c1FXM0VqVGpnUDlrTjNPcWciLCJtYWMiOiIwYjc3ODRiZTZkZTc2YjRjNjM4ZjZjZjE5ZjQ2NjcwZGJiM2JiMWNiNDY3NjZlZDg2MzA4ZTRlZDkyODYzZjBkIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6InArOFdvNjJQVms2MjdQcTJDRVdwUnc9PSIsInZhbHVlIjoiditPVk5zemNpcjF4ZTJVMWhpN3c5eFpTWUNKUG51VGRORjU0TnpCalBPbDNWaDNwRmJZaW1xRHE0T1ErN3N0V1ZiZ0pGeHFCR2pnOGJUZ1AwR2VVaHRxSW8va1RHQ21OSi9VcWRvVWhYRy80U1FqMFVWbmdFRXlCRm55dTBHZlUiLCJtYWMiOiI5ODIzMWI5MGRhNjZhY2YzYzBjMTc2ZDY4NTQ4ODkwMTIxZTJkZmNkMzgzZjYxODI3MWE3MjdiOWM0OWEwYTMwIiwidGFnIjoiIn0%3D'
-          },
-          data : data
-        };
-        
-        axios(config)
-        .then((response) => {
-          console.log('register====>>>>>',JSON.stringify(response.data));
-          navigation.goBack();
-          RNToasty.Success({
-            title: 'User registered successfully',
-            duration: 1,
-          }); 
-        })
-        .catch((error) => {
-          console.log('Signuperrror------->>>>>',error);
-        });
-        
+        SignUpApi(postData, navigation, data => setLoading(data));
         setPostData({
           name: null,
           phone_number: null,
@@ -146,12 +153,13 @@ const Register = ({navigation, LoginApi, AuthFunction, GoogleLoginApi}) => {
           title: 'Password and confirm password does not match',
           duration: 2,
         });
+        console.log('Password and confirm password does not match ');
       }
     } else {
-     RNToasty.Error({
+      RNToasty.Error({
         title: 'Please fill all fields',
         duration: 2,
-      }); 
+      });
     }
   };
 

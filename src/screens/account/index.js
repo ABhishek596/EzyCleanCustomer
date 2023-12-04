@@ -17,10 +17,9 @@ import {GetUserDataApi, LogoutApi} from '../../redux/actions/authActions';
 import Loading from '../../component/loading';
 // import {http2} from '../../services/api';
 import LinearGradient from 'react-native-linear-gradient';
-import { useSelector } from 'react-redux';
-
+import {useSelector} from 'react-redux';
+import axios from 'axios';
 const ScreenNavigation = ({iconName, onPress, children}) => {
-
   return (
     <TouchableOpacity
       style={[
@@ -47,13 +46,12 @@ const Account = ({
   GetUserDataApi,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  console.log('GetUserDataApi--------',GetUserDataApi);
-  console.log('userData--------',userData);
-
-
-  const user = useSelector(state =>state.auth);
-  console.log('userDatassssssss--------',user);
+  const [usr, setUsr] = useState();
+  // console.log('GetUserDataApi--------', GetUserDataApi);
+  // console.log('userData--------', userData);
+  console.log('userDataALLLLL21212112--------', usr);
+  const user = useSelector(state => state.auth);
+  console.log('userDatassssssss--------', user);
   //   axios(config)
   //     .then(response => {
   //       console.log(JSON.stringify(response.data));
@@ -61,7 +59,7 @@ const Account = ({
   //       RNToasty.Success({
   //         title: 'User logout successfully',
   //         duration: 2,
-  //       }); 
+  //       });
   //       setIsModalVisible(!isModalVisible);
   //     })
   //     .catch(error => {
@@ -70,11 +68,40 @@ const Account = ({
   // }
 
   const toggleModal = () => {
-      setIsModalVisible(!isModalVisible);
+    setIsModalVisible(!isModalVisible);
   };
   useEffect(() => {
-    GetUserDataApi();
-  }, []);
+    // GetUserDataApi();
+    userdataall();
+  }, [usr]);
+
+  const userdataall = () => {
+    let data = JSON.stringify({
+      user_id: 15,
+    });
+
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://ezyclean.theprojecttest.xyz/api/get-user-data',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'Bearer 125|Rf3HYyNzcHEDJEjCD2Nxi5puVaYP6ckFIp1diCylf2dd4731',
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        console.log("getgetgetget",JSON.stringify(response.data));
+        setUsr(response.data);
+      })
+      .catch(error => {
+        console.log("ngetngetngetngetnget",error);
+      });
+  };
 
   // const ModalView = () => {
   //   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -255,14 +282,13 @@ const Account = ({
                       <TouchableOpacity
                         style={styles.button1}
                         // onPress={() => {
-                          // Handle 'Yes' button click here
-                          // handlesubmit
-                          // toggleModal();
-                          
-                          // navigation.navigate('OnBoardingScreen');
+                        // Handle 'Yes' button click here
+                        // handlesubmit
+                        // toggleModal();
+
+                        // navigation.navigate('OnBoardingScreen');
                         // }}
-                        onPress={LogoutApi}
-                        >
+                        onPress={LogoutApi}>
                         <Text style={styles.yes}>Yes</Text>
                       </TouchableOpacity>
                     </View>

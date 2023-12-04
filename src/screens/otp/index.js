@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StatusBar, TextInput, TouchableOpacity } from 'react-native';
-import { COLORS, SIZES } from '../../constants';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StatusBar, TextInput, TouchableOpacity} from 'react-native';
+import {COLORS, SIZES} from '../../constants';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import Button1 from '../../component/button/Button1';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import globalStyles from '../../styles/globalStyles';
 import styles from './styles';
 
-// import {connect} from 'react-redux';
-// import {RNToasty} from 'react-native-toasty';
-// import {ForgetPasswordApi, VerifyOtpApi} from '../../redux/actions/authActions';
+import {connect} from 'react-redux';
+import {RNToasty} from 'react-native-toasty';
+import {ForgetPasswordApi, VerifyOtpApi} from '../../redux/actions/authActions';
 // import CountDown from '../../component/countDown/CountDown';
 
 const Otp = ({
@@ -25,12 +25,12 @@ const Otp = ({
   const [countdownTime, setCountdownTime] = useState(`02:00`);
 
   // console.log("otp data: ", route.params.data, route.params.otp )
-  // console.log("otp data: ", route.params.data.otp );
-
-  // const userdata = route.params && route.params.data;
-
+  console.log('otp data from API : ', route.params.data);
+  // console.log("otp postData : ", postData.otp);
+  const userdata = route.params && route.params.data.user_id;
+  console.log('otp data userdata userdata userdata : ',userdata);
   const [postData, setPostData] = useState({
-    // userid: userdata?.id,
+    user_id: userdata,
     otp: null,
   });
 
@@ -41,26 +41,26 @@ const Otp = ({
     });
   };
 
-  // useEffect(() => {
-  //   if (postData.otp) {
-  //     setDisable(false);
-  //   } else {
-  //     setDisable(true);
-  //   }
-  // }, [postData]);
+  useEffect(() => {
+    if (postData.otp) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [postData]);
 
   const handleSubmit = () => {
-    // if (postData.otp) {
-    //   VerifyOtpApi(postData, navigation, userdata.id, data => setLoading(data));
-    //   setPostData({
-    //     otp: null,
-    //   });
-    // } else {
-    //   RNToasty.Error({
-    //     title: 'Please enter otp',
-    //     duration: 2,
-    //   });
-    // }
+    if (postData.otp) {
+      VerifyOtpApi(postData, navigation, userdata.id, data => setLoading(data));
+      setPostData({
+        otp: null,
+      });
+    } else {
+      RNToasty.Error({
+        title: 'Please enter otp',
+        duration: 2,
+      });
+    }
   };
 
   // const countdownTimer = async duration => {
@@ -129,25 +129,27 @@ const Otp = ({
             <OTPInputView
               // onPress={() => console.log("press me")}
               style={styles.OtpinputBox}
-              pinCount={6}
+              pinCount={4}
               // code={postData.otp ? postData.otp : null}
               codeInputFieldStyle={styles.boxstyle}
-              codeInputHighlightStyle={{ borderColor: COLORS.secondary }}
+              codeInputHighlightStyle={{borderColor: COLORS.secondary}}
               // onCodeFilled={(code => setOtp(code))}
-              onCodeFilled={text => handleChange('otp', text)}
+              onCodeFilled={text => {
+                handleChange('otp', text);
+                // console.log(`Code is ${text}, you are good to go!`);
+              }}
             />
           </View>
           <Button1
             disabled={loading}
             loading={loading}
-            // onPress={handleSubmit}
-          onPress={() => navigation.navigate("Login")}
-          style={{marginTop:SIZES.height * 0.06}}
-          >
+            onPress={handleSubmit}
+            // onPress={() => navigation.navigate("Login")}
+            style={{marginTop: SIZES.height * 0.06}}>
             Verify
           </Button1>
 
-          <View style={{ ...globalStyles.row1, ...styles.mv2 }}>
+          <View style={{...globalStyles.row1, ...styles.mv2}}>
             <TouchableOpacity
             // onPress={resendOtp}
             >
@@ -161,13 +163,12 @@ const Otp = ({
   );
 };
 
-// const mapStateToProps = state => ({});
+const mapStateToProps = state => ({});
 
-// const mapDispatchToProps = {
-//   VerifyOtpApi,
-//   ForgetPasswordApi,
-// };
+const mapDispatchToProps = {
+  VerifyOtpApi,
+  // ForgetPasswordApi,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Otp);
-export default Otp;
-
+export default connect(mapStateToProps, mapDispatchToProps)(Otp);
+// export default Otp;
