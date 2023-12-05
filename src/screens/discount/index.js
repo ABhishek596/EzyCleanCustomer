@@ -1,12 +1,6 @@
 import React, {useState} from 'react';
 import {useEffect} from 'react';
-import {
-  View,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {View, Text, StatusBar, TouchableOpacity, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import {COLORS, SIZES} from '../../constants';
 import styles from './styles';
@@ -21,10 +15,10 @@ const Discount = ({navigation, discountList, GetDiscountList, route}) => {
   const [id, setId] = useState();
   const [discount, setDiscount] = useState(null);
   const [subtotal, setSubtotal] = useState(0);
-
-  // useEffect(() => {
-  //   GetDiscountList();
-  // }, []);
+  // console.log('discountListdiscountListdiscountList', discountList);
+  useEffect(() => {
+    GetDiscountList();
+  }, []);
 
   // useEffect(() => {
   //   if (route.params) {
@@ -48,72 +42,84 @@ const Discount = ({navigation, discountList, GetDiscountList, route}) => {
 
   return (
     <>
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.container}>
         <StatusBar
           backgroundColor="transparent"
           translucent={true}
           barStyle="light-content"
         />
+        <View>
+          {discountList && (
+            <FlatList
+              data={discountList}
+              renderItem={({item, index}) => (
+                <View style={[styles.address_box]}>
+                  <View>
+                    {/* {discountList?.map((item, index) => {
+                        return ( */}
+                    <TouchableOpacity
+                      // key={item.id}
+                      activeOpacity={0.5}
+                      onPress={() => {
+                        // setDiscount(item), setId(item.id);
+                      }}>
+                      <LinearGradient
+                        colors={['#651898', '#2C0D8F']}
+                        style={[
+                          styles.card,
+                          {marginTop: 20},
+                          // index == 0 && {marginTop: SIZES.height * 0.025},
+                        ]} // Your styles for the LinearGradient
+                        start={{x: 0, y: 0}}
+                        end={{x: 1, y: 0}}>
+                        <RadioButton
+                          // value={userAddress}
+                          color={COLORS.white}
+                          // status={id === item.id ? 'checked' : 'unchecked'}
+                          onPress={() => {
+                            // setDiscount(item), setId(item.id);
+                          }}
+                        />
+                        <View style={styles.box}>
+                          <View style={globalStyles.row}>
+                            <Text style={styles.offer}>{item.promo_name}</Text>
+                            {/* <Text style={styles.off_text}>off</Text> */}
+                          </View>
+                          <Text style={styles.offer_text}>
+                            {item.description}
+                          </Text>
 
-        <View style={[styles.address_box]}>
-          <View>
-            {/* {discountList?.map((item, index) => {
-              return ( */}
-            <TouchableOpacity
-              // key={item.id}
-              activeOpacity={0.5}
-              onPress={() => {
-                // setDiscount(item), setId(item.id);
-              }}>
-              <LinearGradient
-                colors={['#651898', '#2C0D8F']}
-                style={[
-                  styles.card,
-                  {marginTop: 20},
-                  // index == 0 && {marginTop: SIZES.height * 0.025},
-                ]} // Your styles for the LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}>
-                <RadioButton
-                  // value={userAddress}
-                  color={COLORS.white}
-                  // status={id === item.id ? 'checked' : 'unchecked'}
-                  onPress={() => {
-                    // setDiscount(item), setId(item.id);
-                  }}
-                />
-                <View style={styles.box}>
-                  <View style={globalStyles.row}>
-                    <Text style={styles.offer}>Get 50% Discount </Text>
-                    {/* <Text style={styles.off_text}>off</Text> */}
+                          <View style={styles.offer_btn}>
+                            <Text style={styles.offer_btn_text}>
+                              {item.promo_code}
+                            </Text>
+                          </View>
+                        </View>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                    {/* );
+                      })} */}
                   </View>
-                  <Text style={styles.offer_text}>
-                    Use code sindero50 & get 50% discount. Other T&Cs may apply.
-                  </Text>
-
-                  <View style={styles.offer_btn}>
-                    <Text style={styles.offer_btn_text}>Special 40%</Text>
-                  </View>
+                  {/* {subtotal && */}
+                  {/* <View style={styles.bottom_container}> */}
+                  {/* <View style={styles.total_amt_row}>
+                                      <Text style={styles.amount_text}>SubTotal</Text>
+                                      <Text style={styles.amount_text}>₹{subtotal}</Text>
+                                  </View> */}
+                  {/* </View> */}
+                  {/* } */}
                 </View>
-              </LinearGradient>
-            </TouchableOpacity>
-            {/* );
-            })} */}
-          </View>
-          {/* {subtotal && */}
-          <View style={styles.bottom_container}>
-            {/* <View style={styles.total_amt_row}>
-                            <Text style={styles.amount_text}>SubTotal</Text>
-                            <Text style={styles.amount_text}>₹{subtotal}</Text>
-                        </View> */}
-          </View>
-          {/* } */}
+              )}
+              key={item => item.id}
+              showsVerticalScrollIndicator={false}
+            />
+          )}
         </View>
-      </ScrollView>
-      <View style={styles.bottom_btn_box}>
-        <Button1 style={styles.btn} onPress={handleSubmit}>
-          Apply Discount
-        </Button1>
+        <View style={styles.bottom_btn_box}>
+          <Button1 style={styles.btn} onPress={handleSubmit}>
+            Apply Discount
+          </Button1>
+        </View>
       </View>
     </>
   );

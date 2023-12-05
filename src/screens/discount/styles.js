@@ -9,8 +9,8 @@ export default StyleSheet.create({
     },
  
     address_box: {
-        flex: 1,
-        height: SIZES.height * .9, 
+        // flex: 1,
+        // height: SIZES.height * .9, 
         // alignItems: 'center',
         // justifyContent: 'center',
     },
@@ -28,7 +28,7 @@ export default StyleSheet.create({
         elevation: 5,
         borderRadius: SIZES.width * .03,
         paddingVertical: SIZES.height * .02,
-        marginBottom: SIZES.height * .025,
+        marginBottom: SIZES.height * .005,
         // paddingLeft: SIZES.width * .04,
         alignSelf: 'center',
         flexDirection: 'row',
@@ -52,7 +52,7 @@ export default StyleSheet.create({
         fontFamily: FONTS.regular,
         fontSize: SIZES.width * .034,
         color: COLORS.black82,
-        marginBottom: -4,
+        // marginBottom: -4,
     },
 
     value: {
@@ -60,7 +60,7 @@ export default StyleSheet.create({
         fontFamily: FONTS.medium, 
         fontSize: SIZES.width * .034,
         color: COLORS.black1,
-        marginBottom: -4,
+        // marginBottom: -4,
         // borderWidth: 1,
     },
 
@@ -129,7 +129,7 @@ offer_btn: {
 offer_btn_text: {
     fontFamily: FONTS.regular,
     fontSize: SIZES.width * .031,
-    marginBottom: -3,
+    // marginBottom: -3,
     color: COLORS.black,
 },
  // ============= bottom containger =================
@@ -166,6 +166,6 @@ amount_text: {
     fontFamily: FONTS.semiBold,
     fontSize: SIZES.width * .04,
     color: COLORS.white,
-    marginBottom: -5,
+    // marginBottom: -5,
 },
 })

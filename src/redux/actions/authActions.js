@@ -130,7 +130,7 @@ export const LogoutApi = () => dispatch => {
 };
 
 export const UpdateUserApi = (postData, navigation, cb) => async dispatch => {
-  const userId = await AsyncStorage.getItem('@USER_ID');
+  // const userId = await AsyncStorage.getItem('@USER_ID');
   // console.log("user id updata user : ", userId)
 
   postData = await objectToFormData(postData);
@@ -138,9 +138,10 @@ export const UpdateUserApi = (postData, navigation, cb) => async dispatch => {
 
   cb && cb(true);
   http
-    .post(`edit_profile?cid=${userId}`, postData, formDataHeader)
+    .post(`update-profile`, postData, formDataHeader)
     .then(async response => {
-      if (response.data.response) {
+      console.log("update-profile update user post data auth screen for edit profile : ", response.data)
+      if (response.data) {
         dispatch(GetUserDataApi());
         RNToasty.Success({
           title: response.data.message,
@@ -168,19 +169,20 @@ export const UpdateUserApi = (postData, navigation, cb) => async dispatch => {
 
 export const GetUserDataApi = () => async dispatch => {
   const userId = await AsyncStorage.getItem('@USER_ID');
-  // console.log("usfs fi id ; ", userId)
+  console.log("usfs fi id from auth action =====; ", userId)
 
   dispatch({
     type: LOADING,
     payload: true,
   });
   http
-    .get(`profile_details?cid=${userId}`)
+    .get(`get-user-data/${userId}`)
     .then(async response => {
-      if (response.data.response) {
+      console.log("usfs fi id data ========; ", response.data)
+      if (response.data) {
         dispatch({
           type: USER_DATA,
-          payload: response.data.data,
+          payload: response.data,
         });
         // RNToasty.Success({
         //     title: "get user data successfully",

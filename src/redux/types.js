@@ -5,14 +5,15 @@ export const USER_ID = 'USER_ID';
 export const RESET_NAV = 'RESET_NAV';
 export const ORIENTATION = 'ORIENTATION';
 
-//home
+//home  
 export const LOADING = 'LOADING';
 export const CATEGORY_LIST = 'CATEGORY_LIST';
 export const SERVICE_LIST = 'SERVICE_LIST';
 export const DISCOUNT_LIST = 'DISCOUNT_LIST';
 export const PRIVACY_POLICY = 'PRIVACY_POLICY';
 export const GET_PRICE_LIST = 'GET_PRICE_LIST';
-
+export const ABOUS_US = 'ABOUS_US';
+export const FAQS = 'FAQS';
 // product
 export const TIME_LIST = 'TIME_LIST';
 export const PRODUCT_DATA = 'PRODUCT_DATA';

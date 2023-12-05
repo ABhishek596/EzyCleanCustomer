@@ -7,6 +7,8 @@ import {
   LOADING,
   PRIVACY_POLICY,
   SERVICE_LIST,
+  ABOUS_US,
+  FAQS
 } from '../types';
 
 export const GetAllCategory = () => async dispatch => {
@@ -105,11 +107,103 @@ export const GetPrivacyPolicy = () => async dispatch => {
     payload: true,
   });
   http
-    .get(`privacy_policy`)
+    .get(`privacy-policy`)
     .then(async response => {
       if (response.data?.response) {
         dispatch({
           type: PRIVACY_POLICY,
+          payload: response.data.data,
+        });
+        // RNToasty.Success({
+        //     title: .response.data.message,
+        //     duration: 2,
+        // });
+        dispatch({
+          type: LOADING,
+          payload: false,
+        });
+      } else {
+        dispatch({
+          type: LOADING,
+          payload: false,
+        });
+        // RNToasty.Info({
+        //     title: response.data.message,
+        //     duration: 2,
+        // });
+      }
+    })
+    .catch(error => {
+      dispatch({
+        type: LOADING,
+        payload: false,
+      });
+      // console.log("user data error : ", error.response.data)
+      // RNToasty.Error({
+      //     title: error.response.data.message,
+      //     duration: 2,
+      // });
+    });
+};
+
+export const GetAboutUs = () => async dispatch => {
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  http
+    .get(`about-us/9`)
+    .then(async response => {
+      // console.log("about us home action : ", response.data.data)
+      if (response.data.data) {
+        dispatch({
+          type: ABOUS_US,
+          payload: response.data.data,
+        });
+        // RNToasty.Success({
+        //     title: .response.data.message,
+        //     duration: 2,
+        // });
+        dispatch({
+          type: LOADING,
+          payload: false,
+        });
+      } else {
+        dispatch({
+          type: LOADING,
+          payload: false,
+        });
+        // RNToasty.Info({
+        //     title: response.data.message,
+        //     duration: 2,
+        // });
+      }
+    })
+    .catch(error => {
+      dispatch({
+        type: LOADING,
+        payload: false,
+      });
+      // console.log("user data error : ", error.response.data)
+      // RNToasty.Error({
+      //     title: error.response.data.message,
+      //     duration: 2,
+      // });
+    });
+};
+
+export const GetFaqs = () => async dispatch => {
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  http
+    .get(`faqs`)
+    .then(async response => {
+      // console.log("about us home action : ", response.data.data)
+      if (response.data.data) {
+        dispatch({
+          type: FAQS,
           payload: response.data.data,
         });
         // RNToasty.Success({
@@ -150,8 +244,9 @@ export const GetDiscountList = () => async dispatch => {
     payload: true,
   });
   http
-    .get(`discount_list`)
+    .get(`discount`)
     .then(async response => {
+      // console.log("discount data discount : ", response.data)
       if (response.data?.response) {
         dispatch({
           type: DISCOUNT_LIST,

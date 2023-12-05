@@ -11,7 +11,7 @@ import {
   Pressable,
 } from 'react-native';
 import React, {useEffect} from 'react';
-// import {connect, useDispatch} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
 import {COLORS, SIZES, icons, images} from '../../constants';
@@ -24,9 +24,9 @@ import ServiceCard from '../../component/card/ServiceCard';
 // import {GetActiveSubscription} from '../../redux/actions/subscriptionAction';
 // import CustomButton from '../../component/custombutton';
 import LinearGradient from 'react-native-linear-gradient';
-import { useSelector } from 'react-redux';
+import {GetDiscountList} from '../../redux/actions/homeAction';
 
-const OfferItem = ({offer}) => {
+const OfferItem = ({item}) => {
   return (
     <LinearGradient
       colors={['#651898', '#2C0D8F']}
@@ -35,18 +35,18 @@ const OfferItem = ({offer}) => {
       end={{x: 1, y: 0}}>
       <View>
         <View style={globalStyles.row}>
-          <Text style={styles.offer}>{offer.discount}% </Text>
-          <Text style={styles.off_text}>off</Text>
+          <Text style={styles.offer}>{item.promo_name}</Text>
+          {/* <Text style={styles.off_text}>off</Text> */}
         </View>
-        <Text style={styles.offer_text}>{offer.description}</Text>
+        <Text style={styles.offer_text}>{item.description}</Text>
 
         <View style={styles.offer_btn}>
-          <Text style={styles.offer_btn_text}>{offer.buttonText}</Text>
+          <Text style={styles.offer_btn_text}>{item.promo_code}</Text>
         </View>
       </View>
 
       <Image
-        source={offer.imageSource}
+        source={require('../../assets/images/offer.png')}
         style={styles.offer_image}
         resizeMode="contain"
       />
@@ -61,11 +61,13 @@ const Home = ({
   categoryList,
   serviceList,
   GetActiveSubscription,
-  route
+  route,
+  discountList,
+  GetDiscountList,
 }) => {
-
-  const  data  = route?.params?.data;
-  console.log("userdatattthome", data);
+  console.log('discountList at Home', discountList);
+  // const  data  = route?.params?.data;
+  // console.log("userdatattthome", data);
   // messaging().setBackgroundMessageHandler(async remoteMessage => {
   //   // GetNotificationApi(navigation)
   //   console.log('Message handled in the background!', remoteMessage);
@@ -91,10 +93,9 @@ const Home = ({
   // console.log('service list :===>>>>', serviceList);
 
   // console.log("skldjf : ",  userData?.profile_picture?.slice(-10, -4))
-
-  const user = useSelector(state =>state.auth);
-  console.log('userDatassssssss--------',user);
-
+  useEffect(() => {
+    GetDiscountList();
+  }, []);
 
   return (
     <>
@@ -149,9 +150,7 @@ const Home = ({
 
             <View style={styles.profile_box}>
               {/* <Text style={styles.user_name}>Hello {userData && (`${userData.name}`)}</Text> */}
-              <Text style={styles.user_name}>
-                Hello Jhon {userData?.customer_details?.customer_name}
-              </Text>
+              <Text style={styles.user_name}>{userData?.name}</Text>
               <Text style={styles.text}>Welcome Back</Text>
             </View>
 
@@ -233,9 +232,9 @@ const Home = ({
               </View>
             </Pressable> */}
             <FlatList
-              data={data1}
+              data={discountList}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={({item}) => <OfferItem offer={item} />}
+              renderItem={({item}) => <OfferItem item={item} />}
               horizontal
               showsHorizontalScrollIndicator={false}
             />
@@ -286,19 +285,20 @@ const Home = ({
   );
 };
 
-// const mapStateToProps = state => ({
-//   userData: state.auth.userData,
-//   loading: state.home.loading,
-//   categoryList: state.home.categoryList,
-//   serviceList: state.home.serviceList,
-// });
+const mapStateToProps = state => ({
+  userData: state.auth.userData,
+  loading: state.home.loading,
+  categoryList: state.home.categoryList,
+  serviceList: state.home.serviceList,
+  discountList: state.home.discountList,
+});
 
-// const mapDispatchToProps = {
-//   GetActiveSubscription,
-// };
+const mapDispatchToProps = {
+  // GetActiveSubscription,
+  GetDiscountList,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Home);
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 const category = [
   {

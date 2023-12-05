@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: FONTS.medium,
         fontSize: SIZES.width * .05,
-        marginBottom: -4,
+        // marginBottom: -4,
         color: COLORS.white,
     },
 

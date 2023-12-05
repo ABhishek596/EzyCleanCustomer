@@ -81,7 +81,7 @@ export default StyleSheet.create({
     user_name: {
         fontFamily: FONTS.medium,
         fontSize: SIZES.width * .044,
-        marginBottom: -5,
+        // marginBottom: -5,
         color: COLORS.white,
     },
 

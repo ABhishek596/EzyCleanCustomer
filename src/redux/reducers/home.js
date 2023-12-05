@@ -11,6 +11,8 @@ import {
   SERVICE_LIST,
   USER_DATA,
   USER_ID,
+  ABOUS_US,
+  FAQS,
 } from '../types';
 
 const initialState = {
@@ -21,6 +23,8 @@ const initialState = {
   discountList: null,
   currentLatLong: null,
   priceList: null,
+  aboutUs: null,
+  faqs: null
 };
 
 export default (state = initialState, action) => {
@@ -60,6 +64,16 @@ export default (state = initialState, action) => {
         ...state,
         priceList: action.payload,
       };
+      case ABOUS_US:
+        return {
+          ...state,
+          aboutUs: action.payload,
+        };
+        case FAQS:
+          return {
+            ...state,
+            faqs: action.payload,
+          };
     default:
       return state;
   }

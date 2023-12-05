@@ -29,6 +29,7 @@ const EditProfile = ({
   loading,
   GetUserDataApi,
 }) => {
+  const userId = userData.id;
   const [secure, setSecure] = useState(true);
   const [dob, setDob] = useState(true);
   const [gender, setGender] = useState(true);
@@ -41,10 +42,16 @@ const EditProfile = ({
   // console.log("profile image : ", userData && userData.image)
 
   const [postData, setPostData] = useState({
-    customer_name: null,
+    id: userId,
+    email: null,
+    password: null,
     phone_number: null,
-    profile_picture: null,
-    // address: null
+    first_name: null,
+    last_name: null,
+    date_of_birth: null,
+    gender: null,
+    city: null,
+    address: null,
   });
 
   const handleChange = (name, value) => {
@@ -61,7 +68,7 @@ const EditProfile = ({
       cropping: true,
     }).then(image => {
       setProfileImage({uri: image.path});
-      handleChange('profile_picture', {
+      handleChange('profile_image', {
         uri: image.path,
         name: image.filename || Date.now() + '-' + image.path.slice(-10),
         type: image.mime,
@@ -71,9 +78,16 @@ const EditProfile = ({
 
   const handleSubmit = () => {
     if (
-      postData.customer_name &&
-      postData.profile_picture?.uri &&
-      postData.phone_number
+      postData.name &&
+      postData.profile_image?.uri &&
+      postData.email &&
+      postData.password &&
+      postData.first_name &&
+      postData.last_name &&
+      postData.date_of_birth &&
+      postData.gender &&
+      postData.city &&
+      postData.address
     ) {
       // SignUpApi(postData, navigation)
       UpdateUserApi(postData, navigation, data => setLoadingIndicator(data));
@@ -85,25 +99,30 @@ const EditProfile = ({
     }
   };
 
-  // useEffect(() => {
-  //     GetUserDataApi()
-  // }, [])
+  useEffect(() => {
+    GetUserDataApi();
+  }, []);
 
-  // useEffect(() => {
-  //     if (userData) {
-  //         if (userData.profile_picture) {
-  //             setProfileImage({ uri: userData.profile_picture })
-  //         }
-  //         setPostData({
-  //             "customer_name": userData.customer_details?.customer_name,
-  //             "phone_number": userData.customer_details?.phone_number,
-  //             "profile_picture": { uri: userData.profile_picture, name: "profile_picture.jpg", type: "image/jpg" },
-  //         })
-  //     }
-  // }, [userData])
+  useEffect(() => {
+    if (userData) {
+      if (userData.profile_image) {
+        setProfileImage({uri: userData.profile_image});
+      }
+      setPostData({
+        // last_name: userData.last_name,
+        // first_name: userData.first_name,
+        phone_number: userData.phone_number,
+        profile_image: {
+          uri: userData.profile_image,
+          name: 'profile_image.jpg',
+          type: 'image/jpg',
+        },
+      });
+    }
+  }, [userData]);
 
-  // console.log("uodate customer profile : ", postData)
-  // console.log("laldsfjao g; ", loadingIndicator)
+  console.log('uodate customer profile : ', postData);
+  console.log('laldsfjao g; ', loadingIndicator);
 
   return (
     <>
@@ -161,14 +180,14 @@ const EditProfile = ({
                 placeholder={'Enter your Name'}
                 leftIcon={'user'}
                 label={'First Name'}
-                value={postData.customer_name}
+                value={postData.first_name}
                 onChangeText={text => handleChange('customer_name', text)}
               />
               <InputWithIcon
                 placeholder={'Enter your Last Name'}
                 leftIcon={'user'}
                 label={'Last Name'}
-                value={postData.customer_name}
+                value={postData.last_name}
                 onChangeText={text => handleChange('customer_name', text)}
               />
 
@@ -176,7 +195,8 @@ const EditProfile = ({
                 placeholder={'Email Address'}
                 leftIcon={'email'}
                 label={'Email Address'}
-                value={userData?.customer_details?.email}
+                // value={userData?.customer_details?.email}
+                value={postData.email}
                 editable={false}
               />
               <View
@@ -243,7 +263,7 @@ const EditProfile = ({
                     rightIcon={dob ? 'down-outline' : 'up-outline'}
                     onPress={() => setDob(!dob)}
                     secureTextEntry={false}
-                    value={postData.password}
+                    value={postData.date_of_birth}
                     onChangeText={text => handleChange('password', text)}
                     inputStyle={{
                       width: SIZES.width * 0.4,
@@ -275,7 +295,7 @@ const EditProfile = ({
                     rightIcon={gender ? 'down-outline' : 'up-outline'}
                     onPress={() => setGender(!gender)}
                     secureTextEntry={false}
-                    value={postData.password}
+                    value={postData.gender}
                     onChangeText={text => handleChange('password', text)}
                     inputStyle={{
                       width: SIZES.width * 0.4,
@@ -307,7 +327,7 @@ const EditProfile = ({
                 rightIcon={city ? 'down-outline' : 'up-outline'}
                 onPress={() => setCity(!city)}
                 secureTextEntry={false}
-                value={postData.password}
+                value={postData.city}
                 onChangeText={text => handleChange('password', text)}
               />
               <InputWithIcon
@@ -338,15 +358,14 @@ const EditProfile = ({
   );
 };
 
-// const mapStateToProps = (state) => ({
-//     userData: state.auth.userData,
-//     loading: state.auth.loading,
-// })
+const mapStateToProps = state => ({
+  userData: state.auth.userData,
+  loading: state.auth.loading,
+});
 
-// const mapDispatchToProps = {
-//     UpdateUserApi,
-//     GetUserDataApi,
-// }
+const mapDispatchToProps = {
+  UpdateUserApi,
+  GetUserDataApi,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)
-export default EditProfile;
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);

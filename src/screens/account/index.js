@@ -46,12 +46,10 @@ const Account = ({
   GetUserDataApi,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [usr, setUsr] = useState();
   // console.log('GetUserDataApi--------', GetUserDataApi);
-  // console.log('userData--------', userData);
-  console.log('userDataALLLLL21212112--------', usr);
-  const user = useSelector(state => state.auth);
-  console.log('userDatassssssss--------', user);
+  console.log('userDataAccount/Profile--------', userData);
+  // const user = useSelector(state => state.auth);
+  // console.log('userDatassssssss--------', user);
   //   axios(config)
   //     .then(response => {
   //       console.log(JSON.stringify(response.data));
@@ -70,38 +68,10 @@ const Account = ({
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
+
   useEffect(() => {
-    // GetUserDataApi();
-    userdataall();
-  }, [usr]);
-
-  const userdataall = () => {
-    let data = JSON.stringify({
-      user_id: 15,
-    });
-
-    let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: 'http://ezyclean.theprojecttest.xyz/api/get-user-data',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization:
-          'Bearer 125|Rf3HYyNzcHEDJEjCD2Nxi5puVaYP6ckFIp1diCylf2dd4731',
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then(response => {
-        console.log("getgetgetget",JSON.stringify(response.data));
-        setUsr(response.data);
-      })
-      .catch(error => {
-        console.log("ngetngetngetngetnget",error);
-      });
-  };
+    GetUserDataApi();
+  }, []);
 
   // const ModalView = () => {
   //   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -207,7 +177,7 @@ const Account = ({
               <Text
                 style={
                   styles.user_name
-                }>{`${userData?.customer_details?.customer_name}`}</Text>
+                }>{`${userData?.name}`}</Text>
               <Text style={styles.text}>Welcome Back</Text>
             </View>
           </ImageBackground>

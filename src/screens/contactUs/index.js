@@ -69,19 +69,19 @@ const ContactUs = () => {
           <InputWithIcon
             label={'Full Name'}
             leftIcon={'user'}
-            placeholder={'Anmol Brass'}
+            placeholder={'Enter Name'}
             // value={""}
           />
           <InputWithIcon
             label={'Email Address'}
             leftIcon={'email'}
-            placeholder={'anmolbrass.ex@gmail.com'}
+            placeholder={'Email'}
             // value={""}
           />
           <InputWithIcon
             label={'Phone Number'}
             leftIcon={'call'}
-            placeholder={'Anmol Brass'}
+            placeholder={'Phone Number'}
             // value={""}
             keyboardType={'phone-pad'}
             maxLength={10}
