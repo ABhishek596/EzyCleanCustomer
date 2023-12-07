@@ -83,6 +83,7 @@ export default StyleSheet.create({
         fontSize: SIZES.width * .044,
         // marginBottom: -5,
         color: COLORS.white,
+        marginTop:SIZES.height * -.01,
     },
 
     text: {

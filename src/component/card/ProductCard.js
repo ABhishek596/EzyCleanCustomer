@@ -13,6 +13,7 @@ const ProductCard = ({
   marginBottom,
   price,
   quantity,
+  service_name
 }) => {
   return (
     <View
@@ -25,10 +26,11 @@ const ProductCard = ({
         <Image source={source} style={styles.image} resizeMode="contain" />
       </View>
       <View style={styles.content_box}>
-        <View>
-          <Text style={styles.product_name}>{productName}</Text>
+        <View style={{marginTop: SIZES.height * -0.014}}>
+          <Text style={styles.product_name}>{productName.slice(0,8)}...</Text>
           <View style={{height:5}}/>
           <Text style={styles.price}>{price}</Text>
+          <Text style={styles.service}>{service_name}</Text>
         </View>
         <View style={styles.quan_row}>
           <TouchableOpacity
@@ -100,6 +102,7 @@ const styles = StyleSheet.create({
   image: {
     width: SIZES.width * 0.12,
     height: SIZES.width * 0.12,
+    backgroundColor:'#E9C7FF'
   },
 
   content_box: {
@@ -113,7 +116,7 @@ const styles = StyleSheet.create({
   },
 
   product_name: {
-    fontFamily: FONTS.semiBold,
+    fontFamily: FONTS.bold,
     fontSize: SIZES.width * 0.045,
     color: COLORS.secondary,
     // color: COLORS.white,
@@ -123,6 +126,13 @@ const styles = StyleSheet.create({
   price: {
     fontFamily: FONTS.semiBold,
     fontSize: SIZES.width * 0.038,
+    color: COLORS.secondary,
+    // color: COLORS.white,
+    marginBottom: -4,
+  },
+  service: {
+    fontFamily: FONTS.regular,
+    fontSize: SIZES.width * 0.030,
     color: COLORS.secondary,
     // color: COLORS.white,
     marginBottom: -4,

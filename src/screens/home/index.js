@@ -25,7 +25,7 @@ import ServiceCard from '../../component/card/ServiceCard';
 // import CustomButton from '../../component/custombutton';
 import LinearGradient from 'react-native-linear-gradient';
 import {GetDiscountList} from '../../redux/actions/homeAction';
-
+import {GetUserDataApi} from '../../redux/actions/authActions';
 const OfferItem = ({item}) => {
   return (
     <LinearGradient
@@ -38,7 +38,10 @@ const OfferItem = ({item}) => {
           <Text style={styles.offer}>{item.promo_name}</Text>
           {/* <Text style={styles.off_text}>off</Text> */}
         </View>
-        <Text style={styles.offer_text}>{item.description}</Text>
+        <Text style={styles.offer_text}>{`${item.description.slice(
+          0,
+          34,
+        )}...`}</Text>
 
         <View style={styles.offer_btn}>
           <Text style={styles.offer_btn_text}>{item.promo_code}</Text>
@@ -64,8 +67,9 @@ const Home = ({
   route,
   discountList,
   GetDiscountList,
+  GetUserDataApi,
 }) => {
-  console.log('discountList at Home', discountList);
+  // console.log('discountList at Home', discountList);
   // const  data  = route?.params?.data;
   // console.log("userdatattthome", data);
   // messaging().setBackgroundMessageHandler(async remoteMessage => {
@@ -95,6 +99,10 @@ const Home = ({
   // console.log("skldjf : ",  userData?.profile_picture?.slice(-10, -4))
   useEffect(() => {
     GetDiscountList();
+  }, []);
+
+  useEffect(() => {
+    GetUserDataApi();
   }, []);
 
   return (
@@ -296,6 +304,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   // GetActiveSubscription,
   GetDiscountList,
+  GetUserDataApi,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

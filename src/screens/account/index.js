@@ -47,7 +47,7 @@ const Account = ({
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   // console.log('GetUserDataApi--------', GetUserDataApi);
-  console.log('userDataAccount/Profile--------', userData);
+  // console.log('userDataAccount/Profile--------', userData);
   // const user = useSelector(state => state.auth);
   // console.log('userDatassssssss--------', user);
   //   axios(config)
@@ -174,10 +174,7 @@ const Account = ({
                   resizeMode="cover"
                 />
               </View>
-              <Text
-                style={
-                  styles.user_name
-                }>{`${userData?.name}`}</Text>
+              <Text style={styles.user_name}>{`${userData?.name}`}</Text>
               <Text style={styles.text}>Welcome Back</Text>
             </View>
           </ImageBackground>

@@ -162,7 +162,7 @@ export default StyleSheet.create({
   // ============= bottom containger =================
   bottom_container: {
     width: SIZES.width,
-    backgroundColor: COLORS.white,
+    backgroundColor:'transparent',
     borderTopLeftRadius: SIZES.width * 0.09,
     borderTopRightRadius: SIZES.width * 0.09,
     alignItems: 'center',
@@ -182,7 +182,7 @@ export default StyleSheet.create({
 
   bottom_btn_box: {
     width: SIZES.width,
-    backgroundColor: COLORS.white,
+    backgroundColor:'transparent',
     flexDirection: 'row',
     // borderTopLeftRadius: SIZES.width * .09,
     // borderTopRightRadius: SIZES.width * .09,

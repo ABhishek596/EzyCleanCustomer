@@ -26,7 +26,7 @@ import CategoryButton from '../../component/button/CategoryButton';
 import Button1 from '../../component/button/Button1';
 import {useFocusEffect} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import axios from 'axios';
 const Product = ({
   navigation,
   route,
@@ -39,15 +39,40 @@ const Product = ({
   GetActiveSubscription,
   // subsDetails,
 }) => {
-  const [itemList, setItemList] = useState(itemList1);
+  const [itemList, setItemList] = useState(alldata);
   const [refreshing, setRefreshing] = useState(false);
+  const [alldata, setAlldata] = useState();
   // console.log('subsDetails=========>>>>>',subsDetails);
+  // console.log('completedata product from API', productData);
+
   const onRefresh = () => {
     setRefreshing(true);
     // refreshData().then(() => {
     //   setRefreshing(false);
     // });
   };
+
+  useEffect(() => {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://ezyclean.theprojecttest.xyz/api/products',
+      headers: {},
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        console.log(
+          'completedata product',
+          JSON.stringify(response.data.result.slice(0, 45)),
+        );
+        setAlldata(response.data.result.slice(0, 10));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   // const serviceId  = route.params.service_id;
 
@@ -67,13 +92,38 @@ const Product = ({
   // const [currentCatName, setcurrentCatName] = useState('');
   // const [currentServName, setCurrentServName] = useState('');
 
-  const [catId, setCatId] = useState(
-    route?.params?.catId?.id ? route?.params?.catId?.id : 1,
-  );
+  // const [catId, setCatId] = useState(
+  //   route?.params?.catId?.id ? route?.params?.catId?.id : 1,
+  // );
 
-  const [serviceId, setServiceId] = useState(
-    route?.params?.serviceId?.id ? route?.params?.serviceId?.id : 1,
-  );
+  // const [serviceId, setServiceId] = useState(
+  //   route?.params?.serviceId?.id ? route?.params?.serviceId?.id : 1,
+  // );
+
+  const [catId, setCatId] = useState();
+
+  const [serviceId, setServiceId] = useState();
+
+  const filteredProducts = alldata?alldata.filter(product => {
+    const matchGender = !catId || product.category_id === catId;
+    const matchService =
+      !serviceId || product.service_id === serviceId;
+    return matchGender && matchService;
+  }): [];
+  console.log('Selected filteredProducts :', filteredProducts);
+
+  const handleGenderPress = gender => {
+    setCatId(gender);
+  };
+
+  const handleServicePress = service => {
+    setServiceId(service);
+  };
+
+  const handleItemPress = (item) => {
+    console.log('Selected flatlist data:', item);
+    // Do other things with the selected item if needed
+  };
 
   // useEffect(() => {
   //   categoryList.map(cat => {
@@ -202,7 +252,9 @@ const Product = ({
                 title={item.category_name}
                 isActive={catId == item.id ? true : false}
                 onPress={() => {
-                  setCatId(item.id);
+                  console.log('idididididididi------------------', item.id);
+                  // setCatId(item.id);
+                  handleGenderPress(item.id)
                 }}
                 style={{width: SIZES.width * 0.28}}
               />
@@ -240,7 +292,9 @@ const Product = ({
                   title={item.service?.service_name}
                   isActive={serviceId == item.service?.id ? true : false}
                   onPress={() => {
-                    setServiceId(item.service?.id);
+                    console.log('idid.service?di', item.id);
+                    // setServiceId(item.id);
+                    handleServicePress(item.id)
                   }}
                   titlestyl={{
                     // fontFamily: FONTS.semiBold,
@@ -271,16 +325,16 @@ const Product = ({
             <Loading />
           ) : (
             <View style={{flex: 1}}>
-              {itemList && (
+              {filteredProducts && (
                 <FlatList
-                  data={itemList}
+                  data={filteredProducts}
                   renderItem={
                     ({item, index}) => (
                       // if (item.service_id == serviceId && item.category_id == catId) {
                       //   return
                       <ProductCard
                         marginBottom={
-                          itemList[0] && index == itemList.length - 1
+                          filteredProducts[0] && index == filteredProducts.length - 1
                             ? SIZES.height * 0.28
                             : SIZES.height * 0.025
                         }
@@ -289,6 +343,8 @@ const Product = ({
                         productName={item?.product_name}
                         quantity={item?.qty}
                         price={`₹ ${item.amount ? item.amount : 0}`}
+                        service_name={item?.service_name}
+                        source={{uri: item.image}}
                         onPlusPress={() => {
                           updateQuantity(
                             item.id,
@@ -341,7 +397,9 @@ const Product = ({
         </View>
 
         {/* <Text style={{alignSelf:'center', fontSize:20}}>In Progress</Text> */}
-        {itemList?.[0] && (
+      </ScrollView>
+      <View style={{position: 'absolute', bottom: 0}}>
+        {filteredProducts && (
           <View style={styles.bottom_container}>
             <View style={styles.bottom_btn_box}>
               <Button1
@@ -398,34 +456,34 @@ const Product = ({
             </LinearGradient>
           </View>
         )}
-      </ScrollView>
+      </View>
     </View>
   );
 };
 
-// const mapStateToProps = state => ({
-//   loading: state.product.loading,
-//   productData: state.product.productData,
-//   categoryList: state.home.categoryList,
-//   serviceList: state.home.serviceList,
-//   colorList: state.product.colorList,
-//   damageList: state.product.damageList,
-//   packingList: state.product.packingList,
-//   addonList: state.product.addonList,
-//   stainsList: state.product.stainsList,
-//   subsDetails: state.subscription.subsDetails,
-// });
+const mapStateToProps = state => ({
+  loading: state.product.loading,
+  productData: state.product.productData,
+  categoryList: state.home.categoryList,
+  serviceList: state.home.serviceList,
+  colorList: state.product.colorList,
+  damageList: state.product.damageList,
+  packingList: state.product.packingList,
+  addonList: state.product.addonList,
+  stainsList: state.product.stainsList,
+  subsDetails: state.subscription.subsDetails,
+});
 
-// const mapDispatchToProps = {
-//   GetAllProduct,
-//   GetProductByServiceId,
-//   GetProductByCatId,
-//   GetProductFeatures,
-//   GetActiveSubscription,
-// };
+const mapDispatchToProps = {
+  GetAllProduct,
+  GetProductByServiceId,
+  GetProductByCatId,
+  GetProductFeatures,
+  GetActiveSubscription,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Product);
-export default Product;
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
+// export default Product;
 
 const category = [
   {
@@ -480,19 +538,21 @@ const itemList1 = [
     id: 1,
     service_id: 101,
     category_id: 201,
-    product_name: 'Product 1',
+    product_name: 'Blazer',
     qty: 3,
     amount: 150,
     image: 'product1.jpg',
+    service_name: 'Premium Wash',
   },
   {
     id: 2,
     service_id: 101,
     category_id: 201,
-    product_name: 'Product 2',
+    product_name: 'Pants',
     qty: 2,
     amount: 120,
     image: 'product2.jpg',
+    service_name: 'Premium Wash',
   },
   {
     id: 3,
@@ -502,6 +562,7 @@ const itemList1 = [
     qty: 1,
     amount: 50,
     image: 'product3.jpg',
+    service_name: 'Premium Wash',
   },
 ];
 

@@ -16,14 +16,14 @@ import styles from './styles';
 import AddonCard from '../../component/card/AddonCard';
 import {COLORS, SIZES} from '../../constants';
 import Button1 from '../../component/button/Button1';
-// import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 // import { BottomSheet } from 'react-native-btr';
 // import Icons from '../../component/Icons';
 import CheckBox from '@react-native-community/checkbox';
 import ColorPicker from 'react-native-wheel-color-picker';
 import Slider from '@react-native-community/slider';
 import LinearGradient from 'react-native-linear-gradient';
-
+import axios from 'axios';
 const FeatureRow = ({
   title,
   onValueChange,
@@ -62,21 +62,22 @@ const AddOnScreen = ({
   colorList,
   // damageList,
   // packingList,
-  // addonList,
+  addonList,
   // stainsList,
   subsDetails,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
+    !isModalVisible;
     // navigation.navigate('PickupSchedule');
   };
+  console.log('addonList====', addonList);
   // const {items, discountObj, csIds} = route.params;
   // const [filterBottom, setFilterBottom] = useState(false);
   const [type, setType] = useState(1);
   // const [addonsList, setAddonsList] = useState([]);
-
+  // const [addonList, setAddonList] = useState([]);
   //wheel color
   const [currentColor, setCurrentColor] = useState('#ffffff');
   const [swatchesOnly, setSwatchesOnly] = useState(false);
@@ -127,6 +128,28 @@ const AddOnScreen = ({
   // useEffect(() => {
   //   transformArray();
   // }, [items]);
+
+  useEffect(() => {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://ezyclean.theprojecttest.xyz/api/addons',
+      headers: {
+        Authorization:
+          'Bearer 148|ioaeHFkU68imPMGx1SGi8VQs0vD4BDHCOdcT0oNv44264102',
+      },
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        console.log('Adddddddddddd', JSON.stringify(response.data));
+        // setAddonList(response.data.addons)
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   const featureType = [
     {id: 1, type: 'Color'},
@@ -446,7 +469,12 @@ const AddOnScreen = ({
               Check Discount
             </Button1>
           </View> */}
-          <View style={{flexDirection: 'row',alignSelf:'center',marginVertical:15}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignSelf: 'center',
+              marginVertical: 15,
+            }}>
             <TouchableOpacity
               style={[
                 styles.btn,
@@ -459,7 +487,9 @@ const AddOnScreen = ({
                 },
               ]}
               onPress={() => navigation.navigate('Coupon')}>
-              <Text style={[styles.btn_text,{color: COLORS.secondary}]}>Add Coupon</Text>
+              <Text style={[styles.btn_text, {color: COLORS.secondary}]}>
+                Add Coupon
+              </Text>
             </TouchableOpacity>
             <View style={{width: SIZES.width * 0.066}} />
             <TouchableOpacity
@@ -844,23 +874,23 @@ const AddOnScreen = ({
   );
 };
 
-// const mapStateToProps = state => ({
-//   loading: state.product.loading,
-//   userData: state.auth.userData,
-//   productData: state.product.productData,
-//   categoryList: state.home.categoryList,
-//   serviceList: state.home.serviceList,
-//   colorList: state.product.colorList,
-//   damageList: state.product.damageList,
-//   packingList: state.product.packingList,
-//   addonList: state.product.addonList,
-//   stainsList: state.product.stainsList,
-//   deliveryTypeList: state.product.deliveryTypeList,
-//   subsDetails: state.subscription.subsDetails,
-// });
+const mapStateToProps = state => ({
+  loading: state.product.loading,
+  // userData: state.auth.userData,
+  // productData: state.product.productData,
+  // categoryList: state.home.categoryList,
+  // serviceList: state.home.serviceList,
+  // colorList: state.product.colorList,
+  // damageList: state.product.damageList,
+  // packingList: state.product.packingList,
+  // addonList: state.product.addonList,
+  // stainsList: state.product.stainsList,
+  // deliveryTypeList: state.product.deliveryTypeList,
+  // subsDetails: state.subscription.subsDetails,
+});
 
-// export default connect(mapStateToProps)(AddOnScreen);
-export default AddOnScreen;
+export default connect(mapStateToProps)(AddOnScreen);
+// export default AddOnScreen;
 
 const damageList = [
   {id: 1, damage: 'Collar Dark'},

@@ -110,7 +110,7 @@ export default StyleSheet.create({
     fontFamily: FONTS.regular,
     fontSize: SIZES.width * 0.032,
     // marginBottom: -3,
-    marginTop: SIZES.height * -0.012,
+    marginTop: SIZES.height * 0.001,
     color: COLORS.white,
   },
 
@@ -127,7 +127,7 @@ export default StyleSheet.create({
   offer_btn_text: {
     fontFamily: FONTS.regular,
     fontSize: SIZES.width * 0.031,
-    marginBottom: -3,
+    // marginBottom: -3,
     color: COLORS.secondary,
   },
 

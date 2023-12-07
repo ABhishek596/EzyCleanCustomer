@@ -15,9 +15,9 @@ export const AuthFunction = () => dispatch => {
 };
 
 export const InitialCall = () => async dispatch => {
-  // dispatch(GetUserDataApi());
-  // dispatch(GetAllCategory());
-  // dispatch(GetAllService());
+  dispatch(GetUserDataApi());
+  dispatch(GetAllCategory());
+  dispatch(GetAllService());
   // dispatch(GetAllNotification())
 };
 
@@ -90,7 +90,7 @@ export const LoginApi = (postData, navigation, cb) => async dispatch => {
         //   '@USER_ID',
         //   JSON.stringify(response.data.customer_data?.id),
         // );
-        // dispatch(InitialCall());
+        dispatch(InitialCall());
         navigation &&
         navigation.navigate('StackNavigator', {data: response.data.data});
         RNToasty.Success({
@@ -279,7 +279,7 @@ export const VerifyOtpApi =
             '@USER_ID',
             JSON.stringify(response.data.user_id),
           );
-          // dispatch(InitialCall());
+          dispatch(InitialCall());
           navigation.navigate('StackNavigator');
           RNToasty.Success({
             title: response.data.message,

@@ -33,15 +33,17 @@ export const GetAllProduct = (serviceId, catId) => async dispatch => {
     payload: true,
   });
   http
-    .get(`product_data`)
+    .get('products')
     .then(async response => {
+      console.log("user data products redux api : ", response.data.result)
       if (response.data.status == 1) {
-        const arrObj = await transformArrayOfArraysToObjectArray(
-          response.data.result,
-        );
+        // const arrObj = await transformArrayOfArraysToObjectArray(
+        //   response.data.result,
+        //);
         dispatch({
           type: PRODUCT_DATA,
-          payload: arrObj,
+          payload:response.data.result
+          // payload: arrObj,
         });
         // RNToasty.Success({
         //     title: response.data.message,
@@ -366,12 +368,13 @@ export const GetAddonList = () => async dispatch => {
     payload: true,
   });
   http
-    .get(`addon_data`)
+    .get('addons')
     .then(async response => {
-      if (response.data.response) {
+      console.log('response.data addons addons', response.data.addons);
+      if (response.data.message === "Success") {
         dispatch({
           type: ADDON_LIST,
-          payload: response.data.data,
+          payload: response.data.addons,
         });
         // RNToasty.Success({
         //     title: response.data.message,
