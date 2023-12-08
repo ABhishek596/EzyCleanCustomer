@@ -18,7 +18,7 @@ import {
 } from '../../redux/actions/orderAction';
 import {connect} from 'react-redux';
 import Loading from '../../component/loading';
-
+import axios from 'axios';
 const Payment = ({
   navigation,
   loading,
@@ -32,6 +32,36 @@ const Payment = ({
     // ...route.params?.data,
     // payment_mode: 0,
   };
+
+  const [paymentMethods, setPaymentMethods] = useState();
+
+  useEffect(() => {
+    let data = '';
+
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://ezyclean.theprojecttest.xyz/api/list_paymentmode',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'Bearer 160|LMkKJ9t0E4aTjRqXYRa5d10wByUbQ2wRkxJldtKj1f90965d',
+        Cookie:
+          'XSRF-TOKEN=eyJpdiI6IjlOanlEM1lISU5vdk9SYTkxZ01CUlE9PSIsInZhbHVlIjoicFV2NGFQakJpd3ZuNTVlaE84bW55Y29jdXpRaGI0TG1vUFU1VFhZZ2U3bzM4QWM3aFN3djdZS1lQTFVTSnJZQU1wWVZJOWpvdnFrT0U2UkdkcnNxRUpSTmg5QmxvVDNJbnhaMnVPTWtXTlUzYzUxcldReUtHZERqQ3RwaDVWNnQiLCJtYWMiOiIyMzA3NzY2ODk1ZTNkOGZiMWYwMGNhNTk5NzFkYWRlNTVjNDQzNjZiYWY3ZDhhNjNkNzE0NWFhZWQ5NTg3NmFhIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6InFUaWVJUnRZbUdNRlUxeWkzRFJYK0E9PSIsInZhbHVlIjoiZ0R6WExrOExoYVhKblJTNzZrd2h3SUQvNHRXUmhSZDZsNTJTR3JwOGZlMVdIVDY5c05wQ2Jua0N5RFFiS3Bja1pWQ21vZlh4ZFBBNXB5TDJYRkZEMDlGOVFxb00wR01mS3VSN1p4S1FsaE10Z0lLTWphWHlTakRnb0RhaXZ6cGEiLCJtYWMiOiJkNjkyZGEwODRkYmQyOWVkYTEyNWE4MzkwNjA3MzkwMjQ2NzRjM2U0NDY4ZjI1ZTNlYWM5MmNjMjM3MDlmMjA5IiwidGFnIjoiIn0%3D',
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+        setPaymentMethods(response.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   // useEffect(() => {
   //   GetPaymentMethods();
@@ -52,9 +82,9 @@ const Payment = ({
       //   navigation,
       // );
       // navigation.navigate("Order")
-      navigation.navigate("PaymentOnline");
-    } else if(id == 2){
-      navigation.navigate("PaymentFailed");
+      navigation.navigate('PaymentOnline');
+    } else if (id == 2) {
+      navigation.navigate('PaymentFailed');
     } else {
       CreateOrder(
         {
@@ -123,7 +153,7 @@ const Payment = ({
                   <View style={styles.row}>
                     <View style={styles.iconBox}>
                       <Image
-                        source={item.Icon}
+                        source={{uri:item.Icon}}
                         style={{...styles.iconStyle}}
                         resizeMode="contain"
                       />
@@ -186,25 +216,23 @@ const Payment = ({
 // export default connect(mapStateToProps, mapDispatchToProps)(Payment);
 export default Payment;
 
+const cash = require('../../assets/images/imagecash.png');
+const card = require('../../assets/images/imagecard.png');
 
-
-const cash = require('../../assets/images/imagecash.png')
-const card = require('../../assets/images/imagecard.png')
-
-const paymentMethods = [
-  {
-    Payment_Method: {
-      id: 1,
-      payment_mode: "Cash On Delivery"
-    },
-    Icon: cash
-  },
-  {
-    Payment_Method: {
-      id: 2,
-      payment_mode: "online"
-    },
-    Icon: card
-  },
-  // Add more payment methods as needed
-];
+// const paymentMethods = [
+//   {
+//     Payment_Method: {
+//       id: 1,
+//       payment_mode: 'Cash On Delivery',
+//     },
+//     Icon: cash,
+//   },
+//   {
+//     Payment_Method: {
+//       id: 2,
+//       payment_mode: 'online',
+//     },
+//     Icon: card,
+//   },
+//   // Add more payment methods as needed
+// ];

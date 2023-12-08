@@ -407,6 +407,7 @@ export const GetTime = postData => async dispatch => {
   http
     .post(`get_time`, postData)
     .then(async response => {
+      console.log('Time------', response.data.result);
       if (response.data.result) {
         dispatch({
           type: TIME_LIST,

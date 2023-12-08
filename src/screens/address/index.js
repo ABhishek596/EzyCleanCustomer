@@ -36,6 +36,8 @@ const Address = ({
   // const [currentCoords, setCurrentCoords] = useState(null);
   // const [gettingCords, setGettingCords] = useState(false);
   // const [locationAllowed, setLocationAllowed] = useState(false);
+  console.log('address-=-==========--addressScreen', address);
+
   const [secure, setSecure] = useState(true);
   const handleSubmit = () => {
     navigation.navigate('Login');
@@ -310,15 +312,15 @@ const Address = ({
   );
 };
 
-// const mapStateToProps = state => ({
-//   loading: state.address.loading,
-//   address: state.address.address,
-// });
+const mapStateToProps = state => ({
+  loading: state.address.loading,
+  address: state.address.address,
+});
 
-// const mapDispatchToProps = {
-//   GetAllAddressApi,
-//   DeleteAddressApi,
-// };
+const mapDispatchToProps = {
+  GetAllAddressApi,
+  DeleteAddressApi,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Address);
-export default Address;
+export default connect(mapStateToProps, mapDispatchToProps)(Address);
+// export default Address;

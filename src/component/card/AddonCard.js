@@ -49,14 +49,14 @@ const AddonCard = ({
         </View>
       </View>
       <Text style={styles.dexTxt}>
-        {/* {`${dataAddonss?.dataAddon?.color1?.color_name || ''} ${
+        {`${dataAddonss?.dataAddon?.color1?.color_name || ''} ${
           dataAddonss?.dataAddon?.color2?.color_name || ''
         } ${dataAddonss?.dataAddon?.damage_id?.damage || ''} ${
           dataAddonss?.dataAddon?.packing_id?.packing_style || ''
         } ${dataAddonss?.dataAddon?.stain_id?.stains || ''} ${
           dataAddonss?.dataAddon?.addon_id?.addon_name || ''
-        } Iron (${dataAddonss?.dataAddon?.iron?.iron || ''})`} */}
-        White/Bubble/Normal packing
+        } Iron (${dataAddonss?.dataAddon?.iron?.iron || ''})`}
+        {/* White/Bubble/Normal packing */}
       </Text>
     </Pressable>
   );

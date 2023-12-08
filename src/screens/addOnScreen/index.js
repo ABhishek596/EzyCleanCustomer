@@ -62,7 +62,7 @@ const AddOnScreen = ({
   colorList,
   // damageList,
   // packingList,
-  addonList,
+  // addonList,
   // stainsList,
   subsDetails,
 }) => {
@@ -73,10 +73,13 @@ const AddOnScreen = ({
     // navigation.navigate('PickupSchedule');
   };
   console.log('addonList====', addonList);
-  // const {items, discountObj, csIds} = route.params;
+  const {items, discountObj, csIds} = route.params;
   // const [filterBottom, setFilterBottom] = useState(false);
+
+  console.log('Get all item from product screen', items);
+
   const [type, setType] = useState(1);
-  // const [addonsList, setAddonsList] = useState([]);
+  const [addonsList, setAddonsList] = useState([]);
   // const [addonList, setAddonList] = useState([]);
   //wheel color
   const [currentColor, setCurrentColor] = useState('#ffffff');
@@ -105,29 +108,29 @@ const AddOnScreen = ({
   //   setColor(selectedColor);
   // };
 
-  // const transformArray = () => {
-  //   const outputArray = [];
-  //   let uniqueId = 1;
-  //   items?.forEach(item => {
-  //     if (item.qty > 1) {
-  //       for (let i = 1; i <= item.qty; i++) {
-  //         const newItem = {...item};
-  //         newItem.product_name += ` ${i}`;
-  //         newItem.uid = uniqueId++;
-  //         outputArray.push({...newItem, dataAddon: {...postData}});
-  //       }
-  //     } else if (item.qty == 1) {
-  //       item.uid = uniqueId++;
-  //       outputArray.push({...item, dataAddon: {...postData}});
-  //     }
-  //   });
+  const transformArray = () => {
+    const outputArray = [];
+    let uniqueId = 1;
+    items?.forEach(item => {
+      if (item.qty > 1) {
+        for (let i = 1; i <= item.qty; i++) {
+          const newItem = {...item};
+          newItem.product_name += ` ${i}`;
+          newItem.uid = uniqueId++;
+          outputArray.push({...newItem, dataAddon: {...postData}});
+        }
+      } else if (item.qty == 1) {
+        item.uid = uniqueId++;
+        outputArray.push({...item, dataAddon: {...postData}});
+      }
+    });
 
-  //   setAddonsList(outputArray);
-  // };
+    setAddonsList(outputArray);
+  };
 
-  // useEffect(() => {
-  //   transformArray();
-  // }, [items]);
+  useEffect(() => {
+    transformArray();
+  }, [items]);
 
   useEffect(() => {
     let config = {
@@ -173,30 +176,30 @@ const AddOnScreen = ({
   //   },
   // ];
 
-  // const [itemsData, setItemsData] = useState({
-  //   customer_id: 0,
-  //   total: 0,
-  //   payment_response: 'pending',
-  //   payment_mode: 0,
-  //   s_discount: 0,
-  //   delivery_cost: 30,
-  //   sub_total: 0,
-  // });
+  const [itemsData, setItemsData] = useState({
+    customer_id: 0,
+    total: 0,
+    payment_response: 'pending',
+    payment_mode: 0,
+    s_discount: 0,
+    delivery_cost: 30,
+    sub_total: 0,
+  });
 
-  // const [postData, setPostData] = useState({
-  //   product_id: 0,
-  //   service_id: 0,
-  //   iron: ironList[1],
-  //   color1: 0,
-  //   color2: 0,
-  //   damage_id: 0,
-  //   packing_id: 0,
-  //   stain_id: 0,
-  //   addon_id: 0,
-  //   price: 0,
-  //   qty: 0,
-  //   delivery: deliveryTypeList?.[0] || 0,
-  // });
+  const [postData, setPostData] = useState({
+    product_id: 0,
+    service_id: 0,
+    iron: ironList[1],
+    color1: 0,
+    color2: 0,
+    damage_id: 0,
+    packing_id: 0,
+    stain_id: 0,
+    addon_id: 0,
+    price: 0,
+    qty: 0,
+    delivery: deliveryTypeList?.[0] || 0,
+  });
 
   // const [productId, setProductId] = useState();
   // const [product, setProduct] = useState();
@@ -206,12 +209,12 @@ const AddOnScreen = ({
   // const [totalItem, setTotalItem] = useState(0);
   // const [deliveryCharge, setDeliveryCharge] = useState(0);
 
-  // const handleChange = (name, value) => {
-  //   setPostData({
-  //     ...postData,
-  //     [name]: value,
-  //   });
-  // };
+  const handleChange = (name, value) => {
+    setPostData({
+      ...postData,
+      [name]: value,
+    });
+  };
 
   // const reset = () => {
   //   setPostData({
@@ -407,10 +410,10 @@ const AddOnScreen = ({
             <AddonCard
               marginTop={index == 0 ? SIZES.height * 0.025 : 0}
               dataAddonss={item}
-              // source={{uri: item.image}}
+              source={{uri: item.image}}
               productName={item?.product_name}
               setQuantity={quan =>
-                addItem(item.product?.id, quan, item.price ? item.price : 0)
+                addItem(item?.id, quan, item.amount ? item.amount : 0)
               }
               price={`₹${item.amount ? item.amount : 0}`}
               // onAddonPress={() => {
@@ -521,21 +524,22 @@ const AddOnScreen = ({
               borderColor: COLORS.primary,
               marginBottom: SIZES.width * 0.01,
             }}
-            // onPress={() => {
-            //   // navigation.navigate('PickupSchedule', {
-            //   //   ...itemsData,
-            //   // });
-            //   // handleConfimOrder();
-            //   // confirmColor1();
-
-            // }}
             onPress={() => {
-              if (visible === false) {
-                setIsModalVisible(!isModalVisible);
-              } else if (visible === true) {
-                navigation.navigate('PickupSchedule');
-              }
-            }}>
+              navigation.navigate('PickupSchedule', {
+                ...itemsData,
+              });
+              // handleConfimOrder();
+              // confirmColor1();
+
+            }}
+            // onPress={() => {
+            //   if (visible === false) {
+            //     setIsModalVisible(!isModalVisible);
+            //   } else if (visible === true) {
+            //     navigation.navigate('PickupSchedule');
+            //   }
+            // }}
+            >
             Continue Order
           </Button1>
         </View>
@@ -892,6 +896,10 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(AddOnScreen);
 // export default AddOnScreen;
 
+
+//Json data
+
+
 const damageList = [
   {id: 1, damage: 'Collar Dark'},
   {id: 2, damage: 'Bubble'},
@@ -924,22 +932,22 @@ const packingList = [
   {id: 6, packing_style: 'Paper Bag Pac.. (₹ 50)'},
 ];
 
-const addonsList = [
-  {
-    uid: '1',
-    image: 'https://example.com/image1.jpg',
-    product_name: 'Product 1',
-    amount: 10.99,
-    service_name: 'Service 1',
-    category_name: 'Category 1',
-  },
-  {
-    uid: '2',
-    image: 'https://example.com/image2.jpg',
-    product_name: 'Product 2',
-    amount: 15.99,
-    service_name: 'Service 2',
-    category_name: 'Category 2',
-  },
-  // Add more items as needed
-];
+// const addonsList = [
+//   {
+//     uid: '1',
+//     image: 'https://example.com/image1.jpg',
+//     product_name: 'Product 1',
+//     amount: 10.99,
+//     service_name: 'Service 1',
+//     category_name: 'Category 1',
+//   },
+//   {
+//     uid: '2',
+//     image: 'https://example.com/image2.jpg',
+//     product_name: 'Product 2',
+//     amount: 15.99,
+//     service_name: 'Service 2',
+//     category_name: 'Category 2',
+//   },
+//   // Add more items as needed
+// ];

@@ -67,7 +67,7 @@ const Product = ({
           'completedata product',
           JSON.stringify(response.data.result.slice(0, 45)),
         );
-        setAlldata(response.data.result.slice(0, 10));
+        setAlldata(response.data.result.slice(0, 45));
       })
       .catch(error => {
         console.log(error);
@@ -121,7 +121,7 @@ const Product = ({
   };
 
   const handleItemPress = (item) => {
-    console.log('Selected flatlist data:', item);
+    // console.log('Selected flatlist data:', item);
     // Do other things with the selected item if needed
   };
 
@@ -142,7 +142,7 @@ const Product = ({
   // console.log('This is cat name', currentCatName);
 
   function updateQuantity(productId, serveId, categoryId, action) {
-    const updatedArray = itemList.map(product => {
+    const updatedArray = filteredProducts.map(product => {
       if (
         product.id === productId &&
         product.service_id === serveId &&
@@ -177,30 +177,35 @@ const Product = ({
 
   // console.log('itemList', itemList);
 
-  // const checkAvailibleOrder = () => {
-  //   let totalQty = 0;
-  //   itemList.map(item => {
-  //     if (item.qty > 0) {
-  //       totalQty = totalQty + item.qty;
-  //     }
-  //   });
-  //   if (
-  //     totalQty <=
-  //     Number(
-  //       subsDetails?.existing_subscription_details?.available_no_of_bookings,
-  //     )
-  //   ) {
-  //     navigation.navigate('AddOn', {
-  //       csIds: {...route?.params},
-  //       items: itemList,
-  //     });
-  //   } else {
-  //     Alert.alert(
-  //       'Subscription Alert!',
-  //       `Your available number of booking is ${subsDetails?.existing_subscription_details?.available_no_of_bookings} less than your order quantity ${totalQty}`,
-  //     );
-  //   }
-  // };
+  const checkAvailibleOrder = () => {
+    let totalQty = 0;
+    filteredProducts.map(item => {
+      if (item.qty > 0) {
+        totalQty = totalQty + item.qty;
+      }
+    });
+    navigation.navigate('AddOn', {
+      // csIds: {...route?.params},
+      items: filteredProducts,
+    });
+
+    // if (
+    //   totalQty <=
+    //   Number(
+    //     subsDetails?.existing_subscription_details?.available_no_of_bookings,
+    //   )
+    // ) {
+    //   navigation.navigate('AddOn', {
+    //     csIds: {...route?.params},
+    //     items: itemList,
+    //   });
+    // } else {
+    //   Alert.alert(
+    //     'Subscription Alert!',
+    //     `Your available number of booking is ${subsDetails?.existing_subscription_details?.available_no_of_bookings} less than your order quantity ${totalQty}`,
+    //   );
+    // }
+  };
 
   const continueFunc = () => {
     navigation.navigate('AddOn');
@@ -252,7 +257,7 @@ const Product = ({
                 title={item.category_name}
                 isActive={catId == item.id ? true : false}
                 onPress={() => {
-                  console.log('idididididididi------------------', item.id);
+                  // console.log('idididididididi------------------', item.id);
                   // setCatId(item.id);
                   handleGenderPress(item.id)
                 }}
@@ -292,7 +297,7 @@ const Product = ({
                   title={item.service?.service_name}
                   isActive={serviceId == item.service?.id ? true : false}
                   onPress={() => {
-                    console.log('idid.service?di', item.id);
+                    // console.log('idid.service?di', item.id);
                     // setServiceId(item.id);
                     handleServicePress(item.id)
                   }}
@@ -403,7 +408,8 @@ const Product = ({
           <View style={styles.bottom_container}>
             <View style={styles.bottom_btn_box}>
               <Button1
-                onPress={() => continueFunc()}
+                // onPress={() => continueFunc()}
+                onPress={() => checkAvailibleOrder()}
                 style={{backgroundColor: COLORS.secondary}}>
                 Continue
               </Button1>

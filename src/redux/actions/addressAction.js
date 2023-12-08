@@ -18,7 +18,7 @@ export const CreateNewAddressApi =
       payload: true,
     });
     http
-      .post(`add_address?userid=${userId}`, postData, formDataHeader)
+      .post(`add_address`, postData, formDataHeader)
       .then(response => {
         // console.log("res : ", response.data)
         if (response.data.response) {
@@ -69,7 +69,7 @@ export const GetAllAddressApi = () => async dispatch => {
   // console.log("get address ; ", userId)
 
   http
-    .get(`address_data?userid=${userId}`)
+    .get(`address_data`)
     .then(response => {
       if (response.data.response) {
         dispatch({

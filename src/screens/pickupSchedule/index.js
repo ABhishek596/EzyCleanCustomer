@@ -15,11 +15,11 @@ import Button1 from '../../component/button/Button1';
 import {useState} from 'react';
 import {COLORS, SIZES} from '../../constants';
 import {connect} from 'react-redux';
-// import {GetTime} from '../../redux/actions/productAction';
+import {GetTime} from '../../redux/actions/productAction';
 import Loading from '../../component/loading';
 import {useEffect} from 'react';
 
-const PickupSchedule = ({navigation, GetTime, route,  loading}) => {
+const PickupSchedule = ({navigation, GetTime, route,timeList,  loading}) => {
   const [postData, setPostData] = useState({
     ...route.params,
     pickup_date: null,
@@ -100,16 +100,16 @@ for (let i = 0; i <= 30; i++) {
   //   }
   // }, [activeDate]);
 
-  // useEffect(() => {
-  //   if (timeList && timeList[0]) {
-  //     setActiveTime(timeList[0]);
-  //     setPostData({
-  //       ...postData,
-  //       pickup_date: activeDate,
-  //       pickup_time: timeList[0],
-  //     });
-  //   }
-  // }, [timeList]);
+  useEffect(() => {
+    if (timeList && timeList[0]) {
+      setActiveTime(timeList[0]);
+      setPostData({
+        ...postData,
+        pickup_date: activeDate,
+        pickup_time: timeList[0],
+      });
+    }
+  }, [timeList]);
 
   const handleNext = () => {
     navigation.navigate('DeliverySchedule');
@@ -121,7 +121,7 @@ for (let i = 0; i <= 30; i++) {
     // }
   };
 
-  // console.log("timeList ; ", timeList)
+  console.log("timeList ; ", timeList)
   // console.log('pickup postData ; ', postData);
 
   // const [selectedStartDate, setSelectedStartDate] = useState(null);
@@ -285,31 +285,31 @@ for (let i = 0; i <= 30; i++) {
   );
 };
 
-// const mapStateToProps = state => ({
-//   loading: state.product.loading,
-//   timeList: state.product.timeList,
-// });
+const mapStateToProps = state => ({
+  loading: state.product.loading,
+  timeList: state.product.timeList,
+});
 
-// const mapDispatchToProps = {
-//   GetTime,
-// };
+const mapDispatchToProps = {
+  GetTime,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(PickupSchedule);
-export default PickupSchedule;
+export default connect(mapStateToProps, mapDispatchToProps)(PickupSchedule);
+// export default PickupSchedule;
 
 
-const timeList = [
-  "09:00 AM",
-  "09:30 AM",
-  "10:00 AM",
-  "10:30 AM",
-  "11:00 AM",
-  "11:30 AM",
-  "09:01 AM",
-  "09:32 AM",
-  "10:03 AM",
-  "10:34 AM",
-  "11:05 AM",
-  "11:3 AM",
-  // Add more time slots as needed
-];
+// const timeList = [
+//   "09:00 AM",
+//   "09:30 AM",
+//   "10:00 AM",
+//   "10:30 AM",
+//   "11:00 AM",
+//   "11:30 AM",
+//   "09:01 AM",
+//   "09:32 AM",
+//   "10:03 AM",
+//   "10:34 AM",
+//   "11:05 AM",
+//   "11:3 AM",
+//   // Add more time slots as needed
+// ];

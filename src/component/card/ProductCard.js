@@ -27,7 +27,7 @@ const ProductCard = ({
       </View>
       <View style={styles.content_box}>
         <View style={{marginTop: SIZES.height * -0.014}}>
-          <Text style={styles.product_name}>{productName.slice(0,8)}...</Text>
+          <Text style={styles.product_name}>{productName}</Text>
           <View style={{height:5}}/>
           <Text style={styles.price}>{price}</Text>
           <Text style={styles.service}>{service_name}</Text>
