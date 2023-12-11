@@ -63,11 +63,11 @@ const Product = ({
     axios
       .request(config)
       .then(response => {
-        console.log(
-          'completedata product',
-          JSON.stringify(response.data.result.slice(0, 45)),
-        );
-        setAlldata(response.data.result.slice(0, 45));
+        // console.log(
+        //   'completedata product',
+        //   JSON.stringify(response.data.result),
+        // );
+        setAlldata(response.data.result);
       })
       .catch(error => {
         console.log(error);
@@ -92,25 +92,29 @@ const Product = ({
   // const [currentCatName, setcurrentCatName] = useState('');
   // const [currentServName, setCurrentServName] = useState('');
 
-  // const [catId, setCatId] = useState(
-  //   route?.params?.catId?.id ? route?.params?.catId?.id : 1,
-  // );
+  const [catId, setCatId] = useState(
+    route?.params?.catId ? route?.params?.catId : 1,
+  );
 
-  // const [serviceId, setServiceId] = useState(
-  //   route?.params?.serviceId?.id ? route?.params?.serviceId?.id : 1,
-  // );
+  // console.log('catId', route?.params?.catId);
+  // console.log('serviceId', route?.params?.serviceId);
 
-  const [catId, setCatId] = useState();
+  const [serviceId, setServiceId] = useState(
+    route?.params?.serviceId ? route?.params?.serviceId : 1,
+  );
 
-  const [serviceId, setServiceId] = useState();
+  // const [catId, setCatId] = useState();
 
-  const filteredProducts = alldata?alldata.filter(product => {
-    const matchGender = !catId || product.category_id === catId;
-    const matchService =
-      !serviceId || product.service_id === serviceId;
-    return matchGender && matchService;
-  }): [];
-  console.log('Selected filteredProducts :', filteredProducts);
+  // const [serviceId, setServiceId] = useState();
+
+  const filteredProducts = alldata
+    ? alldata.filter(product => {
+        const matchGender = !catId || product.category_id === catId;
+        const matchService = !serviceId || product.service_id === serviceId;
+        return matchGender && matchService;
+      })
+    : [];
+  // console.log('Selected filteredProducts :', filteredProducts);
 
   const handleGenderPress = gender => {
     setCatId(gender);
@@ -120,7 +124,7 @@ const Product = ({
     setServiceId(service);
   };
 
-  const handleItemPress = (item) => {
+  const handleItemPress = item => {
     // console.log('Selected flatlist data:', item);
     // Do other things with the selected item if needed
   };
@@ -246,86 +250,84 @@ const Product = ({
         translucent={true}
         barStyle="light-content"
       />
-
-      <ScrollView style={{flex: 1, backgroundColor: COLORS.white}}>
-        <View style={{marginLeft: SIZES.width * 0.02}}>
+      <View style={{marginLeft: SIZES.width * 0.02}}>
+        <FlatList
+          data={categoryList}
+          renderItem={({item, index}) => (
+            <CategoryButton
+              marginLeft={index == 0 ? SIZES.width * 0.03 : 0}
+              title={item.category_name}
+              isActive={catId == item.id ? true : false}
+              onPress={() => {
+                // console.log('idididididididi------------------', item.id);
+                // setCatId(item.id);
+                handleGenderPress(item.id);
+              }}
+              style={{width: SIZES.width * 0.28}}
+            />
+          )}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          key={(_, index) => index}
+        />
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginHorizontal: SIZES.width * 0.03,
+        }}>
+        <LinearGradient
+          colors={['#E9C7FF', '#CFC0FF']}
+          style={{
+            backgroundColor: '#fff',
+            width: SIZES.width * 0.22,
+            borderRadius: SIZES.width * 0.03,
+            alignItems: 'center',
+            marginTop: SIZES.height * 0.023,
+            // flexGrow: 1
+          }} // Your styles for the LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}>
           <FlatList
-            data={categoryList}
+            data={serviceList}
             renderItem={({item, index}) => (
               <CategoryButton
-                marginLeft={index == 0 ? SIZES.width * 0.03 : 0}
-                title={item.category_name}
-                isActive={catId == item.id ? true : false}
+                // marginLeft={index == 0 ? SIZES.width * 0.03 : 0}
+                marginBottom={SIZES.height * 0.007}
+                title={item.service?.service_name}
+                isActive={serviceId == item.service?.id ? true : false}
                 onPress={() => {
-                  // console.log('idididididididi------------------', item.id);
-                  // setCatId(item.id);
-                  handleGenderPress(item.id)
+                  // console.log('idid.service?di', item.id);
+                  // setServiceId(item.id);
+                  handleServicePress(item.id);
                 }}
-                style={{width: SIZES.width * 0.28}}
+                titlestyl={{
+                  // fontFamily: FONTS.semiBold,
+                  fontSize: SIZES.width * 0.035,
+                  // color: COLORS.secondary,
+                  width: SIZES.width * 0.16,
+                  alignSelf: 'center',
+                  // marginBottom: -4,
+                }}
+                style={{
+                  borderWidth: 0,
+                  width: SIZES.width * 0.17,
+                  height: SIZES.width * 0.13,
+                  alignSelf: 'center',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: SIZES.width * 0.0,
+                }}
               />
             )}
-            horizontal={true}
+            // horizontal={true}
             showsHorizontalScrollIndicator={false}
             key={(_, index) => index}
           />
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: SIZES.width * 0.03,
-          }}>
-          <LinearGradient
-            colors={['#E9C7FF', '#CFC0FF']}
-            style={{
-              backgroundColor: '#fff',
-              width: SIZES.width * 0.22,
-              borderRadius: SIZES.width * 0.03,
-              alignItems: 'center',
-              marginTop: SIZES.height * 0.023,
-              // flexGrow: 1
-            }} // Your styles for the LinearGradient
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}>
-            <FlatList
-              data={serviceList}
-              renderItem={({item, index}) => (
-                <CategoryButton
-                  // marginLeft={index == 0 ? SIZES.width * 0.03 : 0}
-                  marginBottom={SIZES.height * 0.007}
-                  title={item.service?.service_name}
-                  isActive={serviceId == item.service?.id ? true : false}
-                  onPress={() => {
-                    // console.log('idid.service?di', item.id);
-                    // setServiceId(item.id);
-                    handleServicePress(item.id)
-                  }}
-                  titlestyl={{
-                    // fontFamily: FONTS.semiBold,
-                    fontSize: SIZES.width * 0.035,
-                    // color: COLORS.secondary,
-                    width: SIZES.width * 0.16,
-                    alignSelf: 'center',
-                    // marginBottom: -4,
-                  }}
-                  style={{
-                    borderWidth: 0,
-                    width: SIZES.width * 0.17,
-                    height: SIZES.width * 0.13,
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginRight: SIZES.width * 0.0,
-                  }}
-                />
-              )}
-              // horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              key={(_, index) => index}
-            />
-          </LinearGradient>
-
+        </LinearGradient>
+        <ScrollView
+          style={{backgroundColor: COLORS.white, width: SIZES.width * 0.72}}>
           {loading ? (
             <Loading />
           ) : (
@@ -339,7 +341,8 @@ const Product = ({
                       //   return
                       <ProductCard
                         marginBottom={
-                          filteredProducts[0] && index == filteredProducts.length - 1
+                          filteredProducts[0] &&
+                          index == filteredProducts.length - 1
                             ? SIZES.height * 0.28
                             : SIZES.height * 0.025
                         }
@@ -399,10 +402,10 @@ const Product = ({
               {/* )} */}
             </View>
           )}
-        </View>
 
-        {/* <Text style={{alignSelf:'center', fontSize:20}}>In Progress</Text> */}
-      </ScrollView>
+          {/* <Text style={{alignSelf:'center', fontSize:20}}>In Progress</Text> */}
+        </ScrollView>
+      </View>
       <View style={{position: 'absolute', bottom: 0}}>
         {filteredProducts && (
           <View style={styles.bottom_container}>
@@ -539,38 +542,38 @@ const category = [
   },
 ];
 
-const itemList1 = [
-  {
-    id: 1,
-    service_id: 101,
-    category_id: 201,
-    product_name: 'Blazer',
-    qty: 3,
-    amount: 150,
-    image: 'product1.jpg',
-    service_name: 'Premium Wash',
-  },
-  {
-    id: 2,
-    service_id: 101,
-    category_id: 201,
-    product_name: 'Pants',
-    qty: 2,
-    amount: 120,
-    image: 'product2.jpg',
-    service_name: 'Premium Wash',
-  },
-  {
-    id: 3,
-    service_id: 102,
-    category_id: 202,
-    product_name: 'Product 3',
-    qty: 1,
-    amount: 50,
-    image: 'product3.jpg',
-    service_name: 'Premium Wash',
-  },
-];
+// const itemList1 = [
+//   {
+//     id: 1,
+//     service_id: 101,
+//     category_id: 201,
+//     product_name: 'Blazer',
+//     qty: 3,
+//     amount: 150,
+//     image: 'product1.jpg',
+//     service_name: 'Premium Wash',
+//   },
+//   {
+//     id: 2,
+//     service_id: 101,
+//     category_id: 201,
+//     product_name: 'Pants',
+//     qty: 2,
+//     amount: 120,
+//     image: 'product2.jpg',
+//     service_name: 'Premium Wash',
+//   },
+//   {
+//     id: 3,
+//     service_id: 102,
+//     category_id: 202,
+//     product_name: 'Product 3',
+//     qty: 1,
+//     amount: 50,
+//     image: 'product3.jpg',
+//     service_name: 'Premium Wash',
+//   },
+// ];
 
 const serviceList = [
   {

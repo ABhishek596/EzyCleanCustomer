@@ -59,7 +59,7 @@ export default StyleSheet.create({
   },
 
   time_btn: {
-    width: SIZES.width * 0.22,
+    width: SIZES.width * 0.27,
     height: SIZES.height * 0.056,
     alignItems: 'center',
     justifyContent: 'center',

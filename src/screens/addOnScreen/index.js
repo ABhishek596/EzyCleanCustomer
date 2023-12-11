@@ -78,6 +78,8 @@ const AddOnScreen = ({
 
   console.log('Get all item from product screen', items);
 
+  console.log('Get addonsList ', addonsList);
+
   const [type, setType] = useState(1);
   const [addonsList, setAddonsList] = useState([]);
   // const [addonList, setAddonList] = useState([]);
@@ -128,6 +130,20 @@ const AddOnScreen = ({
     setAddonsList(outputArray);
   };
 
+  // const transformArray = () => {
+  //   const outputArray = addonsList.map(item => {
+  //     const newItem = {...item};
+  //     const existingItem = items.find(i => i.id === newItem.id);
+  //     if (existingItem) {
+  //       // Update the price for existing item
+  //       newItem.amount = existingItem.amount;
+  //     }
+  //     return newItem;
+  //   });
+
+  //   setAddonsList(outputArray);
+  // };
+
   useEffect(() => {
     transformArray();
   }, [items]);
@@ -146,7 +162,7 @@ const AddOnScreen = ({
     axios
       .request(config)
       .then(response => {
-        console.log('Adddddddddddd', JSON.stringify(response.data));
+        // console.log('Adddddddddddd', JSON.stringify(response.data));
         // setAddonList(response.data.addons)
       })
       .catch(error => {
@@ -403,7 +419,7 @@ const AddOnScreen = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <View style={{height: SIZES.height * 0.4}}>
         <FlatList
           data={addonsList}
           renderItem={({item, index}) => (
@@ -428,94 +444,373 @@ const AddOnScreen = ({
           keyExtractor={item => item.uid}
           showsVerticalScrollIndicator={false}
         />
-        <View style={{height: SIZES.height * 0.01}} />
-        <View style={styles.bottom_container}>
-          {/* <View style={styles.bottom_btn_box}>
-            <Button1
-              colors={['#FFFFFF','#FFFFFF']}
-              backgroundColor={COLORS.white}
-              textColor={COLORS.secondary}
-              style={{
-                width: SIZES.width * 0.43,
-                borderWidth: 2,
-                borderRadius: SIZES.width * 0.02,
-                borderColor: COLORS.secondary,
-              }}
-              btnTextStyle={{
-                fontSize: SIZES.width * 0.03,
-              }}
-              onPress={() =>
-                navigation.navigate('Coupon', {
-                  // items,
-                })
-              }>
-              Add Coupon
-            </Button1>
-            <Button1
-              backgroundColor={COLORS.white}
-              textColor={COLORS.secondary}
-              style={{
-                width: SIZES.width * 0.43,
-                borderWidth: 2,
-                borderRadius: SIZES.width * 0.02,
-                borderColor: COLORS.secondary,
-              }}
-              btnTextStyle={{
-                fontSize: SIZES.width * 0.03,
-              }}
-              onPress={() =>
-                navigation.navigate('Discount', {
-                  // data: addonsList,
-                  // discountObj,
-                })
-              }>
-              Check Discount
-            </Button1>
-          </View> */}
-          <View
-            style={{
-              flexDirection: 'row',
-              alignSelf: 'center',
-              marginVertical: 15,
-            }}>
-            <TouchableOpacity
-              style={[
-                styles.btn,
-                {
-                  borderWidth: 2,
-                  borderColor: COLORS.secondary,
-                  backgroundColor: COLORS.white,
-                  width: SIZES.width * 0.4,
-                  alignItems: 'center',
-                },
-              ]}
-              onPress={() => navigation.navigate('Coupon')}>
-              <Text style={[styles.btn_text, {color: COLORS.secondary}]}>
-                Add Coupon
-              </Text>
-            </TouchableOpacity>
-            <View style={{width: SIZES.width * 0.066}} />
-            <TouchableOpacity
-              style={[
-                styles.btn,
-                {
-                  borderWidth: 2,
-                  borderColor: COLORS.secondary,
-                  backgroundColor: COLORS.white,
+      </View>
+      {/* <View style={{height: SIZES.height * 0.01}} />
 
-                  alignItems: 'center',
-                },
-              ]}
-              onPress={() => navigation.navigate('Discount')}>
-              <Text
-                style={[
-                  styles.btn_text,
-                  {color: COLORS.secondary, marginBottom: 0},
-                ]}>
-                Check Discount
-              </Text>
-            </TouchableOpacity>
+      <View style={{height: SIZES.height * 0.015}} /> */}
+
+      <Modal transparent={true} visible={isModalVisible} animationType="fade">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.texta}>Edit Product</Text>
+            <View style={styles.row2}>
+              <View style={styles.sideBar}>
+                {featureType.slice(0, 3).map(item => (
+                  <TouchableOpacity
+                    key={item.id}
+                    style={[
+                      styles.btn,
+                      type == item.id && {backgroundColor: COLORS.secondary},
+                    ]}
+                    onPress={() => setType(item.id)}>
+                    <Text
+                      style={[
+                        styles.btnTxt,
+                        type == item.id && {color: COLORS.white},
+                      ]}>
+                      {item.type}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              {/* <Text>RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</Text> */}
+              <View style={styles.sideBar}>
+                {featureType.slice(3, 6).map(item => (
+                  <TouchableOpacity
+                    key={item.id}
+                    style={[
+                      styles.btn,
+                      type == item.id && {backgroundColor: COLORS.secondary},
+                    ]}
+                    onPress={() => setType(item.id)}>
+                    <Text
+                      style={[
+                        styles.btnTxt,
+                        type == item.id && {color: COLORS.white},
+                      ]}>
+                      {item.type}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              <View style={styles.rightBox}>
+                {type == 1 && (
+                  <View style={styles.container1}>
+                    <View
+                      {...panResponder.panHandlers}
+                      style={{
+                        backgroundColor: `rgb(${color.r},${color.g},${color.b})`,
+                        width: 100,
+                        height: 100,
+                        borderRadius: 5,
+                      }}
+                    />
+
+                    <Slider
+                      style={styles.slider}
+                      minimumValue={0}
+                      maximumValue={255}
+                      step={1}
+                      value={color.r}
+                      onValueChange={handleSliderChange}
+                    />
+                  </View>
+
+                  //   <View style={{ flexDirection: 'row'}}>
+                  //   <ColorPicker
+                  //     ref={pickerRef}
+                  //     color={currentColor}
+                  //     swatchesOnly={swatchesOnly}
+                  //     onColorChange={onColorChange}
+                  //     onColorChangeComplete={onColorChangeComplete}
+                  //     thumbSize={40}
+                  //     sliderSize={40}
+                  //     noSnap={true}
+                  //     row={false}
+                  //     swatchesLast={swatchesLast}
+                  //     swatches={swatchesEnabled}
+                  //     discrete={disc}
+                  //   />
+                  //   {/* Replace SomeButton with the actual button component */}
+                  //   {/* <SomeButton onPress={() => pickerRef.current.revert()} /> */}
+                  //   <Button onClick={() => pickerRef.current.revert()} title='Revert Color'></Button>
+                  // </View>
+
+                  // <FlatList
+                  //   data={colorList}
+                  //   renderItem={({item, index}) => (
+                  //     <FeatureRow
+                  //       title={item.color_name}
+                  //       colorCode={item?.color_code}
+                  //       // value={postData.color1 == item ? true : false}
+                  //       // onValueChange={() => handleChange('color1', item)}
+                  //     />
+                  //   )}
+                  //   key={item => item.id}
+                  //   showsVerticalScrollIndicator={false}
+                  // />
+                )}
+
+                {/* {colorList && type == 2 && (
+                <FlatList
+                  data={colorList}
+                  renderItem={({item, index}) => (
+                    <FeatureRow
+                      title={item.color_name}
+                      colorCode={item?.color_code}
+                      value={postData.color2 == item ? true : false}
+                      onValueChange={() => handleChange('color2', item)}
+                    />
+                  )}
+                  key={item => item.id}
+                  showsVerticalScrollIndicator={false}
+                />
+              )} */}
+
+                <View style={{marginTop: SIZES.height * 0.02}}>
+                  {damageList && type == 3 && (
+                    <FlatList
+                      data={damageList}
+                      renderItem={({item, index}) => (
+                        <FeatureRow
+                          title={item.damage}
+                          // value={postData.damage_id == item ? true : false}
+                          // onValueChange={() => handleChange('damage_id', item)}
+                        />
+                      )}
+                      key={item => item.id}
+                      showsVerticalScrollIndicator={false}
+                      horizontal
+                    />
+                  )}
+                </View>
+
+                {stainsList && type == 4 && (
+                  <FlatList
+                    data={stainsList}
+                    renderItem={({item, index}) => (
+                      <FeatureRow
+                        title={item.stains}
+                        // value={postData.stain_id == item ? true : false}
+                        // onValueChange={() => handleChange('stain_id', item)}
+                      />
+                    )}
+                    key={item => item.id}
+                    showsVerticalScrollIndicator={false}
+                    horizontal
+                  />
+                )}
+
+                {packingList && type == 5 && (
+                  <FlatList
+                    data={packingList}
+                    renderItem={({item, index}) => (
+                      <FeatureRow
+                        title={item.packing_style}
+                        checkBox={{
+                          position: 'absolute',
+                          right: SIZES.width * 0.12,
+                          bottom: SIZES.height * -0.021,
+                        }}
+                        row1={{
+                          width: SIZES.width * 0.68,
+                          marginVertical: SIZES.height * 0.015,
+                          alignItems: 'center',
+                        }}
+
+                        // price={item.price}
+                        // value={postData.packing_id == item ? true : false}
+                        // onValueChange={() => {
+                        //   handleChange('packing_id', item),
+                        //     setPackingCharge(item.price);
+                        // }}
+                      />
+                    )}
+                    key={item => item.id}
+                    showsVerticalScrollIndicator={false}
+                  />
+                )}
+
+                {addonList && type == 6 && (
+                  <FlatList
+                    data={addonList}
+                    renderItem={({item, index}) => (
+                      <FeatureRow
+                        title={item.addon_name}
+                        price={item.price}
+                        // value={postData.addon_id == item ? true : false}
+                        // onValueChange={() => {
+                        //   handleChange('addon_id', item),
+                        //     setAddonCharge(item.price);
+                        // }}
+                      />
+                    )}
+                    horizontal
+                    key={item => item.id}
+                    showsVerticalScrollIndicator={false}
+                  />
+                )}
+
+                {ironList && type == 7 && (
+                  <FlatList
+                    data={ironList}
+                    renderItem={({item, index}) => (
+                      <FeatureRow
+                        title={item.iron}
+                        // value={postData.iron.id == item.id ? true : false}
+                        // onValueChange={() => {
+                        //   handleChange('iron', item),
+                        //     setIronCharge(
+                        //       item.id
+                        //         ? product?.iron_price
+                        //           ? Number(product?.iron_price)
+                        //           : 0
+                        //         : 0,
+                        //     );
+                        // }}
+                      />
+                    )}
+                    key={item => item.id}
+                    showsVerticalScrollIndicator={false}
+                    horizontal
+                  />
+                )}
+
+                {/* {deliveryTypeList && type == 8 && (
+                <FlatList
+                  data={deliveryTypeList}
+                  renderItem={({item, index}) => (
+                    <FeatureRow
+                      title={item.type}
+                      price={item.urgent_charge}
+                      value={postData.delivery.id == item.id ? true : false}
+                      onValueChange={() => {
+                        handleChange('delivery', item),
+                          setDeliveryCharge(
+                            item.id
+                              ? product?.iron_price
+                                ? Number(product?.iron_price)
+                                : 0
+                              : 0,
+                          );
+                      }}
+                    />
+                  )}
+                  key={item => item.id}
+                  showsVerticalScrollIndicator={false}
+                />
+              )} */}
+              </View>
+            </View>
+            <View style={styles.buttonRow}>
+              <TouchableOpacity style={styles.button1} onPress={toggleModal}>
+                <Text style={styles.yes}>Reset</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  // Handle 'Yes' button click here
+                  toggleModal();
+                  setVisible(true);
+                  // navigation.navigate('OnBoardingScreen');
+                }}>
+                <Text style={styles.cancle}>Apply</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+        </View>
+      </Modal>
+
+      <View style={{position: 'absolute', bottom: 0}}>
+        <View // Button Add Coupon Check Discount
+          style={{
+            flexDirection: 'row',
+            alignSelf: 'center',
+            marginVertical: 15,
+          }}>
+          <TouchableOpacity
+            style={[
+              styles.btn,
+              {
+                borderWidth: 2,
+                borderColor: COLORS.secondary,
+                backgroundColor: COLORS.white,
+                width: SIZES.width * 0.4,
+                alignItems: 'center',
+              },
+            ]}
+            onPress={() => navigation.navigate('Coupon')}>
+            <Text style={[styles.btn_text, {color: COLORS.secondary}]}>
+              Add Coupon
+            </Text>
+          </TouchableOpacity>
+          <View style={{width: SIZES.width * 0.066}} />
+          <TouchableOpacity
+            style={[
+              styles.btn,
+              {
+                borderWidth: 2,
+                borderColor: COLORS.secondary,
+                backgroundColor: COLORS.white,
+
+                alignItems: 'center',
+              },
+            ]}
+            onPress={() => navigation.navigate('Discount')}>
+            <Text
+              style={[
+                styles.btn_text,
+                {color: COLORS.secondary, marginBottom: 0},
+              ]}>
+              Check Discount
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.bottom_container}>
+          {/* <View style={styles.bottom_btn_box}>     //Button Continue Order
+  <Button1
+    colors={['#FFFFFF','#FFFFFF']}
+    backgroundColor={COLORS.white}
+    textColor={COLORS.secondary}
+    style={{
+      width: SIZES.width * 0.43,
+      borderWidth: 2,
+      borderRadius: SIZES.width * 0.02,
+      borderColor: COLORS.secondary,
+    }}
+    btnTextStyle={{
+      fontSize: SIZES.width * 0.03,
+    }}
+    onPress={() =>
+      navigation.navigate('Coupon', {
+        // items,
+      })
+    }>
+    Add Coupon
+  </Button1>
+  <Button1
+    backgroundColor={COLORS.white}
+    textColor={COLORS.secondary}
+    style={{
+      width: SIZES.width * 0.43,
+      borderWidth: 2,
+      borderRadius: SIZES.width * 0.02,
+      borderColor: COLORS.secondary,
+    }}
+    btnTextStyle={{
+      fontSize: SIZES.width * 0.03,
+    }}
+    onPress={() =>
+      navigation.navigate('Discount', {
+        // data: addonsList,
+        // discountObj,
+      })
+    }>
+    Check Discount
+  </Button1>
+</View> */}
+
           <Button1
             style={{
               // borderWidth: 2,
@@ -530,7 +825,6 @@ const AddOnScreen = ({
               });
               // handleConfimOrder();
               // confirmColor1();
-
             }}
             // onPress={() => {
             //   if (visible === false) {
@@ -539,11 +833,10 @@ const AddOnScreen = ({
             //     navigation.navigate('PickupSchedule');
             //   }
             // }}
-            >
+          >
             Continue Order
           </Button1>
         </View>
-        <View style={{height: SIZES.height * 0.015}} />
 
         <LinearGradient
           colors={['#651898', '#2C0D8F']}
@@ -601,279 +894,7 @@ const AddOnScreen = ({
           />
           <View style={{height: SIZES.height * 0.01}} />
         </LinearGradient>
-
-        <Modal transparent={true} visible={isModalVisible} animationType="fade">
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text style={styles.texta}>Edit Product</Text>
-              <View style={styles.row2}>
-                <View style={styles.sideBar}>
-                  {featureType.slice(0, 3).map(item => (
-                    <TouchableOpacity
-                      key={item.id}
-                      style={[
-                        styles.btn,
-                        type == item.id && {backgroundColor: COLORS.secondary},
-                      ]}
-                      onPress={() => setType(item.id)}>
-                      <Text
-                        style={[
-                          styles.btnTxt,
-                          type == item.id && {color: COLORS.white},
-                        ]}>
-                        {item.type}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-                {/* <Text>RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</Text> */}
-                <View style={styles.sideBar}>
-                  {featureType.slice(3, 6).map(item => (
-                    <TouchableOpacity
-                      key={item.id}
-                      style={[
-                        styles.btn,
-                        type == item.id && {backgroundColor: COLORS.secondary},
-                      ]}
-                      onPress={() => setType(item.id)}>
-                      <Text
-                        style={[
-                          styles.btnTxt,
-                          type == item.id && {color: COLORS.white},
-                        ]}>
-                        {item.type}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-                <View style={styles.rightBox}>
-                  {type == 1 && (
-                    <View style={styles.container1}>
-                      <View
-                        {...panResponder.panHandlers}
-                        style={{
-                          backgroundColor: `rgb(${color.r},${color.g},${color.b})`,
-                          width: 100,
-                          height: 100,
-                          borderRadius: 5,
-                        }}
-                      />
-
-                      <Slider
-                        style={styles.slider}
-                        minimumValue={0}
-                        maximumValue={255}
-                        step={1}
-                        value={color.r}
-                        onValueChange={handleSliderChange}
-                      />
-                    </View>
-
-                    //   <View style={{ flexDirection: 'row'}}>
-                    //   <ColorPicker
-                    //     ref={pickerRef}
-                    //     color={currentColor}
-                    //     swatchesOnly={swatchesOnly}
-                    //     onColorChange={onColorChange}
-                    //     onColorChangeComplete={onColorChangeComplete}
-                    //     thumbSize={40}
-                    //     sliderSize={40}
-                    //     noSnap={true}
-                    //     row={false}
-                    //     swatchesLast={swatchesLast}
-                    //     swatches={swatchesEnabled}
-                    //     discrete={disc}
-                    //   />
-                    //   {/* Replace SomeButton with the actual button component */}
-                    //   {/* <SomeButton onPress={() => pickerRef.current.revert()} /> */}
-                    //   <Button onClick={() => pickerRef.current.revert()} title='Revert Color'></Button>
-                    // </View>
-
-                    // <FlatList
-                    //   data={colorList}
-                    //   renderItem={({item, index}) => (
-                    //     <FeatureRow
-                    //       title={item.color_name}
-                    //       colorCode={item?.color_code}
-                    //       // value={postData.color1 == item ? true : false}
-                    //       // onValueChange={() => handleChange('color1', item)}
-                    //     />
-                    //   )}
-                    //   key={item => item.id}
-                    //   showsVerticalScrollIndicator={false}
-                    // />
-                  )}
-
-                  {/* {colorList && type == 2 && (
-                <FlatList
-                  data={colorList}
-                  renderItem={({item, index}) => (
-                    <FeatureRow
-                      title={item.color_name}
-                      colorCode={item?.color_code}
-                      value={postData.color2 == item ? true : false}
-                      onValueChange={() => handleChange('color2', item)}
-                    />
-                  )}
-                  key={item => item.id}
-                  showsVerticalScrollIndicator={false}
-                />
-              )} */}
-
-                  <View style={{marginTop: SIZES.height * 0.02}}>
-                    {damageList && type == 3 && (
-                      <FlatList
-                        data={damageList}
-                        renderItem={({item, index}) => (
-                          <FeatureRow
-                            title={item.damage}
-                            // value={postData.damage_id == item ? true : false}
-                            // onValueChange={() => handleChange('damage_id', item)}
-                          />
-                        )}
-                        key={item => item.id}
-                        showsVerticalScrollIndicator={false}
-                        horizontal
-                      />
-                    )}
-                  </View>
-
-                  {stainsList && type == 4 && (
-                    <FlatList
-                      data={stainsList}
-                      renderItem={({item, index}) => (
-                        <FeatureRow
-                          title={item.stains}
-                          // value={postData.stain_id == item ? true : false}
-                          // onValueChange={() => handleChange('stain_id', item)}
-                        />
-                      )}
-                      key={item => item.id}
-                      showsVerticalScrollIndicator={false}
-                      horizontal
-                    />
-                  )}
-
-                  {packingList && type == 5 && (
-                    <FlatList
-                      data={packingList}
-                      renderItem={({item, index}) => (
-                        <FeatureRow
-                          title={item.packing_style}
-                          checkBox={{
-                            position: 'absolute',
-                            right: SIZES.width * 0.12,
-                            bottom: SIZES.height * -0.021,
-                          }}
-                          row1={{
-                            width: SIZES.width * 0.68,
-                            marginVertical: SIZES.height * 0.015,
-                            alignItems: 'center',
-                          }}
-
-                          // price={item.price}
-                          // value={postData.packing_id == item ? true : false}
-                          // onValueChange={() => {
-                          //   handleChange('packing_id', item),
-                          //     setPackingCharge(item.price);
-                          // }}
-                        />
-                      )}
-                      key={item => item.id}
-                      showsVerticalScrollIndicator={false}
-                    />
-                  )}
-
-                  {addonList && type == 6 && (
-                    <FlatList
-                      data={addonList}
-                      renderItem={({item, index}) => (
-                        <FeatureRow
-                          title={item.addon_name}
-                          price={item.price}
-                          // value={postData.addon_id == item ? true : false}
-                          // onValueChange={() => {
-                          //   handleChange('addon_id', item),
-                          //     setAddonCharge(item.price);
-                          // }}
-                        />
-                      )}
-                      horizontal
-                      key={item => item.id}
-                      showsVerticalScrollIndicator={false}
-                    />
-                  )}
-
-                  {ironList && type == 7 && (
-                    <FlatList
-                      data={ironList}
-                      renderItem={({item, index}) => (
-                        <FeatureRow
-                          title={item.iron}
-                          // value={postData.iron.id == item.id ? true : false}
-                          // onValueChange={() => {
-                          //   handleChange('iron', item),
-                          //     setIronCharge(
-                          //       item.id
-                          //         ? product?.iron_price
-                          //           ? Number(product?.iron_price)
-                          //           : 0
-                          //         : 0,
-                          //     );
-                          // }}
-                        />
-                      )}
-                      key={item => item.id}
-                      showsVerticalScrollIndicator={false}
-                      horizontal
-                    />
-                  )}
-
-                  {/* {deliveryTypeList && type == 8 && (
-                <FlatList
-                  data={deliveryTypeList}
-                  renderItem={({item, index}) => (
-                    <FeatureRow
-                      title={item.type}
-                      price={item.urgent_charge}
-                      value={postData.delivery.id == item.id ? true : false}
-                      onValueChange={() => {
-                        handleChange('delivery', item),
-                          setDeliveryCharge(
-                            item.id
-                              ? product?.iron_price
-                                ? Number(product?.iron_price)
-                                : 0
-                              : 0,
-                          );
-                      }}
-                    />
-                  )}
-                  key={item => item.id}
-                  showsVerticalScrollIndicator={false}
-                />
-              )} */}
-                </View>
-              </View>
-              <View style={styles.buttonRow}>
-                <TouchableOpacity style={styles.button1} onPress={toggleModal}>
-                  <Text style={styles.yes}>Reset</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => {
-                    // Handle 'Yes' button click here
-                    toggleModal();
-                    setVisible(true);
-                    // navigation.navigate('OnBoardingScreen');
-                  }}>
-                  <Text style={styles.cancle}>Apply</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -896,9 +917,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(AddOnScreen);
 // export default AddOnScreen;
 
-
 //Json data
-
 
 const damageList = [
   {id: 1, damage: 'Collar Dark'},

@@ -13,7 +13,7 @@ const ProductCard = ({
   marginBottom,
   price,
   quantity,
-  service_name
+  service_name,
 }) => {
   return (
     <View
@@ -27,8 +27,8 @@ const ProductCard = ({
       </View>
       <View style={styles.content_box}>
         <View style={{marginTop: SIZES.height * -0.014}}>
-          <Text style={styles.product_name}>{productName}</Text>
-          <View style={{height:5}}/>
+          <Text style={styles.product_name}>{productName.slice(0, 7)}...</Text>
+          <View style={{height: 5}} />
           <Text style={styles.price}>{price}</Text>
           <Text style={styles.service}>{service_name}</Text>
         </View>
@@ -36,14 +36,14 @@ const ProductCard = ({
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={onPlusPress}
-            style={{...styles.count_btn, }}>
+            style={{...styles.count_btn}}>
             <Icons name={'plus'} size={20} color={COLORS.white} />
           </TouchableOpacity>
           <Text style={styles.count_text}>{quantity}</Text>
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={onMinusPress}
-            style={{...styles.count_btn, }}>
+            style={{...styles.count_btn}}>
             <Icons name={'minus'} size={20} color={COLORS.white} />
           </TouchableOpacity>
         </View>
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray30,
     borderRadius: SIZES.width * 0.03,
     overflow: 'hidden',
-    justifyContent:'center'
+    justifyContent: 'center',
   },
 
   image_box: {
     width: SIZES.width * 0.14,
     height: SIZES.width * 0.14,
-    backgroundColor:'#E9C7FF',
+    backgroundColor: '#E9C7FF',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: SIZES.width * 0.03,
@@ -102,15 +102,15 @@ const styles = StyleSheet.create({
   image: {
     width: SIZES.width * 0.12,
     height: SIZES.width * 0.12,
-    backgroundColor:'#E9C7FF'
+    backgroundColor: '#E9C7FF',
   },
 
   content_box: {
     width: SIZES.width * 0.45,
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    flexDirection:'row',
-    marginTop:SIZES.height * 0.010,
+    flexDirection: 'row',
+    marginTop: SIZES.height * 0.01,
     // justifyContent: 'center',
     // borderWidth: 1,
   },
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   service: {
     fontFamily: FONTS.regular,
-    fontSize: SIZES.width * 0.030,
+    fontSize: SIZES.width * 0.03,
     color: COLORS.secondary,
     // color: COLORS.white,
     marginBottom: -4,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 
   // ============ count button ================
   quan_row: {
-    width: SIZES.width * 0.20,
+    width: SIZES.width * 0.2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.width * 0.014,
     borderColor: COLORS.primary,
     overflow: 'hidden',
-    marginTop:SIZES.height * 0.010,
+    marginTop: SIZES.height * 0.01,
   },
   count_btn: {
     width: SIZES.width * 0.06,
@@ -156,19 +156,19 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.secondary,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius:180/2
+    borderRadius: 180 / 2,
     // borderColor: COLORS.primary,
   },
 
   count_text: {
     fontFamily: FONTS.medium,
-    fontSize: SIZES.width * 0.030,
+    fontSize: SIZES.width * 0.03,
     color: COLORS.secondary,
     // marginBottom: -2,
-    borderWidth:1.2,
-    paddingHorizontal:5,
-    paddingVertical:2,
-    borderColor:COLORS.secondary
+    borderWidth: 1.2,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    borderColor: COLORS.secondary,
   },
 
   // ============ buttons ===========

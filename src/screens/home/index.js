@@ -10,7 +10,7 @@ import {
   PermissionsAndroid,
   Pressable,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect, useDispatch} from 'react-redux';
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
@@ -26,6 +26,7 @@ import ServiceCard from '../../component/card/ServiceCard';
 import LinearGradient from 'react-native-linear-gradient';
 import {GetDiscountList} from '../../redux/actions/homeAction';
 import {GetUserDataApi} from '../../redux/actions/authActions';
+import axios from 'axios';
 const OfferItem = ({item}) => {
   return (
     <LinearGradient
@@ -69,6 +70,56 @@ const Home = ({
   GetDiscountList,
   GetUserDataApi,
 }) => {
+  useEffect(() => {
+    let data = '';
+
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://ezyclean.theprojecttest.xyz/api/categories',
+      headers: {},
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        // console.log(JSON.stringify(response.data));
+        setSategory(response.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    let data = '';
+
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://ezyclean.theprojecttest.xyz/api/services',
+      headers: {
+        Authorization:
+          'Bearer 160|LMkKJ9t0E4aTjRqXYRa5d10wByUbQ2wRkxJldtKj1f90965d',
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        // console.log(JSON.stringify(response.data));
+        setService(response.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  const [category, setSategory] = useState();
+  const [service, setService] = useState();
+
   // console.log('discountList at Home', discountList);
   // const  data  = route?.params?.data;
   // console.log("userdatattthome", data);
@@ -192,17 +243,17 @@ const Home = ({
                     <Text style={styles.see_all}>See All</Text>
                   </TouchableOpacity>
                 </View>
-                <ScrollView horizontal>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {service?.map(item => (
                     <ServiceCard
-                      key={item.service?.id}
+                      key={item?.id}
                       // source={images.primWash}
-                      source={{uri: item.image}}
-                      service={item.service?.service_name}
+                      source={{uri: item?.image}}
+                      service={item?.service_name}
                       // subTitle={item.service?.description}
                       onPress={() =>
                         navigation.navigate('Product', {
-                          serviceId: item.service,
+                          serviceId: item.id,
                         })
                       }
                     />
@@ -269,10 +320,10 @@ const Home = ({
                             : SIZES.width * 0.02
                         }
                         category={item.category_name}
-                        source={{uri: item.images}}
+                        source={{uri: item.category_image}}
                         onPress={() =>
                           navigation.navigate('Product', {
-                            catId: item.service_id,
+                            catId: item.id,
                           })
                         }
                       />
@@ -309,101 +360,102 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
-const category = [
-  {
-    id: 1,
-    category_name: 'Men',
-    category_name_ar: null,
-    category_image: 'categories/6b92e366d82c3c92deaed75974fd7545.png',
-    service_id: ['1'],
-    status: 1,
-    created_at: '2023-10-09T06:30:49.000000Z',
-    updated_at: '2023-10-09T06:30:49.000000Z',
-    services: [{id: 1, service_name: 'Dry Cleaning'}],
-    images:
-      'https://dryfi.theprojecttest.xyz/public/uploads/categories/6b92e366d82c3c92deaed75974fd7545.png',
-  },
-  {
-    id: 2,
-    category_name: 'Women',
-    category_name_ar: null,
-    category_image: 'categories/2577ecdc7eb5f0141df74358eee429c0.png',
-    service_id: ['2', '3'],
-    status: 1,
-    created_at: '2023-10-09T06:31:49.000000Z',
-    updated_at: '2023-10-09T06:31:49.000000Z',
-    services: [
-      {id: 2, service_name: 'Ironing'},
-      {id: 3, service_name: 'Wash & Clean'},
-    ],
-    images:
-      'https://dryfi.theprojecttest.xyz/public/uploads/categories/2577ecdc7eb5f0141df74358eee429c0.png',
-  },
-  {
-    id: 3,
-    category_name: 'Kids',
-    category_name_ar: null,
-    category_image: 'categories/e2cff0705861f2e45251761b6d3cd44f.png',
-    service_id: ['1', '3'],
-    status: 1,
-    created_at: '2023-10-09T06:32:06.000000Z',
-    updated_at: '2023-10-09T06:32:06.000000Z',
-    services: [
-      {id: 1, service_name: 'Dry Cleaning'},
-      {id: 3, service_name: 'Wash & Clean'},
-    ],
-    images:
-      'https://dryfi.theprojecttest.xyz/public/uploads/categories/e2cff0705861f2e45251761b6d3cd44f.png',
-  },
-];
+// const category = [
+//   {
+//     id: 1,
+//     category_name: 'Men',
+//     category_name_ar: null,
+//     category_image: 'categories/6b92e366d82c3c92deaed75974fd7545.png',
+//     service_id: ['1'],
+//     status: 1,
+//     created_at: '2023-10-09T06:30:49.000000Z',
+//     updated_at: '2023-10-09T06:30:49.000000Z',
+//     services: [{id: 1, service_name: 'Dry Cleaning'}],
+//     images:
+//       'https://dryfi.theprojecttest.xyz/public/uploads/categories/6b92e366d82c3c92deaed75974fd7545.png',
+//   },
+//   {
+//     id: 2,
+//     category_name: 'Women',
+//     category_name_ar: null,
+//     category_image: 'categories/2577ecdc7eb5f0141df74358eee429c0.png',
+//     service_id: ['2', '3'],
+//     status: 1,
+//     created_at: '2023-10-09T06:31:49.000000Z',
+//     updated_at: '2023-10-09T06:31:49.000000Z',
+//     services: [
+//       {id: 2, service_name: 'Ironing'},
+//       {id: 3, service_name: 'Wash & Clean'},
+//     ],
+//     images:
+//       'https://dryfi.theprojecttest.xyz/public/uploads/categories/2577ecdc7eb5f0141df74358eee429c0.png',
+//   },
+//   {
+//     id: 3,
+//     category_name: 'Kids',
+//     category_name_ar: null,
+//     category_image: 'categories/e2cff0705861f2e45251761b6d3cd44f.png',
+//     service_id: ['1', '3'],
+//     status: 1,
+//     created_at: '2023-10-09T06:32:06.000000Z',
+//     updated_at: '2023-10-09T06:32:06.000000Z',
+//     services: [
+//       {id: 1, service_name: 'Dry Cleaning'},
+//       {id: 3, service_name: 'Wash & Clean'},
+//     ],
+//     images:
+//       'https://dryfi.theprojecttest.xyz/public/uploads/categories/e2cff0705861f2e45251761b6d3cd44f.png',
+//   },
+// ];
 //{ uri: require('../../assets/images/qrimg.jpg') },
-const service = [
-  {
-    image:
-      'https://dryfi.theprojecttest.xyz/public/uploads/services/f9b05ca89ba2e6899ad4a1b83175b61c.png',
-    service: {
-      created_at: '2023-10-09T06:27:36.000000Z',
-      description: 'Dry Cleaning',
-      description_ar: null,
-      id: 1,
-      image: 'services/f9b05ca89ba2e6899ad4a1b83175b61c.png',
-      service_name: 'Dry Cleaning',
-      service_name_ar: null,
-      status: 1,
-      updated_at: '2023-10-09T06:27:36.000000Z',
-    },
-  },
-  {
-    image:
-      'https://dryfi.theprojecttest.xyz/public/uploads/services/cff14d111f88e238d5314f6f3690aa3b.png',
-    service: {
-      created_at: '2023-10-09T06:28:48.000000Z',
-      description: 'ironing',
-      description_ar: null,
-      id: 2,
-      image: 'services/cff14d111f88e238d5314f6f3690aa3b.png',
-      service_name: 'Ironing',
-      service_name_ar: null,
-      status: 1,
-      updated_at: '2023-10-09T06:28:48.000000Z',
-    },
-  },
-  {
-    image:
-      'https://dryfi.theprojecttest.xyz/public/uploads/services/15c2441979364ee709d29474185ea199.png',
-    service: {
-      created_at: '2023-10-09T06:29:17.000000Z',
-      description: 'wash and clean',
-      description_ar: null,
-      id: 3,
-      image: 'services/15c2441979364ee709d29474185ea199.png',
-      service_name: 'Wash & Clean',
-      service_name_ar: null,
-      status: 1,
-      updated_at: '2023-10-09T06:29:17.000000Z',
-    },
-  },
-];
+
+// const service = [
+//   {
+//     image:
+//       'https://dryfi.theprojecttest.xyz/public/uploads/services/f9b05ca89ba2e6899ad4a1b83175b61c.png',
+//     service: {
+//       created_at: '2023-10-09T06:27:36.000000Z',
+//       description: 'Dry Cleaning',
+//       description_ar: null,
+//       id: 1,
+//       image: 'services/f9b05ca89ba2e6899ad4a1b83175b61c.png',
+//       service_name: 'Dry Cleaning',
+//       service_name_ar: null,
+//       status: 1,
+//       updated_at: '2023-10-09T06:27:36.000000Z',
+//     },
+//   },
+//   {
+//     image:
+//       'https://dryfi.theprojecttest.xyz/public/uploads/services/cff14d111f88e238d5314f6f3690aa3b.png',
+//     service: {
+//       created_at: '2023-10-09T06:28:48.000000Z',
+//       description: 'ironing',
+//       description_ar: null,
+//       id: 2,
+//       image: 'services/cff14d111f88e238d5314f6f3690aa3b.png',
+//       service_name: 'Ironing',
+//       service_name_ar: null,
+//       status: 1,
+//       updated_at: '2023-10-09T06:28:48.000000Z',
+//     },
+//   },
+//   {
+//     image:
+//       'https://dryfi.theprojecttest.xyz/public/uploads/services/15c2441979364ee709d29474185ea199.png',
+//     service: {
+//       created_at: '2023-10-09T06:29:17.000000Z',
+//       description: 'wash and clean',
+//       description_ar: null,
+//       id: 3,
+//       image: 'services/15c2441979364ee709d29474185ea199.png',
+//       service_name: 'Wash & Clean',
+//       service_name_ar: null,
+//       status: 1,
+//       updated_at: '2023-10-09T06:29:17.000000Z',
+//     },
+//   },
+// ];
 
 const data1 = [
   // Add your offer objects here
