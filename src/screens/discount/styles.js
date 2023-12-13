@@ -112,7 +112,7 @@ offer_text: {
     fontFamily: FONTS.regular,
     fontSize: SIZES.width * .032,
     // marginBottom: -3,
-    marginTop: SIZES.height * -.012,
+    // marginTop: SIZES.height * -.012,
     color: COLORS.white,
 },
 

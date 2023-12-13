@@ -56,6 +56,8 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     // paddingHorizontal: SIZES.width * .02,
     backgroundColor: COLORS.lightGreen,
+   
+ 
   },
 
   indicator_container: {

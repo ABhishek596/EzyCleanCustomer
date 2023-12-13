@@ -1,10 +1,18 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native';
-import React, { useState } from 'react';
-import { COLORS, FONTS, icons, images, SIZES } from '../../constants';
-import { useSelector } from 'react-redux';
-import LinearGradient from 'react-native-linear-gradient';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ImageBackground,
 
-const Header = ({ onPress, source, navigation }) => {
+} from 'react-native';
+import React, {useState} from 'react';
+import {COLORS, FONTS, icons, images, SIZES} from '../../constants';
+import {useSelector} from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
+import Icons from '../Icons';
+const Header = ({onPress, source, navigation}) => {
   // let userData = useSelector(state => state.auth.userData);
 
   // console.log("user data : ", userData)
@@ -16,8 +24,22 @@ const Header = ({ onPress, source, navigation }) => {
         colors={[COLORS.primary, COLORS.primary1]}
         // colors={["#1C3FAA", "#2351DB"]}
         style={styles.container}> */}
-      <ImageBackground source={require('../../assets/images/Headimg.png')} resizeMode='contain' style={styles.container}>
-        <View style={styles.container}>
+      <ImageBackground
+        source={require('../../assets/images/Headimg.png')}
+        resizeMode="stretch"
+        style={styles.container}>
+        <View>
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              right: SIZES.width * 0.45,
+              top: SIZES.height * 0.025,
+            }}
+            onPress={()=>navigation.goBack()}
+            >
+            <Icons name={'back'} size={20} color={'#ffffff'} />
+          </TouchableOpacity>
+          {/* <Text style={styles.title}>Dryfi</Text> */}
           <View style={styles.imageBox}>
             <Image
               source={icons.dryfinewlogo}
@@ -25,7 +47,6 @@ const Header = ({ onPress, source, navigation }) => {
               resizeMode="contain"
             />
           </View>
-          {/* <Text style={styles.title}>Dryfi</Text> */}
         </View>
       </ImageBackground>
     </View>
@@ -41,30 +62,31 @@ export default Header;
 const styles = StyleSheet.create({
   box: {
     backgroundColor: COLORS.white,
-    marginTop:SIZES.height * -0.005,
+    // marginTop:SIZES.height * -0.025,
   },
   container: {
     width: SIZES.width,
-    height: SIZES.height * 0.24,
+    height: SIZES.height * 0.22,
     // backgroundColor: COLORS.primary,
     // borderBottomLeftRadius: 25,
     // borderBottomRightRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
   },
 
   imageBox: {
     // width: SIZES.width * .2,
     // height: SIZES.height * .1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // borderWidth: 1,
-    marginTop: SIZES.height * 0.03,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // // borderWidth: 1,
+    // marginTop: SIZES.height * 0.03,
   },
 
   image: {
-    width: SIZES.width * 0.2,
-    height: SIZES.width * 0.2,
+    width: SIZES.width * 0.14,
+    height: SIZES.width * 0.14,
     tintColor: COLORS.white,
   },
 

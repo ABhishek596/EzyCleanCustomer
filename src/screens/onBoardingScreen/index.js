@@ -162,7 +162,7 @@ const OnBoardingScreen = ({navigation}) => {
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={COLORS.white} barStyle="dark-content" />
       {/* <View style={globalStyles.center}> */}
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} >
         <FlatList
           ref={ref}
           onMomentumScrollEnd={updateCurrentSlideIndex}

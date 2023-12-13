@@ -10,7 +10,7 @@ const HeaderLeft = ({ showBack,showNotificationButton, title, navigation, }) => 
         <ImageBackground
             source={images.Headimg}
             style={styles.header}
-            resizeMode='cover'
+            resizeMode='stretch'
         >
             <View style={styles.header_row}>
                 <View style={styles.row}>
@@ -50,13 +50,13 @@ const styles = StyleSheet.create({
     // ========== header =================
     header: {
         width: SIZES.width,
-        height: SIZES.height * .24,
+        height: SIZES.height * .20,
         // borderBottomLeftRadius: 30,
         // borderBottomRightRadius: 30,
-        overflow: 'hidden',
+        // overflow: 'hidden',
         alignItems: 'center',
         justifyContent: 'center',
-        tintColor: COLORS.primary,
+        // tintColor: COLORS.primary,
         // paddingVertical: SIZES.height * .03,
     },
 
