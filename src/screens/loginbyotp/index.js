@@ -24,22 +24,22 @@ import { LoginByOtpApi } from '../../redux/actions/authActions';
 //   statusCodes,
 // } from '@react-native-google-signin/google-signin';
 // import Loader from '../../component/Loader/Loader';
-// import messaging from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 
 const Logbyotp = ({ navigation, LoginByOtpApi, AuthFunction, GoogleLoginApi }) => {
   const [loading, setLoading] = useState(false);
   const [secure, setSecure] = useState(true);
   const [fcm, setFcm] = useState();
 
-  // useEffect(() => {
-  //   getDeviceToken();
-  // }, []);
+  useEffect(() => {
+    getDeviceToken();
+  }, []);
 
-  // const getDeviceToken = async () => {
-  //   let fcmToken = await messaging().getToken();
-  //   console.log('signin fcm : ', fcmToken);
-  //   setFcm(fcmToken);
-  // };
+  const getDeviceToken = async () => {
+    let fcmToken = await messaging().getToken();
+    console.log('signin fcm : ', fcmToken);
+    setFcm(fcmToken);
+  };
 
   const [postData, setPostData] = useState({
     phone_number: null,

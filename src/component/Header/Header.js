@@ -28,7 +28,7 @@ const Header = ({onPress, source, navigation}) => {
         source={require('../../assets/images/Headimg.png')}
         resizeMode="stretch"
         style={styles.container}>
-        <View>
+        <View style={{top:SIZES.height * -0.015}}>
           <TouchableOpacity
             style={{
               position: 'absolute',
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: SIZES.width,
-    height: SIZES.height * 0.22,
+    height: SIZES.height * 0.20,
     // backgroundColor: COLORS.primary,
     // borderBottomLeftRadius: 25,
     // borderBottomRightRadius: 25,

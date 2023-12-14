@@ -171,7 +171,7 @@ const Home = ({
           <ImageBackground
             source={images.bg}
             style={styles.header_bg}
-            resizeMode="contain">
+            resizeMode='contain'>
             <View style={styles.header_row}>
               <View style={styles.logo_box}>
                 <Image
@@ -200,7 +200,7 @@ const Home = ({
                   onPress={() => navigation.navigate('Notification')}>
                   <Icons
                     name={'notification'}
-                    size={22}
+                    size={16}
                     color={COLORS.secondary}
                   />
                 </TouchableOpacity>
@@ -313,7 +313,7 @@ const Home = ({
                     data={category} //categoryList
                     renderItem={({item, index}) => (
                       <CategoryCard
-                        marginLeft={index == 0 ? SIZES.width * 0.05 : null}
+                        marginLeft={SIZES.width * 0.03}
                         mr={
                           index == categoryList?.length - 1
                             ? SIZES.width * 0.05

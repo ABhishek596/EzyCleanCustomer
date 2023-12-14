@@ -7,13 +7,13 @@ export default StyleSheet.create({
     width: SIZES.width,
     // borderBottomLeftRadius: 30,
     // borderBottomRightRadius: 30,
-    overflow: 'hidden',
+    // overflow: 'hidden',
     alignItems: 'center',
-    paddingVertical: SIZES.height * 0.03,
+    // paddingVertical: SIZES.height * 0.03,
     tintColor: COLORS.primary,
-    height: SIZES.height * 0.37,
-    marginTop:SIZES.height * -0.005,
-    // alignSelf:'center'
+    height: SIZES.height * 0.1832,
+    // marginTop:SIZES.height * -0.005,
+    alignSelf:'center'
   },
 
   header_row: {
@@ -21,7 +21,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: SIZES.height * 0.02,
+    marginTop: SIZES.height * 0.035,
     // marginBottom: SIZES.height * .01,
     // borderWidth: 1,
   },
@@ -43,27 +43,29 @@ export default StyleSheet.create({
   },
 
   notification_btn: {
-    width: SIZES.width * 0.1,
-    height: SIZES.width * 0.1,
+    width: SIZES.width * 0.08,
+    height: SIZES.width * 0.08,
     borderRadius: SIZES.width * 0.05,
     backgroundColor: COLORS.white,
     // borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    top: SIZES.height * 0.01,
   },
 
   logo_box: {
-    width: SIZES.width * 0.2,
-    height: SIZES.width * 0.2,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: SIZES.width * 0.08,
+    height: SIZES.width * 0.08,
+    // top: SIZES.height * 0.001,
+    // alignItems: 'center',
+    // justifyContent: 'center',
     // borderRadius: SIZES.width * 0.02,
     // backgroundColor: COLORS.white,
   },
 
   logo: {
-    width: SIZES.width * 0.2,
-    height: SIZES.width * 0.2,
+    width: SIZES.width * 0.08,
+    height: SIZES.width * 0.08,
     // borderRadius: SIZES.width * 0.02,
     tintColor: COLORS.white,
     // marginLeft: SIZES.width * 0.0,
@@ -77,21 +79,23 @@ export default StyleSheet.create({
     width: SIZES.width * 0.9,
     // alignItems: 'center',
     // marginVertical: SIZES.height * .01,
+    marginTop:SIZES.height * -0.005,
   },
 
   image_box: {
-    width: SIZES.width * 0.12,
-    height: SIZES.width * 0.12,
+    width: SIZES.width * 0.085,
+    height: SIZES.width * 0.085,
     borderRadius: 180/2,
     overflow: 'hidden',
     marginRight: SIZES.width * 0.03,
     backgroundColor: COLORS.light,
+    top: SIZES.height * 0.01,
     // marginBottom: SIZES.height * .015,
   },
 
   profile: {
-    width: SIZES.width * 0.12,
-    height: SIZES.width * 0.12,
+    width: SIZES.width * 0.085,
+    height: SIZES.width * 0.085,
     borderRadius: 180/2,
     // overflow: 'hidden',
     // marginRight: SIZES.width * .03,
@@ -100,19 +104,20 @@ export default StyleSheet.create({
 
   user_name: {
     fontFamily: FONTS.semiBold,
-    fontSize: SIZES.width * 0.074,
+    fontSize: SIZES.width * 0.045,
     // marginBottom: -5,
     color: COLORS.white,
-    marginTop:SIZES.height * 0.015,
-    fontWeight:'bold'
+    // marginTop:SIZES.height * 0.015,
+    fontWeight:'bold',
+    // marginTop:SIZES.height * 0.015,
   },
 
   text: {
     fontFamily: FONTS.regular,
     // fontSize: 12,
-    fontSize: SIZES.width * 0.041,
+    fontSize: SIZES.width * 0.03,
     // marginBottom: -5,
-    marginTop:SIZES.height * 0.008,
+    // marginTop:SIZES.height * 0.008,
     color: COLORS.white,
   },
 

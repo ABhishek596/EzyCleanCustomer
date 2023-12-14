@@ -27,7 +27,7 @@ const HeaderLeft = ({ showBack,showNotificationButton, title, navigation, }) => 
                     <TouchableOpacity style={styles.notification_btn}
                     onPress={() => navigation.navigate("Notification")}
                     >
-                        <Icons name={"notification"} size={22} color={COLORS.secondary} />
+                        <Icons name={"notification"} size={16} color={COLORS.secondary} />
                     </TouchableOpacity>
                 }
             </View>
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
     },
 
     notification_btn: {
-        width: SIZES.width * .1,
-        height: SIZES.width * .1,
+        width: SIZES.width * .08,
+        height: SIZES.width * .08,
         borderRadius: SIZES.width * .05,
         backgroundColor: COLORS.white,
         // borderWidth: 1,
