@@ -27,36 +27,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import {GetDiscountList} from '../../redux/actions/homeAction';
 import {GetUserDataApi} from '../../redux/actions/authActions';
 import axios from 'axios';
-const OfferItem = ({item}) => {
-  return (
-    <LinearGradient
-      colors={['#651898', '#2C0D8F']}
-      style={[styles.offer_box]}
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}>
-      <View>
-        <View style={globalStyles.row}>
-          <Text style={styles.offer}>{item.promo_name}</Text>
-          {/* <Text style={styles.off_text}>off</Text> */}
-        </View>
-        <Text style={styles.offer_text}>{`${item.description.slice(
-          0,
-          34,
-        )}...`}</Text>
-
-        <View style={styles.offer_btn}>
-          <Text style={styles.offer_btn_text}>{item.promo_code}</Text>
-        </View>
-      </View>
-
-      <Image
-        source={require('../../assets/images/offer.png')}
-        style={styles.offer_image}
-        resizeMode="contain"
-      />
-    </LinearGradient>
-  );
-};
 
 const Home = ({
   navigation,
@@ -70,6 +40,39 @@ const Home = ({
   GetDiscountList,
   GetUserDataApi,
 }) => {
+  const OfferItem = ({item}) => {
+    return (
+      <Pressable onPress={() => navigation.navigate('Discount')}>
+        <LinearGradient
+          colors={['#651898', '#2C0D8F']}
+          style={[styles.offer_box]}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}>
+          <View>
+            <View style={globalStyles.row}>
+              <Text style={styles.offer}>{item.promo_name}</Text>
+              {/* <Text style={styles.off_text}>off</Text> */}
+            </View>
+            <Text style={styles.offer_text}>{`${item.description.slice(
+              0,
+              34,
+            )}...`}</Text>
+
+            <View style={styles.offer_btn}>
+              <Text style={styles.offer_btn_text}>{item.promo_code}</Text>
+            </View>
+          </View>
+
+          <Image
+            source={require('../../assets/images/offer.png')}
+            style={styles.offer_image}
+            resizeMode="contain"
+          />
+        </LinearGradient>
+      </Pressable>
+    );
+  };
+
   useEffect(() => {
     let data = '';
 
@@ -171,14 +174,22 @@ const Home = ({
           <ImageBackground
             source={images.bg}
             style={styles.header_bg}
-            resizeMode='contain'>
+            resizeMode="contain">
             <View style={styles.header_row}>
-              <View style={styles.logo_box}>
-                <Image
-                  source={images.logo}
-                  style={styles.logo}
-                  resizeMode="center"
-                />
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={styles.logo_box}>
+                  <Image
+                    source={images.logo}
+                    style={styles.logo}
+                    resizeMode="center"
+                  />
+                </View>
+
+                <View style={{marginLeft: SIZES.width * 0.04}}>
+                  {/* <Text style={styles.user_name}>Hello {userData && (`${userData.name}`)}</Text> */}
+                  <Text style={styles.user_name}>{userData?.name}</Text>
+                  <Text style={styles.text}>Welcome Back</Text>
+                </View>
               </View>
               <View style={globalStyles.row}>
                 <View style={styles.image_box}>
@@ -205,12 +216,6 @@ const Home = ({
                   />
                 </TouchableOpacity>
               </View>
-            </View>
-
-            <View style={styles.profile_box}>
-              {/* <Text style={styles.user_name}>Hello {userData && (`${userData.name}`)}</Text> */}
-              <Text style={styles.user_name}>{userData?.name}</Text>
-              <Text style={styles.text}>Welcome Back</Text>
             </View>
 
             {/* <TouchableOpacity style={styles.loc_btn}>
@@ -302,11 +307,11 @@ const Home = ({
               <View style={globalStyles.center}>
                 <View style={styles.row1}>
                   <Text style={styles.title}>Category</Text>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                   // onPress={() => navigation.navigate("Category")}
                   >
                     <Text style={styles.see_all}>See All</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
                 {category && (
                   <FlatList

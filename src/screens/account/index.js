@@ -47,7 +47,7 @@ const Account = ({
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   // console.log('GetUserDataApi--------', GetUserDataApi);
-  // console.log('userDataAccount/Profile--------', userData);
+  console.log('userDataAccount/Profile--------', userData);
   // const user = useSelector(state => state.auth);
   // console.log('userDatassssssss--------', user);
   //   axios(config)
@@ -159,7 +159,9 @@ const Account = ({
               </TouchableOpacity>
             </View>
 
-            <View style={styles.profile_box}>
+        
+          </ImageBackground>
+          <View style={styles.profile_box}>
               {/* <Image source={!userData?.profile_picture.slice(-10, -4)  == "avatar" ? {uri: userData.profile_picture} : images.profile1} style={styles.profile}
                                 resizeMode='stretch'
                             />  */}
@@ -177,7 +179,6 @@ const Account = ({
               <Text style={styles.user_name}>{`${userData?.name}`}</Text>
               <Text style={styles.text}>Welcome Back</Text>
             </View>
-          </ImageBackground>
           {/* button container */}
           <View style={styles.btn_container}>
             <ScreenNavigation
@@ -205,10 +206,11 @@ const Account = ({
               onPress={() => navigation.navigate('Faqs')}>
               FAQs
             </ScreenNavigation>
-            {/* <ScreenNavigation
-                            iconName={"setting"}
-                            onPress={() => navigation.navigate("PaymentSuccess")}  //ActivePlan Subscription
-                        >Settings</ScreenNavigation> */}
+            <ScreenNavigation
+              iconName={'subsc'} //ActivePlan Subscription
+              onPress={() => navigation.navigate('ActivePlan')}>
+              Subscription
+            </ScreenNavigation>
             <ScreenNavigation
               iconName={'logout'}
               // onPress={LogoutApi}

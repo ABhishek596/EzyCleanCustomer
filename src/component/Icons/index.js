@@ -249,6 +249,14 @@ const Icons = ({name, color, size, style}) => {
                 resizeMode="contain"
               />
             );
+            case 'subsc':
+              return (
+                <Image
+                  source={icons.subsc}
+                  style={[{tintColor: color, height: size, width: size}, style]}
+                  resizeMode="contain"
+                />
+              );
 
     // socail icons
     case 'google':

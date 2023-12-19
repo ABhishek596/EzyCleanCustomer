@@ -5,13 +5,15 @@ export default StyleSheet.create({
 // ========== header =================
     header_bg: {
         width: SIZES.width,
-        // height: SIZES.height * .35, 
         // borderBottomLeftRadius: 30,
-        // borderBottomRightRadius: 30, 
-        overflow: 'hidden',
+        // borderBottomRightRadius: 30,
+        // overflow: 'hidden',
         alignItems: 'center',
-        height:SIZES.height * .37, 
-        marginTop:SIZES.height * -0.005,
+        // paddingVertical: SIZES.height * 0.03,
+        tintColor: COLORS.primary,
+        height: SIZES.height * 0.1831,
+        // marginTop:SIZES.height * -0.005,
+        alignSelf:'center'
     },
 
     header_row: {
@@ -45,6 +47,9 @@ export default StyleSheet.create({
     // ============= profile ==================
     profile_box: {
         alignItems: 'center',
+        alignSelf:'center',
+        marginTop:SIZES.height * -.09,
+        
     },
 
     image_box: {
@@ -52,7 +57,7 @@ export default StyleSheet.create({
         height: SIZES.width * .28,
         // borderRadius: SIZES.width * .3,
         overflow: 'hidden',
-        marginBottom: SIZES.height * .015,
+        // marginBottom: SIZES.height * .015,
         backgroundColor: COLORS.light,
         borderRadius:180/2
     },
@@ -70,15 +75,16 @@ export default StyleSheet.create({
     title: {
         width: SIZES.width * .9,
         fontFamily: FONTS.semiBold,
-        fontSize: 24,
-        marginBottom: -5,
+        fontSize: SIZES.width * .065,
+        // marginBottom: -5,
         color: COLORS.secondary,
         marginBottom: SIZES.height * .01,
     },
 
     box: {
         alignItems: 'center',
-        marginTop: SIZES.height * .03,
+        // marginTop: SIZES.height * .03,
+       
     },
 
     edit_btn: {

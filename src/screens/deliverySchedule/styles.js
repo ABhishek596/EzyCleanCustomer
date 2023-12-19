@@ -21,8 +21,8 @@ export default StyleSheet.create({
   },
 
   date_btn: {
-    width: SIZES.width * 0.16,
-    height: SIZES.height * 0.14,
+    width: SIZES.width * 0.12,
+    height: SIZES.height * 0.10,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: SIZES.width * 0.015,

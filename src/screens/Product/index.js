@@ -271,66 +271,73 @@ const Product = ({
           key={(_, index) => index}
         />
       </View>
-      <View
+
+      <ScrollView
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginHorizontal: SIZES.width * 0.03,
+          backgroundColor: COLORS.white,
+          width: SIZES.width,
+          alignSelf:'center',
+          
         }}>
-        <LinearGradient
-          colors={['#E9C7FF', '#CFC0FF']}
-          style={{
-            backgroundColor: '#fff',
-            width: SIZES.width * 0.22,
-            borderRadius: SIZES.width * 0.03,
-            alignItems: 'center',
-            marginTop: SIZES.height * 0.023,
-            // flexGrow: 1
-          }} // Your styles for the LinearGradient
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}>
-          <FlatList
-            data={serviceList}
-            renderItem={({item, index}) => (
-              <CategoryButton
-                // marginLeft={index == 0 ? SIZES.width * 0.03 : 0}
-                marginBottom={SIZES.height * 0.007}
-                title={item.service?.service_name}
-                isActive={serviceId == item.service?.id ? true : false}
-                onPress={() => {
-                  // console.log('idid.service?di', item.id);
-                  // setServiceId(item.id);
-                  handleServicePress(item.id);
-                }}
-                titlestyl={{
-                  // fontFamily: FONTS.semiBold,
-                  fontSize: SIZES.width * 0.035,
-                  // color: COLORS.secondary,
-                  width: SIZES.width * 0.16,
-                  alignSelf: 'center',
-                  // marginBottom: -4,
-                }}
-                style={{
-                  borderWidth: 0,
-                  width: SIZES.width * 0.17,
-                  height: SIZES.width * 0.13,
-                  alignSelf: 'center',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginRight: SIZES.width * 0.0,
-                }}
+        {loading ? (
+          <Loading />
+        ) : (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignSelf:'center'
+              // marginHorizontal: SIZES.width * 0.03,
+            }}>
+            <LinearGradient
+              colors={['#E9C7FF', '#CFC0FF']}
+              style={{
+                backgroundColor: '#fff',
+                width: SIZES.width * 0.22,
+                borderRadius: SIZES.width * 0.03,
+                alignItems: 'center',
+                marginTop: SIZES.height * 0.023,
+                // flexGrow: 1
+              }} // Your styles for the LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}>
+              <FlatList
+                data={serviceList}
+                renderItem={({item, index}) => (
+                  <CategoryButton
+                    // marginLeft={index == 0 ? SIZES.width * 0.03 : 0}
+                    marginBottom={SIZES.height * 0.007}
+                    title={item.service?.service_name}
+                    isActive={serviceId == item.service?.id ? true : false}
+                    onPress={() => {
+                      // console.log('idid.service?di', item.id);
+                      // setServiceId(item.id);
+                      handleServicePress(item.id);
+                    }}
+                    titlestyl={{
+                      // fontFamily: FONTS.semiBold,
+                      fontSize: SIZES.width * 0.035,
+                      // color: COLORS.secondary,
+                      width: SIZES.width * 0.16,
+                      alignSelf: 'center',
+                      // marginBottom: -4,
+                    }}
+                    style={{
+                      borderWidth: 0,
+                      width: SIZES.width * 0.17,
+                      height: SIZES.width * 0.13,
+                      alignSelf: 'center',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: SIZES.width * 0.0,
+                    }}
+                  />
+                )}
+                // horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                key={(_, index) => index}
               />
-            )}
-            // horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            key={(_, index) => index}
-          />
-        </LinearGradient>
-        <ScrollView
-          style={{backgroundColor: COLORS.white, width: SIZES.width * 0.72}}>
-          {loading ? (
-            <Loading />
-          ) : (
+            </LinearGradient>
             <View style={{flex: 1}}>
               {filteredProducts && (
                 <FlatList
@@ -401,12 +408,12 @@ const Product = ({
           //   </View> */}
               {/* )} */}
             </View>
-          )}
+          </View>
 
-          {/* <Text style={{alignSelf:'center', fontSize:20}}>In Progress</Text> */}
-        </ScrollView>
-      </View>
-      <View style={{position: 'absolute', bottom: 0}}>
+        )}
+
+        {/* <Text style={{alignSelf:'center', fontSize:20}}>In Progress</Text> */}
+        <View style={{}}>
         {filteredProducts && (
           <View style={styles.bottom_container}>
             <View style={styles.bottom_btn_box}>
@@ -421,7 +428,7 @@ const Product = ({
               colors={['#651898', '#2C0D8F']}
               style={{
                 // backgroundColor: COLORS.secondary,
-                height: SIZES.width * 0.28,
+                height: SIZES.width * 0.22,
                 width: SIZES.width * 1.0,
                 borderTopLeftRadius: SIZES.width * 0.1,
                 borderTopRightRadius: SIZES.width * 0.1,
@@ -452,7 +459,7 @@ const Product = ({
                   ₹ 400
                 </Text>
               </View>
-              <View
+              {/* <View
                 style={{
                   height: SIZES.height * 0.01,
                   borderTopWidth: 1,
@@ -461,11 +468,14 @@ const Product = ({
                   borderTopColor: COLORS.white,
                   marginTop: SIZES.height * 0.02,
                 }}
-              />
+              /> */}
             </LinearGradient>
           </View>
         )}
       </View>
+
+      </ScrollView>
+    
     </View>
   );
 };

@@ -32,7 +32,7 @@ import discount from '../../screens/discount';
 // import addCurrentAddress from '../../screens/addCurrentAddress';
 // import Subscription from '../../screens/subscription';
 // import SubscriptionDetails from '../../screens/subscriptionDetails';
-// import ActivePlan from '../../screens/activePlan';
+import ActivePlan from '../../screens/activePlan';
 // import CheckOut from '../../screens/checkout';
 import AddOnScreen from '../../screens/addOnScreen';
 // import QrScreen from '../../screens/qrscreen';
@@ -311,6 +311,19 @@ const StackNavigator = () => {
             <HeaderLeft
               navigation={navigation}
               title={'Coupon'}
+              showNotificationButton={true}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="ActivePlan"
+        component={ActivePlan}
+        options={({navigation}) => ({
+          header: () => (
+            <HeaderLeft
+              navigation={navigation}
+              title={'Active Subscription'}
               showNotificationButton={true}
             />
           ),

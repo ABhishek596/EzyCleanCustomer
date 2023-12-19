@@ -419,6 +419,7 @@ const AddOnScreen = ({
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView style={{flex:1}}>
       <View style={{height: SIZES.height * 0.4}}>
         <FlatList
           data={addonsList}
@@ -721,7 +722,7 @@ const AddOnScreen = ({
         </View>
       </Modal>
 
-      <View style={{position: 'absolute', bottom: 0}}>
+      <View style={{}}>
         <View // Button Add Coupon Check Discount
           style={{
             flexDirection: 'row',
@@ -752,7 +753,6 @@ const AddOnScreen = ({
                 borderWidth: 2,
                 borderColor: COLORS.secondary,
                 backgroundColor: COLORS.white,
-
                 alignItems: 'center',
               },
             ]}
@@ -769,11 +769,11 @@ const AddOnScreen = ({
 
         <View style={styles.bottom_container}>
           {/* <View style={styles.bottom_btn_box}>     //Button Continue Order
-  <Button1
-    colors={['#FFFFFF','#FFFFFF']}
-    backgroundColor={COLORS.white}
-    textColor={COLORS.secondary}
-    style={{
+      <Button1
+      colors={['#FFFFFF','#FFFFFF']}
+      backgroundColor={COLORS.white}
+      textColor={COLORS.secondary}
+     style={{
       width: SIZES.width * 0.43,
       borderWidth: 2,
       borderRadius: SIZES.width * 0.02,
@@ -895,6 +895,7 @@ const AddOnScreen = ({
           <View style={{height: SIZES.height * 0.01}} />
         </LinearGradient>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -25,8 +25,8 @@ const Header = ({onPress, source, navigation}) => {
         // colors={["#1C3FAA", "#2351DB"]}
         style={styles.container}> */}
       <ImageBackground
-        source={require('../../assets/images/Headimg.png')}
-        resizeMode="stretch"
+        source={require('../../assets/images/bg.png')}
+        resizeMode='contain'
         style={styles.container}>
         <View style={{top:SIZES.height * -0.015}}>
           <TouchableOpacity
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: SIZES.width,
-    height: SIZES.height * 0.20,
+    height: SIZES.height * 0.1831,
     // backgroundColor: COLORS.primary,
     // borderBottomLeftRadius: 25,
     // borderBottomRightRadius: 25,

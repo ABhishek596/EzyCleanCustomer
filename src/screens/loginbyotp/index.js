@@ -1,32 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Linking, StatusBar } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, Linking, StatusBar} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {connect} from 'react-redux';
 import Button1 from '../../component/button/Button1';
 // import Icons from '../../component/Icons';
 import InputWithIcon from '../../component/input/InputWithIcon';
 import InputWithIcon1 from '../../component/input/InputWithIcon1';
-import { COLORS, SIZES } from '../../constants';
+import {COLORS, SIZES} from '../../constants';
 import styles from './styles';
-// import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from 'react-native-toasty';
 import globalStyles from '../../styles/globalStyles';
-import { LoginByOtpApi } from '../../redux/actions/authActions';
-// import {
-//   AuthFunction,
-//   GoogleLoginApi,
-//   LoginApi,
-// } from '../../redux/actions/authActions';
-// import Loading from '../../component/loading';
+import {LoginByOtpApi} from '../../redux/actions/authActions';
+import {
+  AuthFunction,
+  GoogleLoginApi,
+  LoginApi,
+} from '../../redux/actions/authActions';
+import Loading from '../../component/loading';
 // import {googleLogin} from '../../services/socialLogin';
 // import {
 //   GoogleSignin,
 //   GoogleSigninButton,
 //   statusCodes,
 // } from '@react-native-google-signin/google-signin';
-// import Loader from '../../component/Loader/Loader';
+import Loader from '../../component/Loader/Loader';
 import messaging from '@react-native-firebase/messaging';
 
-const Logbyotp = ({ navigation, LoginByOtpApi, AuthFunction, GoogleLoginApi }) => {
+const Logbyotp = ({
+  navigation,
+  LoginByOtpApi,
+  AuthFunction,
+  GoogleLoginApi,
+}) => {
   const [loading, setLoading] = useState(false);
   const [secure, setSecure] = useState(true);
   const [fcm, setFcm] = useState();
@@ -54,13 +59,11 @@ const Logbyotp = ({ navigation, LoginByOtpApi, AuthFunction, GoogleLoginApi }) =
 
   const handleSubmit = () => {
     // navigation.navigate('Otp');
-    if (postData.phone_number!== " ") {
+    if (postData.phone_number !== ' ') {
       // LoginApi({...postData, fcm_token: fcm}, navigation, data =>
       //   setLoading(data),
       // );
-      LoginByOtpApi(postData, navigation, data =>
-        setLoading(data),
-      );
+      LoginByOtpApi(postData, navigation, data => setLoading(data));
       setPostData({
         phone_number: null,
       });
@@ -128,7 +131,8 @@ const Logbyotp = ({ navigation, LoginByOtpApi, AuthFunction, GoogleLoginApi }) =
           <View style={globalStyles.title_box}>
             <Text style={globalStyles.title}>Login By OTP</Text>
             <Text style={globalStyles.text}>
-              Enter your phone number for the verification process we will send 4 digits code to your phone nomber.
+              Enter your phone number for the verification process we will send
+              4 digits code to your phone nomber.
             </Text>
           </View>
           <View
@@ -197,12 +201,9 @@ const Logbyotp = ({ navigation, LoginByOtpApi, AuthFunction, GoogleLoginApi }) =
             // disabled={loading}
             // loading={loading}
             onPress={handleSubmit}
-            style={{ marginTop: 20 }}
-          >
+            style={{marginTop: 20}}>
             Send Code
           </Button1>
-
-
 
           {/* <View style={globalStyles.center}>
             <View style={styles.or_box}>
@@ -250,3 +251,65 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(Logbyotp);
 // export default Logbyotp;
 
+// import React, { useState, useEffect } from 'react';
+// import { View, Text, TextInput, Button } from 'react-native';
+// import auth from '@react-native-firebase/auth';
+
+// function LogByOTP() {
+//   const [confirm, setConfirm] = useState(null);
+//   const [code, setCode] = useState('');
+
+//   useEffect(() => {
+//     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+//     return () => subscriber(); // unsubscribe on unmount
+//   }, []);
+
+//   function onAuthStateChanged(user) {
+//     if (user) {
+//       // Handle successful login, e.g., navigate to another screen
+//       console.log('User logged in:', user);
+//     }
+//   }
+
+//   async function signInWithPhoneNumber(phoneNumber) {
+//     try {
+//       const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+//       setConfirm(confirmation);
+//     } catch (error) {
+//       console.log('Error sending OTP:', error.message);
+//     }
+//   }
+
+//   async function confirmCode() {
+//     try {
+//       await confirm.confirm(code);
+//     } catch (error) {
+//       console.log('Invalid code:', error.message);
+//     }
+//   }
+
+//   if (!confirm) {
+//     return (
+//       <View>
+//         <Button
+//           title="Phone Number Sign In"
+//           onPress={() => signInWithPhoneNumber('+91 8319211351')}
+//         />
+//       </View>
+//     );
+//   }
+
+//   return (
+//     <View>
+//       <Text>Enter OTP:</Text>
+//       <TextInput
+//         value={code}
+//         onChangeText={(text) => setCode(text)}
+//         keyboardType="numeric"
+//       />
+//       <Button title="Confirm Code" onPress={confirmCode} />
+//     </View>
+//   );
+// }
+
+// export default LogByOTP;

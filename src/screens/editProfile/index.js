@@ -5,6 +5,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Image,
+  SafeAreaView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import globalStyles from '../../styles/globalStyles';
@@ -129,26 +130,28 @@ const EditProfile = ({
       {loading ? (
         <Loading />
       ) : (
-        <View style={globalStyles.container}>
-          <StatusBar
-            backgroundColor="transparent"
-            translucent={true}
-            barStyle="light-content"
-          />
+        <SafeAreaView style={{flex: 1}}>
+          <View style={globalStyles.container}>
+            <StatusBar
+              backgroundColor="transparent"
+              translucent={true}
+              barStyle="light-content"
+            />
 
-          {/* header */}
-          <ImageBackground
-            source={images.bg}
-            style={styles.header_bg}
-            resizeMode="contain">
-            <View style={styles.header_row}>
-              <TouchableOpacity
-                style={styles.back_btn}
-                onPress={() => navigation.goBack()}>
-                <Icons name={'back'} size={22} color={COLORS.white} />
-              </TouchableOpacity>
-              <Text style={styles.page_title}>Edit Profile</Text>
-            </View>
+            {/* header */}
+            <ImageBackground
+              source={images.bg}
+              style={styles.header_bg}
+              resizeMode="contain">
+              <View style={styles.header_row}>
+                <TouchableOpacity
+                  style={styles.back_btn}
+                  onPress={() => navigation.goBack()}>
+                  <Icons name={'back'} size={22} color={COLORS.white} />
+                </TouchableOpacity>
+                <Text style={styles.page_title}>Edit Profile</Text>
+              </View>
+            </ImageBackground>
 
             <TouchableOpacity style={styles.profile_box} onPress={ImagePick}>
               <View style={styles.image_box}>
@@ -167,86 +170,152 @@ const EditProfile = ({
                 <Icons name={'edit'} size={15} color={COLORS.secondary} />
               </TouchableOpacity>
             </TouchableOpacity>
-          </ImageBackground>
+            <View style={{height:SIZES.height * .05}}/>
+            <View style={{flex: 1}}>
+              {/* button container */}
+              <KeyboardAwareScrollView
+                keyboardShouldPersistTaps={'handled'}
+                showsVerticalScrollIndicator={false}
+                // style={{top: SIZES.height * -0.08, flex: 1}}
+                >
+                <View style={styles.box}>
+                  <Text style={styles.title}>Basic Details</Text>
 
-          {/* button container */}
-          <KeyboardAwareScrollView
-            keyboardShouldPersistTaps={'handled'}
-            showsVerticalScrollIndicator={false}>
-            <View style={styles.box}>
-              <Text style={styles.title}>Basic Details</Text>
+                  <InputWithIcon
+                    placeholder={'Enter your Name'}
+                    leftIcon={'user'}
+                    label={'First Name'}
+                    value={postData.first_name}
+                    onChangeText={text => handleChange('customer_name', text)}
+                  />
+                  <InputWithIcon
+                    placeholder={'Enter your Last Name'}
+                    leftIcon={'user'}
+                    label={'Last Name'}
+                    value={postData.last_name}
+                    onChangeText={text => handleChange('customer_name', text)}
+                  />
 
-              <InputWithIcon
-                placeholder={'Enter your Name'}
-                leftIcon={'user'}
-                label={'First Name'}
-                value={postData.first_name}
-                onChangeText={text => handleChange('customer_name', text)}
-              />
-              <InputWithIcon
-                placeholder={'Enter your Last Name'}
-                leftIcon={'user'}
-                label={'Last Name'}
-                value={postData.last_name}
-                onChangeText={text => handleChange('customer_name', text)}
-              />
-
-              <InputWithIcon
-                placeholder={'Email Address'}
-                leftIcon={'email'}
-                label={'Email Address'}
-                // value={userData?.customer_details?.email}
-                value={postData.email}
-                editable={false}
-              />
-              <View
-                style={{
-                  alignSelf: 'flex-start',
-                  marginBottom: SIZES.width * 0.02,
-                  marginLeft: SIZES.width * 0.05,
-                }}>
-                <Text
-                  style={{
-                    textAlign: 'left',
-                    color: COLORS.blueezy,
-                    fontSize: SIZES.body3,
-                    // fontWeight: 'bold',
-                  }}>
-                  Email Password
-                </Text>
-              </View>
-              <InputWithIcon1
-                placeholder={'Email Password'}
-                // leftIcon={'lock'}
-                rightIcon={secure ? 'eye-off' : 'eye'}
-                onPress={() => setSecure(!secure)}
-                secureTextEntry={secure}
-                value={postData.password}
-                onChangeText={text => handleChange('password', text)}
-              />
-
-              <InputWithIcon
-                placeholder={'Phone Number'}
-                leftIcon={'call'}
-                label={'Phone Number'}
-                keyboardType={'phone-pad'}
-                maxLength={10}
-                value={postData.phone_number}
-                onChangeText={text => handleChange('phone_number', text)}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  width: SIZES.width * 0.9,
-                  alignSelf: 'center',
-                }}>
-                <View>
+                  <InputWithIcon
+                    placeholder={'Email Address'}
+                    leftIcon={'email'}
+                    label={'Email Address'}
+                    // value={userData?.customer_details?.email}
+                    value={postData.email}
+                    editable={false}
+                  />
                   <View
                     style={{
                       alignSelf: 'flex-start',
                       marginBottom: SIZES.width * 0.02,
-                      // marginLeft: SIZES.width * .05,
+                      marginLeft: SIZES.width * 0.05,
+                    }}>
+                    <Text
+                      style={{
+                        textAlign: 'left',
+                        color: COLORS.blueezy,
+                        fontSize: SIZES.body3,
+                        // fontWeight: 'bold',
+                      }}>
+                      Email Password
+                    </Text>
+                  </View>
+                  <InputWithIcon1
+                    placeholder={'Email Password'}
+                    // leftIcon={'lock'}
+                    rightIcon={secure ? 'eye-off' : 'eye'}
+                    onPress={() => setSecure(!secure)}
+                    secureTextEntry={secure}
+                    value={postData.password}
+                    onChangeText={text => handleChange('password', text)}
+                  />
+
+                  <InputWithIcon
+                    placeholder={'Phone Number'}
+                    leftIcon={'call'}
+                    label={'Phone Number'}
+                    keyboardType={'phone-pad'}
+                    maxLength={10}
+                    value={postData.phone_number}
+                    onChangeText={text => handleChange('phone_number', text)}
+                  />
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      width: SIZES.width * 0.9,
+                      alignSelf: 'center',
+                    }}>
+                    <View>
+                      <View
+                        style={{
+                          alignSelf: 'flex-start',
+                          marginBottom: SIZES.width * 0.02,
+                          // marginLeft: SIZES.width * .05,
+                        }}>
+                        <Text
+                          style={{
+                            textAlign: 'left',
+                            color: COLORS.blueezy,
+                            fontSize: SIZES.body3,
+                          }}>
+                          Date of Birth
+                        </Text>
+                      </View>
+                      <InputWithIcon1
+                        placeholder={'D.O.B.'}
+                        // leftIcon={'lock'}
+                        rightIcon={dob ? 'down-outline' : 'up-outline'}
+                        onPress={() => setDob(!dob)}
+                        secureTextEntry={false}
+                        value={postData.date_of_birth}
+                        onChangeText={text => handleChange('password', text)}
+                        inputStyle={{
+                          width: SIZES.width * 0.4,
+                          alignSelf: 'flex-start',
+                        }}
+                        inputTextStyle={{width: SIZES.width * 0.29}}
+                        style={{marginLeft: SIZES.width * 0.02}}
+                      />
+                    </View>
+                    <View>
+                      <View
+                        style={{
+                          alignSelf: 'flex-start',
+                          marginBottom: SIZES.width * 0.02,
+                          // marginLeft: SIZES.width * .05,
+                        }}>
+                        <Text
+                          style={{
+                            textAlign: 'left',
+                            color: COLORS.blueezy,
+                            fontSize: SIZES.body3,
+                          }}>
+                          Gender
+                        </Text>
+                      </View>
+                      <InputWithIcon1
+                        placeholder={'Gender'}
+                        // leftIcon={'lock'}
+                        rightIcon={gender ? 'down-outline' : 'up-outline'}
+                        onPress={() => setGender(!gender)}
+                        secureTextEntry={false}
+                        value={postData.gender}
+                        onChangeText={text => handleChange('password', text)}
+                        inputStyle={{
+                          width: SIZES.width * 0.4,
+                          alignSelf: 'flex-start',
+                        }}
+                        inputTextStyle={{width: SIZES.width * 0.29}}
+                        style={{marginLeft: SIZES.width * 0.02}}
+                      />
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      alignSelf: 'flex-start',
+                      marginBottom: SIZES.width * 0.02,
+                      marginLeft: SIZES.width * 0.05,
                     }}>
                     <Text
                       style={{
@@ -254,105 +323,43 @@ const EditProfile = ({
                         color: COLORS.blueezy,
                         fontSize: SIZES.body3,
                       }}>
-                      Date of Birth
+                      Select City
                     </Text>
                   </View>
                   <InputWithIcon1
-                    placeholder={'D.O.B.'}
+                    placeholder={'Select City'}
                     // leftIcon={'lock'}
-                    rightIcon={dob ? 'down-outline' : 'up-outline'}
-                    onPress={() => setDob(!dob)}
+                    rightIcon={city ? 'down-outline' : 'up-outline'}
+                    onPress={() => setCity(!city)}
                     secureTextEntry={false}
-                    value={postData.date_of_birth}
+                    value={postData.city}
                     onChangeText={text => handleChange('password', text)}
-                    inputStyle={{
-                      width: SIZES.width * 0.4,
-                      alignSelf: 'flex-start',
-                    }}
-                    inputTextStyle={{width: SIZES.width * 0.29}}
-                    style={{marginLeft: SIZES.width * 0.02}}
                   />
-                </View>
-                <View>
-                  <View
+                  <InputWithIcon
+                    placeholder={'Type Address...'}
+                    leftIcon={'location'}
+                    label={'Address'}
+                    value={postData.address}
+                    multiline={true}
+                    numberOfLines={5}
+                    onChangeText={text => handleChange('address', text)}
+                  />
+                  <Button1
+                    disabled={loadingIndicator}
+                    loading={loadingIndicator}
+                    onPress={handleSubmit}
                     style={{
-                      alignSelf: 'flex-start',
-                      marginBottom: SIZES.width * 0.02,
-                      // marginLeft: SIZES.width * .05,
+                      borderRadius: SIZES.width * 0.06,
+                      marginTop: SIZES.height * 0.03,
+                      marginBottom: SIZES.height * 0.02,
                     }}>
-                    <Text
-                      style={{
-                        textAlign: 'left',
-                        color: COLORS.blueezy,
-                        fontSize: SIZES.body3,
-                      }}>
-                      Gender
-                    </Text>
-                  </View>
-                  <InputWithIcon1
-                    placeholder={'Gender'}
-                    // leftIcon={'lock'}
-                    rightIcon={gender ? 'down-outline' : 'up-outline'}
-                    onPress={() => setGender(!gender)}
-                    secureTextEntry={false}
-                    value={postData.gender}
-                    onChangeText={text => handleChange('password', text)}
-                    inputStyle={{
-                      width: SIZES.width * 0.4,
-                      alignSelf: 'flex-start',
-                    }}
-                    inputTextStyle={{width: SIZES.width * 0.29}}
-                    style={{marginLeft: SIZES.width * 0.02}}
-                  />
+                    Update
+                  </Button1>
                 </View>
-              </View>
-              <View
-                style={{
-                  alignSelf: 'flex-start',
-                  marginBottom: SIZES.width * 0.02,
-                  marginLeft: SIZES.width * 0.05,
-                }}>
-                <Text
-                  style={{
-                    textAlign: 'left',
-                    color: COLORS.blueezy,
-                    fontSize: SIZES.body3,
-                  }}>
-                  Select City
-                </Text>
-              </View>
-              <InputWithIcon1
-                placeholder={'Select City'}
-                // leftIcon={'lock'}
-                rightIcon={city ? 'down-outline' : 'up-outline'}
-                onPress={() => setCity(!city)}
-                secureTextEntry={false}
-                value={postData.city}
-                onChangeText={text => handleChange('password', text)}
-              />
-              <InputWithIcon
-                placeholder={'Type Address...'}
-                leftIcon={'location'}
-                label={'Address'}
-                value={postData.address}
-                multiline={true}
-                numberOfLines={5}
-                onChangeText={text => handleChange('address', text)}
-              />
-              <Button1
-                disabled={loadingIndicator}
-                loading={loadingIndicator}
-                onPress={handleSubmit}
-                style={{
-                  borderRadius: SIZES.width * 0.06,
-                  marginTop: SIZES.height * 0.03,
-                  marginBottom: SIZES.height * 0.02,
-                }}>
-                Update
-              </Button1>
+              </KeyboardAwareScrollView>
             </View>
-          </KeyboardAwareScrollView>
-        </View>
+          </View>
+        </SafeAreaView>
       )}
     </>
   );

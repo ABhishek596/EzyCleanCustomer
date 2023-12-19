@@ -50,12 +50,12 @@ export default StyleSheet.create({
     // borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    top: SIZES.height * 0.01,
+    top: SIZES.height * 0.008,
   },
 
   logo_box: {
-    width: SIZES.width * 0.08,
-    height: SIZES.width * 0.08,
+    width: SIZES.width * 0.15,
+    height: SIZES.width * 0.15,
     // top: SIZES.height * 0.001,
     // alignItems: 'center',
     // justifyContent: 'center',
@@ -64,8 +64,8 @@ export default StyleSheet.create({
   },
 
   logo: {
-    width: SIZES.width * 0.08,
-    height: SIZES.width * 0.08,
+    width: SIZES.width * 0.15,
+    height: SIZES.width * 0.15,
     // borderRadius: SIZES.width * 0.02,
     tintColor: COLORS.white,
     // marginLeft: SIZES.width * 0.0,

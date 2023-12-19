@@ -46,6 +46,8 @@ const star_unfill = require('../assets/icons/star_unfill.png');
 const orderPlace = require('../assets/icons/orderPlace.png');
 const appointment = require('../assets/icons/appointment.png');
 const appointment_outline = require('../assets/icons/appointment_outline.png');
+const subsc = require('../assets/icons/subscription.png');
+
  
 export default {
   google,
@@ -93,4 +95,5 @@ export default {
   star_unfill,
   primWash,
   stanWash,
+  subsc,
 };

@@ -4,16 +4,16 @@ import { COLORS, FONTS, SIZES } from "../../constants";
 export default StyleSheet.create({
 // ========== header =================
     header_bg: {
-        width: SIZES.width,
-        // borderBottomLeftRadius: 30,
-        // borderBottomRightRadius: 30, 
-        overflow: 'hidden',
-        alignItems: 'center',
-        // paddingVertical: SIZES.height * .03,
-        height:SIZES.height * .37,
-        marginTop:SIZES.height * -0.005,
-        // paddingTop:SIZES.height * -0.03
-        // marginTop: SIZES.height * -0.03,
+      width: SIZES.width,
+    // borderBottomLeftRadius: 30,
+    // borderBottomRightRadius: 30,
+    // overflow: 'hidden',
+    alignItems: 'center',
+    // paddingVertical: SIZES.height * 0.03,
+    tintColor: COLORS.primary,
+    height: SIZES.height * 0.1832,
+    // marginTop:SIZES.height * -0.005,
+    alignSelf:'center'
     },
 
     header_row: {
@@ -57,6 +57,7 @@ export default StyleSheet.create({
     // ============= profile ==================
     profile_box: {
         alignItems: 'center',
+        top:SIZES.height * -.09,
     },
 
     image_box: {
@@ -82,7 +83,7 @@ export default StyleSheet.create({
         fontFamily: FONTS.medium,
         fontSize: SIZES.width * .044,
         // marginBottom: -5,
-        color: COLORS.white,
+        color: COLORS.secondary,
         marginTop:SIZES.height * -.01,
     },
 
@@ -91,12 +92,13 @@ export default StyleSheet.create({
         // fontSize: 12,
         fontSize: SIZES.width * .031,
         marginBottom: -5,
-        color: COLORS.white,
+        color: COLORS.secondary,
     },
 
     // ================= screen navigation =============
     btn_container: {
         // marginTop: SIZES.height * .03,
+        top: SIZES.height * -.07,
     },
 
     screen_btn: {
