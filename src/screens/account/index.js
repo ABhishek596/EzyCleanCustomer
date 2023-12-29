@@ -228,7 +228,7 @@ const Account = ({
               <Modal
                 transparent={true}
                 visible={isModalVisible}
-                animationType="fade">
+                animationType="slide">
                 <View style={styles.modalContainer}>
                   <LinearGradient
                     colors={['#EDD2FF', '#D9CCFF']}

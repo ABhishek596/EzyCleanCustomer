@@ -43,7 +43,7 @@ const Product = ({
   const [refreshing, setRefreshing] = useState(false);
   const [alldata, setAlldata] = useState();
   // console.log('subsDetails=========>>>>>',subsDetails);
-  // console.log('completedata product from API', productData);
+  console.log('completedata product from API', productData);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -173,11 +173,12 @@ const Product = ({
   //   setItemList(productData);
   // }, [productData]);
 
-  // useEffect(() => {
-  //   GetProductByServiceId();
-  //   GetProductFeatures();
-  //   GetActiveSubscription();
-  // }, []);
+  useEffect(() => {
+    GetAllProduct();
+    GetProductByServiceId();
+    GetProductFeatures();
+    GetActiveSubscription();
+  }, []);
 
   // console.log('itemList', itemList);
 
@@ -276,8 +277,7 @@ const Product = ({
         style={{
           backgroundColor: COLORS.white,
           width: SIZES.width,
-          alignSelf:'center',
-          
+          alignSelf: 'center',
         }}>
         {loading ? (
           <Loading />
@@ -286,11 +286,13 @@ const Product = ({
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignSelf:'center'
+              alignSelf: 'center',
+              left: SIZES.width * 0.02,
               // marginHorizontal: SIZES.width * 0.03,
             }}>
             <LinearGradient
-              colors={['#E9C7FF', '#CFC0FF']}
+              // colors={['#E9C7FF', '#CFC0FF']}
+              colors={['#FFFFFF', '#FFFFFF']}
               style={{
                 backgroundColor: '#fff',
                 width: SIZES.width * 0.22,
@@ -409,57 +411,24 @@ const Product = ({
               {/* )} */}
             </View>
           </View>
-
         )}
 
         {/* <Text style={{alignSelf:'center', fontSize:20}}>In Progress</Text> */}
         <View style={{}}>
-        {filteredProducts && (
-          <View style={styles.bottom_container}>
-            <View style={styles.bottom_btn_box}>
-              <Button1
-                // onPress={() => continueFunc()}
-                onPress={() => checkAvailibleOrder()}
-                style={{backgroundColor: COLORS.secondary}}>
-                Continue
-              </Button1>
-            </View>
-            <LinearGradient
-              colors={['#651898', '#2C0D8F']}
-              style={{
-                // backgroundColor: COLORS.secondary,
-                height: SIZES.width * 0.22,
-                width: SIZES.width * 1.0,
-                borderTopLeftRadius: SIZES.width * 0.1,
-                borderTopRightRadius: SIZES.width * 0.1,
-              }} // Your styles for the LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}>
-              <View
+          {filteredProducts && (
+            <View style={styles.bottom_container}>
+              <LinearGradient
+                colors={['#ffffff', '#ffffff']}
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginHorizontal: SIZES.width * 0.08,
-                  marginTop: SIZES.height * 0.04,
-                }}>
-                <Text style={{color: COLORS.white}}>Total Price (4 Items)</Text>
-                <Text style={{color: COLORS.white}}>₹ 400</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginHorizontal: SIZES.width * 0.08,
-                  marginTop: SIZES.height * 0.01,
-                }}>
-                <Text style={{color: COLORS.white, fontWeight: 'bold'}}>
-                  Subtotal
-                </Text>
-                <Text style={{color: COLORS.white, fontWeight: 'bold'}}>
-                  ₹ 400
-                </Text>
-              </View>
-              {/* <View
+                  // backgroundColor: COLORS.secondary,
+                  height: SIZES.width * 0.22,
+                  width: SIZES.width * 1.0,
+                  borderTopLeftRadius: SIZES.width * 0.1,
+                  borderTopRightRadius: SIZES.width * 0.1,
+                }} // Your styles for the LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}>
+                {/* <View
                 style={{
                   height: SIZES.height * 0.01,
                   borderTopWidth: 1,
@@ -469,13 +438,67 @@ const Product = ({
                   marginTop: SIZES.height * 0.02,
                 }}
               /> */}
-            </LinearGradient>
-          </View>
-        )}
-      </View>
-
+              </LinearGradient>
+            </View>
+          )}
+        </View>
       </ScrollView>
-    
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          // marginHorizontal: SIZES.width * 0.08,
+          // marginTop: SIZES.height * 0.04,
+          width: SIZES.width * 1.0,
+          alignItems: 'center',
+          backgroundColor: '#ffffff',
+          // margin:15,
+          alignSelf: 'center',
+          paddingVertical: SIZES.height * 0.015,
+          paddingHorizontal: 5,
+          position: 'absolute',
+          bottom: 0,
+        }}>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              // marginHorizontal: SIZES.width * 0.08,
+              // marginTop: SIZES.height * 0.04,
+              width: SIZES.width * 0.5,
+            }}>
+            <Text style={{color: COLORS.secondary}}>Total Price (4 Items)</Text>
+            <Text style={{color: COLORS.secondary}}>₹ 400</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              // marginHorizontal: SIZES.width * 0.08,
+              // marginTop: SIZES.height * 0.01,
+              width: SIZES.width * 0.5,
+            }}>
+            <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+              Subtotal
+            </Text>
+            <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+              ₹ 400
+            </Text>
+          </View>
+        </View>
+        <View>
+          <Button1
+            // onPress={() => continueFunc()}
+            onPress={() => checkAvailibleOrder()}
+            style={{
+              backgroundColor: COLORS.secondary,
+              width: SIZES.width * 0.38,
+            }}>
+            Continue
+          </Button1>
+        </View>
+      </View>
     </View>
   );
 };

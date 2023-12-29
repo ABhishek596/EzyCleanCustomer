@@ -33,7 +33,7 @@ export const GetAllProduct = (serviceId, catId) => async dispatch => {
     payload: true,
   });
   http
-    .get('products')
+    .get(`products`)
     .then(async response => {
       console.log("user data products redux api : ", response.data.result)
       if (response.data.status == 1) {

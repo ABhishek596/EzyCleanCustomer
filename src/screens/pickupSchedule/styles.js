@@ -15,14 +15,14 @@ export default StyleSheet.create({
 
   title: {
     fontFamily: FONTS.bold,
-    color: COLORS.black,
+    color: COLORS.secondary,
     fontSize: SIZES.width * 0.05,
     marginBottom: -4,
   },
 
   date_btn: {
-    width: SIZES.width * 0.16,
-    height: SIZES.height * 0.14,
+    width: SIZES.width * 0.13,
+    height: SIZES.height * 0.092,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: SIZES.width * 0.015,
@@ -40,7 +40,7 @@ export default StyleSheet.create({
   },
 
   time_container: {
-    width: SIZES.width * 0.94,
+    width: SIZES.width * 1.0,
     minHeight: SIZES.height * 0.25,
     backgroundColor: COLORS.white,
     // borderWidth: 1,
@@ -54,7 +54,7 @@ export default StyleSheet.create({
   },
 
   time_btn_box: {
-    width: SIZES.width * 0.30,
+    width: SIZES.width * 0.32,
     alignItems: 'center',
   },
 
@@ -72,7 +72,7 @@ export default StyleSheet.create({
 
   time_text: {
     fontFamily: FONTS.medium,
-    fontSize: SIZES.width * 0.027,
+    fontSize: SIZES.width * 0.035,
     fontWeight: 'bold',
     color: COLORS.white,
     marginBottom: -3,
@@ -91,6 +91,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     // color:COLORS.secondary
     backgroundColor:COLORS.secondary,
-    borderRadius:30
+    borderRadius:30,
+    top:-5
   },
 });

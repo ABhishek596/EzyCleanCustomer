@@ -419,140 +419,140 @@ const AddOnScreen = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{flex:1}}>
-      <View style={{height: SIZES.height * 0.4}}>
-        <FlatList
-          data={addonsList}
-          renderItem={({item, index}) => (
-            <AddonCard
-              marginTop={index == 0 ? SIZES.height * 0.025 : 0}
-              dataAddonss={item}
-              source={{uri: item.image}}
-              productName={item?.product_name}
-              setQuantity={quan =>
-                addItem(item?.id, quan, item.amount ? item.amount : 0)
-              }
-              price={`₹${item.amount ? item.amount : 0}`}
-              // onAddonPress={() => {
-              //   setProductId(item.uid);
-              //   setFilterBottom(true);
-              // }}
-              serName={item.service_name}
-              catName={item.category_name}
-              onAddonPress={toggleModal}
-            />
-          )}
-          keyExtractor={item => item.uid}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
-      {/* <View style={{height: SIZES.height * 0.01}} />
+      <ScrollView style={{flex: 1}}>
+        <View style={{flex:1}}>
+          <FlatList
+            data={addonsList}
+            renderItem={({item, index}) => (
+              <AddonCard
+                marginTop={index == 0 ? SIZES.height * 0.025 : 0}
+                dataAddonss={item}
+                source={{uri: item.image}}
+                productName={item?.product_name}
+                setQuantity={quan =>
+                  addItem(item?.id, quan, item.amount ? item.amount : 0)
+                }
+                price={`₹${item.amount ? item.amount : 0}`}
+                // onAddonPress={() => {
+                //   setProductId(item.uid);
+                //   setFilterBottom(true);
+                // }}
+                serName={item.service_name}
+                catName={item.category_name}
+                onAddonPress={toggleModal}
+              />
+            )}
+            keyExtractor={item => item.uid}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+        {/* <View style={{height: SIZES.height * 0.01}} />
 
       <View style={{height: SIZES.height * 0.015}} /> */}
 
-      <Modal transparent={true} visible={isModalVisible} animationType="fade">
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.texta}>Edit Product</Text>
-            <View style={styles.row2}>
-              <View style={styles.sideBar}>
-                {featureType.slice(0, 3).map(item => (
-                  <TouchableOpacity
-                    key={item.id}
-                    style={[
-                      styles.btn,
-                      type == item.id && {backgroundColor: COLORS.secondary},
-                    ]}
-                    onPress={() => setType(item.id)}>
-                    <Text
+        <Modal transparent={true} visible={isModalVisible} animationType="fade">
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.texta}>Edit Product</Text>
+              <View style={styles.row2}>
+                <View style={styles.sideBar}>
+                  {featureType.slice(0, 3).map(item => (
+                    <TouchableOpacity
+                      key={item.id}
                       style={[
-                        styles.btnTxt,
-                        type == item.id && {color: COLORS.white},
-                      ]}>
-                      {item.type}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-              {/* <Text>RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</Text> */}
-              <View style={styles.sideBar}>
-                {featureType.slice(3, 6).map(item => (
-                  <TouchableOpacity
-                    key={item.id}
-                    style={[
-                      styles.btn,
-                      type == item.id && {backgroundColor: COLORS.secondary},
-                    ]}
-                    onPress={() => setType(item.id)}>
-                    <Text
+                        styles.btn,
+                        type == item.id && {backgroundColor: COLORS.secondary},
+                      ]}
+                      onPress={() => setType(item.id)}>
+                      <Text
+                        style={[
+                          styles.btnTxt,
+                          type == item.id && {color: COLORS.white},
+                        ]}>
+                        {item.type}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                {/* <Text>RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</Text> */}
+                <View style={styles.sideBar}>
+                  {featureType.slice(3, 6).map(item => (
+                    <TouchableOpacity
+                      key={item.id}
                       style={[
-                        styles.btnTxt,
-                        type == item.id && {color: COLORS.white},
-                      ]}>
-                      {item.type}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-              <View style={styles.rightBox}>
-                {type == 1 && (
-                  <View style={styles.container1}>
-                    <View
-                      {...panResponder.panHandlers}
-                      style={{
-                        backgroundColor: `rgb(${color.r},${color.g},${color.b})`,
-                        width: 100,
-                        height: 100,
-                        borderRadius: 5,
-                      }}
-                    />
+                        styles.btn,
+                        type == item.id && {backgroundColor: COLORS.secondary},
+                      ]}
+                      onPress={() => setType(item.id)}>
+                      <Text
+                        style={[
+                          styles.btnTxt,
+                          type == item.id && {color: COLORS.white},
+                        ]}>
+                        {item.type}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                <View style={styles.rightBox}>
+                  {type == 1 && (
+                    <View style={styles.container1}>
+                      <View
+                        {...panResponder.panHandlers}
+                        style={{
+                          backgroundColor: `rgb(${color.r},${color.g},${color.b})`,
+                          width: 100,
+                          height: 100,
+                          borderRadius: 5,
+                        }}
+                      />
 
-                    <Slider
-                      style={styles.slider}
-                      minimumValue={0}
-                      maximumValue={255}
-                      step={1}
-                      value={color.r}
-                      onValueChange={handleSliderChange}
-                    />
-                  </View>
+                      <Slider
+                        style={styles.slider}
+                        minimumValue={0}
+                        maximumValue={255}
+                        step={1}
+                        value={color.r}
+                        onValueChange={handleSliderChange}
+                      />
+                    </View>
 
-                  //   <View style={{ flexDirection: 'row'}}>
-                  //   <ColorPicker
-                  //     ref={pickerRef}
-                  //     color={currentColor}
-                  //     swatchesOnly={swatchesOnly}
-                  //     onColorChange={onColorChange}
-                  //     onColorChangeComplete={onColorChangeComplete}
-                  //     thumbSize={40}
-                  //     sliderSize={40}
-                  //     noSnap={true}
-                  //     row={false}
-                  //     swatchesLast={swatchesLast}
-                  //     swatches={swatchesEnabled}
-                  //     discrete={disc}
-                  //   />
-                  //   {/* Replace SomeButton with the actual button component */}
-                  //   {/* <SomeButton onPress={() => pickerRef.current.revert()} /> */}
-                  //   <Button onClick={() => pickerRef.current.revert()} title='Revert Color'></Button>
-                  // </View>
+                    //   <View style={{ flexDirection: 'row'}}>
+                    //   <ColorPicker
+                    //     ref={pickerRef}
+                    //     color={currentColor}
+                    //     swatchesOnly={swatchesOnly}
+                    //     onColorChange={onColorChange}
+                    //     onColorChangeComplete={onColorChangeComplete}
+                    //     thumbSize={40}
+                    //     sliderSize={40}
+                    //     noSnap={true}
+                    //     row={false}
+                    //     swatchesLast={swatchesLast}
+                    //     swatches={swatchesEnabled}
+                    //     discrete={disc}
+                    //   />
+                    //   {/* Replace SomeButton with the actual button component */}
+                    //   {/* <SomeButton onPress={() => pickerRef.current.revert()} /> */}
+                    //   <Button onClick={() => pickerRef.current.revert()} title='Revert Color'></Button>
+                    // </View>
 
-                  // <FlatList
-                  //   data={colorList}
-                  //   renderItem={({item, index}) => (
-                  //     <FeatureRow
-                  //       title={item.color_name}
-                  //       colorCode={item?.color_code}
-                  //       // value={postData.color1 == item ? true : false}
-                  //       // onValueChange={() => handleChange('color1', item)}
-                  //     />
-                  //   )}
-                  //   key={item => item.id}
-                  //   showsVerticalScrollIndicator={false}
-                  // />
-                )}
+                    // <FlatList
+                    //   data={colorList}
+                    //   renderItem={({item, index}) => (
+                    //     <FeatureRow
+                    //       title={item.color_name}
+                    //       colorCode={item?.color_code}
+                    //       // value={postData.color1 == item ? true : false}
+                    //       // onValueChange={() => handleChange('color1', item)}
+                    //     />
+                    //   )}
+                    //   key={item => item.id}
+                    //   showsVerticalScrollIndicator={false}
+                    // />
+                  )}
 
-                {/* {colorList && type == 2 && (
+                  {/* {colorList && type == 2 && (
                 <FlatList
                   data={colorList}
                   renderItem={({item, index}) => (
@@ -568,15 +568,32 @@ const AddOnScreen = ({
                 />
               )} */}
 
-                <View style={{marginTop: SIZES.height * 0.02}}>
-                  {damageList && type == 3 && (
+                  <View style={{marginTop: SIZES.height * 0.02}}>
+                    {damageList && type == 3 && (
+                      <FlatList
+                        data={damageList}
+                        renderItem={({item, index}) => (
+                          <FeatureRow
+                            title={item.damage}
+                            // value={postData.damage_id == item ? true : false}
+                            // onValueChange={() => handleChange('damage_id', item)}
+                          />
+                        )}
+                        key={item => item.id}
+                        showsVerticalScrollIndicator={false}
+                        horizontal
+                      />
+                    )}
+                  </View>
+
+                  {stainsList && type == 4 && (
                     <FlatList
-                      data={damageList}
+                      data={stainsList}
                       renderItem={({item, index}) => (
                         <FeatureRow
-                          title={item.damage}
-                          // value={postData.damage_id == item ? true : false}
-                          // onValueChange={() => handleChange('damage_id', item)}
+                          title={item.stains}
+                          // value={postData.stain_id == item ? true : false}
+                          // onValueChange={() => handleChange('stain_id', item)}
                         />
                       )}
                       key={item => item.id}
@@ -584,100 +601,83 @@ const AddOnScreen = ({
                       horizontal
                     />
                   )}
-                </View>
 
-                {stainsList && type == 4 && (
-                  <FlatList
-                    data={stainsList}
-                    renderItem={({item, index}) => (
-                      <FeatureRow
-                        title={item.stains}
-                        // value={postData.stain_id == item ? true : false}
-                        // onValueChange={() => handleChange('stain_id', item)}
-                      />
-                    )}
-                    key={item => item.id}
-                    showsVerticalScrollIndicator={false}
-                    horizontal
-                  />
-                )}
+                  {packingList && type == 5 && (
+                    <FlatList
+                      data={packingList}
+                      renderItem={({item, index}) => (
+                        <FeatureRow
+                          title={item.packing_style}
+                          checkBox={{
+                            position: 'absolute',
+                            right: SIZES.width * 0.12,
+                            bottom: SIZES.height * -0.021,
+                          }}
+                          row1={{
+                            width: SIZES.width * 0.68,
+                            marginVertical: SIZES.height * 0.015,
+                            alignItems: 'center',
+                          }}
 
-                {packingList && type == 5 && (
-                  <FlatList
-                    data={packingList}
-                    renderItem={({item, index}) => (
-                      <FeatureRow
-                        title={item.packing_style}
-                        checkBox={{
-                          position: 'absolute',
-                          right: SIZES.width * 0.12,
-                          bottom: SIZES.height * -0.021,
-                        }}
-                        row1={{
-                          width: SIZES.width * 0.68,
-                          marginVertical: SIZES.height * 0.015,
-                          alignItems: 'center',
-                        }}
+                          // price={item.price}
+                          // value={postData.packing_id == item ? true : false}
+                          // onValueChange={() => {
+                          //   handleChange('packing_id', item),
+                          //     setPackingCharge(item.price);
+                          // }}
+                        />
+                      )}
+                      key={item => item.id}
+                      showsVerticalScrollIndicator={false}
+                    />
+                  )}
 
-                        // price={item.price}
-                        // value={postData.packing_id == item ? true : false}
-                        // onValueChange={() => {
-                        //   handleChange('packing_id', item),
-                        //     setPackingCharge(item.price);
-                        // }}
-                      />
-                    )}
-                    key={item => item.id}
-                    showsVerticalScrollIndicator={false}
-                  />
-                )}
+                  {addonList && type == 6 && (
+                    <FlatList
+                      data={addonList}
+                      renderItem={({item, index}) => (
+                        <FeatureRow
+                          title={item.addon_name}
+                          price={item.price}
+                          // value={postData.addon_id == item ? true : false}
+                          // onValueChange={() => {
+                          //   handleChange('addon_id', item),
+                          //     setAddonCharge(item.price);
+                          // }}
+                        />
+                      )}
+                      horizontal
+                      key={item => item.id}
+                      showsVerticalScrollIndicator={false}
+                    />
+                  )}
 
-                {addonList && type == 6 && (
-                  <FlatList
-                    data={addonList}
-                    renderItem={({item, index}) => (
-                      <FeatureRow
-                        title={item.addon_name}
-                        price={item.price}
-                        // value={postData.addon_id == item ? true : false}
-                        // onValueChange={() => {
-                        //   handleChange('addon_id', item),
-                        //     setAddonCharge(item.price);
-                        // }}
-                      />
-                    )}
-                    horizontal
-                    key={item => item.id}
-                    showsVerticalScrollIndicator={false}
-                  />
-                )}
+                  {ironList && type == 7 && (
+                    <FlatList
+                      data={ironList}
+                      renderItem={({item, index}) => (
+                        <FeatureRow
+                          title={item.iron}
+                          // value={postData.iron.id == item.id ? true : false}
+                          // onValueChange={() => {
+                          //   handleChange('iron', item),
+                          //     setIronCharge(
+                          //       item.id
+                          //         ? product?.iron_price
+                          //           ? Number(product?.iron_price)
+                          //           : 0
+                          //         : 0,
+                          //     );
+                          // }}
+                        />
+                      )}
+                      key={item => item.id}
+                      showsVerticalScrollIndicator={false}
+                      horizontal
+                    />
+                  )}
 
-                {ironList && type == 7 && (
-                  <FlatList
-                    data={ironList}
-                    renderItem={({item, index}) => (
-                      <FeatureRow
-                        title={item.iron}
-                        // value={postData.iron.id == item.id ? true : false}
-                        // onValueChange={() => {
-                        //   handleChange('iron', item),
-                        //     setIronCharge(
-                        //       item.id
-                        //         ? product?.iron_price
-                        //           ? Number(product?.iron_price)
-                        //           : 0
-                        //         : 0,
-                        //     );
-                        // }}
-                      />
-                    )}
-                    key={item => item.id}
-                    showsVerticalScrollIndicator={false}
-                    horizontal
-                  />
-                )}
-
-                {/* {deliveryTypeList && type == 8 && (
+                  {/* {deliveryTypeList && type == 8 && (
                 <FlatList
                   data={deliveryTypeList}
                   renderItem={({item, index}) => (
@@ -701,188 +701,177 @@ const AddOnScreen = ({
                   showsVerticalScrollIndicator={false}
                 />
               )} */}
+                </View>
+              </View>
+              <View style={styles.buttonRow}>
+                <TouchableOpacity style={styles.button1} onPress={toggleModal}>
+                  <Text style={styles.yes}>Reset</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    // Handle 'Yes' button click here
+                    toggleModal();
+                    setVisible(true);
+                    // navigation.navigate('OnBoardingScreen');
+                  }}>
+                  <Text style={styles.cancle}>Apply</Text>
+                </TouchableOpacity>
               </View>
             </View>
-            <View style={styles.buttonRow}>
-              <TouchableOpacity style={styles.button1} onPress={toggleModal}>
-                <Text style={styles.yes}>Reset</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  // Handle 'Yes' button click here
-                  toggleModal();
-                  setVisible(true);
-                  // navigation.navigate('OnBoardingScreen');
-                }}>
-                <Text style={styles.cancle}>Apply</Text>
-              </TouchableOpacity>
-            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
 
+       
+      </ScrollView>
       <View style={{}}>
-        <View // Button Add Coupon Check Discount
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'center',
-            marginVertical: 15,
-          }}>
-          <TouchableOpacity
-            style={[
-              styles.btn,
-              {
-                borderWidth: 2,
-                borderColor: COLORS.secondary,
-                backgroundColor: COLORS.white,
-                width: SIZES.width * 0.4,
-                alignItems: 'center',
-              },
-            ]}
-            onPress={() => navigation.navigate('Coupon')}>
-            <Text style={[styles.btn_text, {color: COLORS.secondary}]}>
-              Add Coupon
-            </Text>
-          </TouchableOpacity>
-          <View style={{width: SIZES.width * 0.066}} />
-          <TouchableOpacity
-            style={[
-              styles.btn,
-              {
-                borderWidth: 2,
-                borderColor: COLORS.secondary,
-                backgroundColor: COLORS.white,
-                alignItems: 'center',
-              },
-            ]}
-            onPress={() => navigation.navigate('Discount')}>
-            <Text
-              style={[
-                styles.btn_text,
-                {color: COLORS.secondary, marginBottom: 0},
-              ]}>
-              Check Discount
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.bottom_container}>
-          {/* <View style={styles.bottom_btn_box}>     //Button Continue Order
-      <Button1
-      colors={['#FFFFFF','#FFFFFF']}
-      backgroundColor={COLORS.white}
-      textColor={COLORS.secondary}
-     style={{
-      width: SIZES.width * 0.43,
-      borderWidth: 2,
-      borderRadius: SIZES.width * 0.02,
-      borderColor: COLORS.secondary,
-    }}
-    btnTextStyle={{
-      fontSize: SIZES.width * 0.03,
-    }}
-    onPress={() =>
-      navigation.navigate('Coupon', {
-        // items,
-      })
-    }>
-    Add Coupon
-  </Button1>
-  <Button1
-    backgroundColor={COLORS.white}
-    textColor={COLORS.secondary}
-    style={{
-      width: SIZES.width * 0.43,
-      borderWidth: 2,
-      borderRadius: SIZES.width * 0.02,
-      borderColor: COLORS.secondary,
-    }}
-    btnTextStyle={{
-      fontSize: SIZES.width * 0.03,
-    }}
-    onPress={() =>
-      navigation.navigate('Discount', {
-        // data: addonsList,
-        // discountObj,
-      })
-    }>
-    Check Discount
-  </Button1>
-</View> */}
-
-          <Button1
+          <View // Button Add Coupon Check Discount
             style={{
-              // borderWidth: 2,
+              flexDirection: 'row',
               alignSelf: 'center',
-              borderRadius: SIZES.width * 0.02,
-              borderColor: COLORS.primary,
-              marginBottom: SIZES.width * 0.01,
-            }}
-            onPress={() => {
-              navigation.navigate('PickupSchedule', {
-                ...itemsData,
-              });
-              // handleConfimOrder();
-              // confirmColor1();
-            }}
-            // onPress={() => {
-            //   if (visible === false) {
-            //     setIsModalVisible(!isModalVisible);
-            //   } else if (visible === true) {
-            //     navigation.navigate('PickupSchedule');
-            //   }
-            // }}
-          >
-            Continue Order
-          </Button1>
-        </View>
+              marginVertical: 15,
+            }}>
+            <TouchableOpacity
+              style={[
+                styles.btn,
+                {
+                  borderWidth: 2,
+                  borderColor: COLORS.secondary,
+                  backgroundColor: COLORS.white,
+                  width: SIZES.width * 0.4,
+                  alignItems: 'center',
+                },
+              ]}
+              onPress={() => navigation.navigate('Coupon')}>
+              <Text style={[styles.btn_text, {color: COLORS.secondary}]}>
+                Add Coupon
+              </Text>
+            </TouchableOpacity>
+            <View style={{width: SIZES.width * 0.066}} />
+            <TouchableOpacity
+              style={[
+                styles.btn,
+                {
+                  borderWidth: 2,
+                  borderColor: COLORS.secondary,
+                  backgroundColor: COLORS.white,
+                  alignItems: 'center',
+                },
+              ]}
+              onPress={() => navigation.navigate('Discount')}>
+              <Text
+                style={[
+                  styles.btn_text,
+                  {color: COLORS.secondary, marginBottom: 0},
+                ]}>
+                Check Discount
+              </Text>
+            </TouchableOpacity>
+          </View>
+        
 
-        <LinearGradient
-          colors={['#651898', '#2C0D8F']}
-          style={{
-            backgroundColor: COLORS.secondary,
-            width: SIZES.width * 1.0,
-            borderTopLeftRadius: SIZES.width * 0.1,
-            borderTopRightRadius: SIZES.width * 0.1,
-          }} // Your styles for the LinearGradient
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}>
-          <View
+          <LinearGradient
+            colors={['#651898', '#2C0D8F']}
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginHorizontal: SIZES.width * 0.08,
-              marginTop: SIZES.height * 0.04,
-            }}>
-            <Text style={{color: COLORS.white}}>Total Price (4 Items)</Text>
-            <Text style={{color: COLORS.white}}>₹ 400</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginHorizontal: SIZES.width * 0.08,
-              marginTop: SIZES.height * 0.01,
-            }}>
-            <Text style={{color: COLORS.white, fontWeight: 'bold'}}>
-              Discount
-            </Text>
-            <Text style={{color: COLORS.white, fontWeight: 'bold'}}>₹ 40</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginHorizontal: SIZES.width * 0.08,
-              marginTop: SIZES.height * 0.01,
-            }}>
-            <Text style={{color: COLORS.white, fontWeight: 'bold'}}>
-              Subtotal
-            </Text>
-            <Text style={{color: COLORS.white, fontWeight: 'bold'}}>₹ 400</Text>
-          </View>
-          <View
+              backgroundColor: COLORS.secondary,
+              width: SIZES.width * 1.0,
+              borderTopLeftRadius: SIZES.width * 0.1,
+              borderTopRightRadius: SIZES.width * 0.1,
+            }} // Your styles for the LinearGradient
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                // marginHorizontal: SIZES.width * 0.08,
+                // marginTop: SIZES.height * 0.04,
+                width: SIZES.width * 1.0,
+                alignItems: 'center',
+                backgroundColor: '#ffffff',
+                // margin:15,
+                alignSelf: 'center',
+                paddingVertical: SIZES.height * 0.005,
+                paddingHorizontal: 5,
+                // position: 'absolute',
+                // bottom: 0,
+              }}>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    // marginHorizontal: SIZES.width * 0.08,
+                    width: SIZES.width * 0.5,
+                    // marginTop: SIZES.height * 0.04,
+                  }}>
+                  <Text style={{color: COLORS.secondary}}>
+                    Total Price (4 Items)
+                  </Text>
+                  <Text style={{color: COLORS.secondary}}>₹ 400</Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    // marginHorizontal: SIZES.width * 0.08,
+                    marginTop: SIZES.height * 0.01,
+                    width: SIZES.width * 0.5,
+                  }}>
+                  <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+                    Discount
+                  </Text>
+                  <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+                    ₹ 40
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    // marginHorizontal: SIZES.width * 0.08,
+                    marginTop: SIZES.height * 0.01,
+                    // paddingBottom: SIZES.height * 0.02,
+                    width: SIZES.width * 0.5,
+                  }}>
+                  <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+                    Subtotal
+                  </Text>
+                  <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+                    ₹ 400
+                  </Text>
+                </View>
+              </View>
+              <View >
+                <Button1
+                  style={{
+                    // borderWidth: 2,
+                    // alignSelf: 'center',
+                    borderRadius: SIZES.width * 0.02,
+                    borderColor: COLORS.primary,
+                    // marginBottom: SIZES.width * 0.01,
+                    width: SIZES.width * 0.38,
+                  }}
+                  onPress={() => {
+                    navigation.navigate('PickupSchedule', {
+                      ...itemsData,
+                    });
+                    // handleConfimOrder();
+                    // confirmColor1();
+                  }}
+                  // onPress={() => {
+                  //   if (visible === false) {
+                  //     setIsModalVisible(!isModalVisible);
+                  //   } else if (visible === true) {
+                  //     navigation.navigate('PickupSchedule');
+                  //   }
+                  // }}
+                >
+                  Continue Order
+                </Button1>
+              </View>
+            </View>
+            {/* <View
             style={{
               height: SIZES.height * 0.01,
               borderTopWidth: 1,
@@ -891,11 +880,10 @@ const AddOnScreen = ({
               borderTopColor: COLORS.white,
               marginTop: SIZES.height * 0.02,
             }}
-          />
-          <View style={{height: SIZES.height * 0.01}} />
-        </LinearGradient>
-      </View>
-      </ScrollView>
+          /> */}
+            {/* <View style={{height: SIZES.height * 0.01}} /> */}
+          </LinearGradient>
+        </View>
     </SafeAreaView>
   );
 };

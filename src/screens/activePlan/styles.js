@@ -51,16 +51,16 @@ export default StyleSheet.create({
     paddingHorizontal: SIZES.width * 0.04,
   },
   infoTxt: {
-    color: COLORS.primary,
+    color: COLORS.secondary,
     fontWeight: 'bold',
     fontSize: SIZES.h3,
   },
   infoTxtSm: {
-    color: COLORS.primary,
+    color: COLORS.secondary,
     fontWeight: 'bold',
   },
   infoTxtBold: {
-    color: COLORS.primary,
+    color: COLORS.secondary,
     fontWeight: '900',
     fontSize: SIZES.h3,
     textAlign: 'right',

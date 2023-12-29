@@ -75,9 +75,9 @@ const Discount = ({navigation, discountList, GetDiscountList, route}) => {
                         <RadioButton
                           // value={userAddress}
                           color={COLORS.white}
-                          // status={id === item.id ? 'checked' : 'unchecked'}
+                          status={id === item.id ? 'checked' : 'unchecked'}
                           onPress={() => {
-                            // setDiscount(item), setId(item.id);
+                            setDiscount(item), setId(item.id);
                           }}
                         />
                         <View style={styles.box}>

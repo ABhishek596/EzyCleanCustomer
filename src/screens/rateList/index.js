@@ -70,7 +70,7 @@ const OfferItem = ({offer}) => {
       start={{x: 0, y: 0}}
       end={{x: 1, y: 0}}>
       <View>
-        <View style={globalStyles.row}>
+        <View style={[globalStyles.row,{alignItems:'center'}]}>
           <Text style={styles.offer}>{offer.discount}% </Text>
           <Text style={styles.off_text}>off</Text>
         </View>

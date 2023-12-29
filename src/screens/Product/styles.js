@@ -199,4 +199,33 @@ export default StyleSheet.create({
     color: COLORS.white,
     marginBottom: -5,
   },
+  container: {
+    flex: 1,
+    flexDirection: 'row', // Set the direction to 'row'
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'lightgray', // Adjust as needed
+    margin: 5,
+  },
+  scrollView2: {
+    // flex: 1,
+    backgroundColor: 'lightgray', // Adjust as needed
+    margin: 5,
+    width:'60%'
+  },
+  scrollViewContent: {
+    // Add styling for content if needed
+  },
+  listItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray',
+  },
+  buttonContainer: {
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 3,
+  },
 });

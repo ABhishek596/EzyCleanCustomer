@@ -43,7 +43,7 @@ const AddonCard = ({
             onPress={onAddonPress}
             activeOpacity={0.5}
             style={styles.count_btn}>
-            <Icons name={'edit1'} size={20} color={COLORS.white} />
+            <Icons name={'edit1'} size={16} color={COLORS.white} />
           </TouchableOpacity>
           {/* <Text style={styles.addDetails}>Add{'\n'}Details</Text> */}
         </View>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 0.25,
     width: SIZES.width * 0.2,
     height: SIZES.width * 0.2,
-    backgroundColor: '#E9C7FF',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: SIZES.width * 0.03,
@@ -155,13 +155,14 @@ const styles = StyleSheet.create({
     marginTop: SIZES.width * 0.01,
   },
   count_btn: {
-    flex: 0.12,
+    // flex: 0.12,
     width: SIZES.width * 0.09,
     height: SIZES.width * 0.09,
     backgroundColor: COLORS.secondary,
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: COLORS.primary,
-    borderRadius: SIZES.width * 0.08,
+    borderRadius:180/2
+    // borderRadius: SIZES.width * 0.08,
   },
 });

@@ -37,14 +37,14 @@ const ProductCard = ({
             activeOpacity={0.5}
             onPress={onPlusPress}
             style={{...styles.count_btn}}>
-            <Icons name={'plus'} size={20} color={COLORS.white} />
+            <Icons name={'plus'} size={16} color={COLORS.white} />
           </TouchableOpacity>
           <Text style={styles.count_text}>{quantity}</Text>
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={onMinusPress}
             style={{...styles.count_btn}}>
-            <Icons name={'minus'} size={20} color={COLORS.white} />
+            <Icons name={'minus'} size={16} color={COLORS.white} />
           </TouchableOpacity>
         </View>
       </View>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   image_box: {
     width: SIZES.width * 0.14,
     height: SIZES.width * 0.14,
-    backgroundColor: '#E9C7FF',
+    // backgroundColor: '#E9C7FF',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: SIZES.width * 0.03,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   image: {
     width: SIZES.width * 0.12,
     height: SIZES.width * 0.12,
-    backgroundColor: '#E9C7FF',
+    // backgroundColor: '#E9C7FF',
   },
 
   content_box: {
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
     marginTop: SIZES.height * 0.01,
   },
   count_btn: {
-    width: SIZES.width * 0.06,
-    height: SIZES.width * 0.06,
+    width: SIZES.width * 0.045,
+    height: SIZES.width * 0.045,
     backgroundColor: COLORS.secondary,
     alignItems: 'center',
     justifyContent: 'center',

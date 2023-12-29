@@ -53,8 +53,8 @@ export default StyleSheet.create({
     },
 
     image_box: {
-        width: SIZES.width * .28,
-        height: SIZES.width * .28,
+        width: SIZES.width * .24,
+        height: SIZES.width * .24,
         // borderRadius: SIZES.width * .3,
         overflow: 'hidden',
         // marginBottom: SIZES.height * .015,
@@ -63,8 +63,8 @@ export default StyleSheet.create({
     },
 
     profile: {
-        width: SIZES.width * .28,
-        height: SIZES.width * .28,
+        width: SIZES.width * .24,
+        height: SIZES.width * .24,
         // borderRadius: SIZES.width * .3,
         // overflow: 'hidden',
         // marginBottom: SIZES.height * .015,

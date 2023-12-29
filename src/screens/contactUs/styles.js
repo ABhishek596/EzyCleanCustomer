@@ -57,4 +57,7 @@ export default StyleSheet.create({
     marginBottom: -4,
     color: COLORS.white,
   },
+  box:{
+    marginTop:SIZES.height * 0.03,
+  }
 });

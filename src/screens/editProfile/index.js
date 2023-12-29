@@ -68,6 +68,7 @@ const EditProfile = ({
       height: SIZES.height * 0.15,
       cropping: true,
     }).then(image => {
+      console.log('editProfileImage',image);
       setProfileImage({uri: image.path});
       handleChange('profile_image', {
         uri: image.path,

@@ -19,6 +19,7 @@ import {GetTime} from '../../redux/actions/productAction';
 import Loading from '../../component/loading';
 import {useEffect} from 'react';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PickupSchedule = ({
   navigation,
@@ -27,32 +28,71 @@ const PickupSchedule = ({
   // timeList,
   loading,
 }) => {
-  useEffect(() => {
-    let data = JSON.stringify({
-      date: '2023-12-08',
-    });
+  // useEffect(async () => {
+  //   const token = await AsyncStorage.getItem('@USER_TOKEN');
+  //   // console.log('ContactUs token--------', token);
+  //   setToken(token);
+  // }, []);
 
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'http://ezyclean.theprojecttest.xyz/api/get_time',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization:
-          'Bearer 160|LMkKJ9t0E4aTjRqXYRa5d10wByUbQ2wRkxJldtKj1f90965d',
-      },
-      data: data,
+  // const [token, setToken] = useState();
+  // console.log('PickupSchedules token-------->>', token);
+
+  // useEffect(() => {
+  //   let data = JSON.stringify({
+  //     date: '2023-12-27',
+  //   });
+
+  //   let config = {
+  //     method: 'get',
+  //     maxBodyLength: Infinity,
+  //     url: 'http://ezyclean.theprojecttest.xyz/api/get_time',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization:
+  //         'Bearer 195|F8kaxG4Y4I8P0So08MjcHVJCl21szRnUFMg68m3Adb21c10c',
+  //     },
+  //     data: data,
+  //   };
+
+  //   axios
+  //     .request(config)
+  //     .then(response => {
+  //       console.log(
+  //         'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
+  //         JSON.stringify(response.data),
+  //       );
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = await AsyncStorage.getItem('@USER_TOKEN');
+
+      try {
+        const response = await axios.get(
+          'http://ezyclean.theprojecttest.xyz/api/get_time',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              date: '2023-12-27',
+            },
+          },
+        );
+
+        console.log('Response========:', response.data.result);
+        setTimeList(response.data.result);
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
 
-    axios
-      .request(config)
-      .then(response => {
-        // console.log(JSON.stringify(response.data));
-        setTimeList(response.data.result)
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    fetchData();
   }, []);
 
   const [timeList, setTimeList] = useState({});
@@ -309,16 +349,17 @@ const PickupSchedule = ({
               </View>
             </View>
             {/* <View style={{height: '4%'}} /> */}
-            <Button1
-              style={styles.btn}
-              backgroundColor={COLORS.secondary}
-              onPress={handleNext}>
-              Next
-            </Button1>
-            <View style={{height: '4%'}} />
+
+            {/* <View style={{height: '4%'}} /> */}
           </View>
         </ScrollView>
       )}
+      <Button1
+        style={styles.btn}
+        backgroundColor={COLORS.secondary}
+        onPress={handleNext}>
+        Next
+      </Button1>
     </View>
   );
 };

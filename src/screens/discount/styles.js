@@ -96,7 +96,7 @@ offer_image: {
 
 offer: {
     fontFamily: FONTS.regular,
-    fontSize: SIZES.width * .07,
+    fontSize: SIZES.width * .05,
     // marginBottom: -6,
     color: COLORS.white,
 },
@@ -112,7 +112,7 @@ offer_text: {
     fontFamily: FONTS.regular,
     fontSize: SIZES.width * .032,
     // marginBottom: -3,
-    // marginTop: SIZES.height * -.012,
+    marginTop: SIZES.height * 0.004,
     color: COLORS.white,
 },
 
@@ -123,7 +123,8 @@ offer_btn: {
     backgroundColor: COLORS.white,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: SIZES.width * .02,
+    marginVertical: SIZES.width * .01,
+    top:SIZES.height * 0.005
 },
 
 offer_btn_text: {

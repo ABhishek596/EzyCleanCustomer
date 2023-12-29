@@ -94,7 +94,7 @@ export default StyleSheet.create({
 
   offer: {
     fontFamily: FONTS.regular,
-    fontSize: SIZES.width * 0.07,
+    fontSize: SIZES.width * 0.06,
     // marginBottom: -6,
     color: COLORS.white,
   },
