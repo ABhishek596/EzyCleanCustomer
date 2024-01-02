@@ -23,6 +23,7 @@ import Icons from '../../component/Icons';
 import {RadioButton} from 'react-native-paper';
 import InputWithIcon from '../../component/input/InputWithIcon';
 import InputWithIcon1 from '../../component/input/InputWithIcon1';
+import axios from 'axios';
 const Address = ({
   navigation,
   GetAllAddressApi,
@@ -36,11 +37,33 @@ const Address = ({
   // const [currentCoords, setCurrentCoords] = useState(null);
   // const [gettingCords, setGettingCords] = useState(false);
   // const [locationAllowed, setLocationAllowed] = useState(false);
-  console.log('address-=-==========--addressScreen', address);
+  // console.log('address-=-==========--addressScreen', address);
 
   const [secure, setSecure] = useState(true);
+
+  const [postData, setPostData] = useState({
+    // name: null,
+    phone_number: null,
+    pincode: null,
+    address: null,
+    locality: null,
+    city: null,
+    state: null,
+    country: null,
+  });
+
+  const handleChange = (name, value) => {
+    setPostData({
+      ...postData,
+      [name]: value,
+    });
+  };
+  
+
+
+
   const handleSubmit = () => {
-    navigation.navigate('Login');
+    // navigation.navigate('Login');
     // if (postData.phone_number) {
     //   LoginApi({...postData, fcm_token: fcm}, navigation, data =>
     //     setLoading(data),
@@ -55,6 +78,56 @@ const Address = ({
     //   });
     // }
   };
+
+  const onSubmit = () => {
+     if (postData.phone_number) {
+      LoginApi({...postData, fcm_token: fcm}, navigation, data =>
+        setLoading(data),
+      );
+      setPostData({
+        phone_number: null,
+      });
+    } else {
+      RNToasty.Error({
+        title: 'Please Enter Mobile Number.',
+        duration: 2,
+      });
+    }
+    
+    
+    let data = JSON.stringify({
+      userid: 30,
+      pincode: '345678',
+      address: '667/1 nanda nagar ,road',
+      locality: 'zone1',
+      city: 'indore',
+      state: 'goa',
+      country: 'india',
+      phone_number: '8978968677',
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://ezyclean.theprojecttest.xyz/api/add_address',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'Bearer 195|F8kaxG4Y4I8P0So08MjcHVJCl21szRnUFMg68m3Adb21c10c',
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   // const valuestatus = route.params?.valuestatus;
   // console.log('valuestatus............', valuestatus);
 
@@ -67,10 +140,11 @@ const Address = ({
   //   getGPSLocation();
   // }, [locationAllowed]);
 
-  const postData = {
-    // ...route.params.data,
-    // address_id: userAddress,
-  };
+  // const postData = {
+  //   // ...route.params.data,
+  //   // address_id: userAddress,
+  // };
+
   // console.log('postData--on--addressScreen', postData);
   // const handlePress = ()=>{
   //   // CreateOrder(

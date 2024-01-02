@@ -88,5 +88,18 @@ export default StyleSheet.create({
         color: COLORS.blueezy,
         marginBottom: -4,
       },
+      dropdownContainer: {
+        // position: 'absolute',
+        // top: 60, // Adjust this value based on your design
+        width: '80%',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        backgroundColor: '#fff',
+      },
+      dropdownItem: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+      },
 
 })

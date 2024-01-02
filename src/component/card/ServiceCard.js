@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 
     service: {
         fontFamily: FONTS.semiBold,
-        fontSize: SIZES.width * .045,
+        fontSize: SIZES.width * .04,
         color: COLORS.secondary,
         // color: COLORS.white,
         // marginBottom: -6,

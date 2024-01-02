@@ -220,6 +220,20 @@ const products1 = [
   // ... more products
 ];
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import React, {useState} from 'react';
 // import {View, FlatList, Text, TouchableOpacity, Image} from 'react-native';
 
@@ -373,3 +387,92 @@ const products1 = [
 // export default function App() {
 //   return <ProductList products={products} />;
 // }
+
+
+
+
+
+
+
+//dropdown 
+
+// import React, { useState } from 'react';
+// import { View, Text, TouchableOpacity, FlatList, TextInput, StyleSheet } from 'react-native';
+
+// const genders = ['Male', 'Female', 'Other'];
+
+// const CustomDropdown = () => {
+//   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+//   const [selectedGender, setSelectedGender] = useState(null);
+
+//   const toggleDropdown = () => {
+//     setIsDropdownOpen(!isDropdownOpen);
+//   };
+
+//   const handleGenderSelect = (gender) => {
+//     setSelectedGender(gender);
+//     setIsDropdownOpen(false);
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <TouchableOpacity onPress={toggleDropdown} style={styles.inputContainer}>
+//         <TextInput
+//           style={styles.input}
+//           placeholder="Select Gender"
+//           editable={false}
+//           value={selectedGender}
+//         />
+//       </TouchableOpacity>
+
+//       {isDropdownOpen && (
+//         <View style={styles.dropdownContainer}>
+//           <FlatList
+//             data={genders}
+//             keyExtractor={(item) => item}
+//             renderItem={({ item }) => (
+//               <TouchableOpacity onPress={() => handleGenderSelect(item)}>
+//                 <View style={styles.dropdownItem}>
+//                   <Text>{item}</Text>
+//                 </View>
+//               </TouchableOpacity>
+//             )}
+//           />
+//         </View>
+//       )}
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   inputContainer: {
+//     // position: 'relative',
+//     width: '80%',
+//     marginBottom: 10,
+//   },
+//   input: {
+//     borderWidth: 1,
+//     padding: 10,
+//   },
+//   dropdownContainer: {
+//     // position: 'absolute',
+//     // top: 60, // Adjust this value based on your design
+//     width: '80%',
+//     borderWidth: 1,
+//     borderColor: '#ccc',
+//     backgroundColor: '#fff',
+//   },
+//   dropdownItem: {
+//     padding: 10,
+//     borderBottomWidth: 1,
+//     borderBottomColor: '#ccc',
+//   },
+// });
+
+// export default CustomDropdown;
+

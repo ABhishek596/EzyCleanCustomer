@@ -6,6 +6,7 @@ import {
   Linking,
   StatusBar,
   ScrollView,
+  FlatList
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {connect} from 'react-redux';
@@ -39,6 +40,24 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
   const [secure, setSecure] = useState(true);
   const [branch, setBranch] = useState(true);
   const [fcm, setFcm] = useState();
+
+
+  const branches = ['Main', 'Local', 'Special'];
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedBranch, setSelectedBranch] = useState(null);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleGenderSelect = (name,branch) => {
+    setSelectedBranch(branch);
+    setIsDropdownOpen(false);
+    setPostData({
+      ...postData,
+      [name]: branch,
+    });
+  };
 
   // useEffect(() => {
   //   getDeviceToken();
@@ -328,11 +347,14 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
             <InputWithIcon1
               placeholder={'Enter Branch'}
               // leftIcon={'lock'}
-              rightIcon={branch ? 'down-outline' : 'up-outline'}
-              onPress={() => setBranch(!branch)}
+              rightIcon={isDropdownOpen ? 'up-outline' : 'down-outline'}
+              onPress={toggleDropdown}
+              // rightIcon={branch ? 'down-outline' : 'up-outline'}
+              // onPress={() => setBranch(!branch)}
               secureTextEntry={false}
+              // value={selectedBranch}
               value={postData.branch}
-              onChangeText={text => handleChange('branch', text)}
+              // onChangeText={text => handleChange('branch', text)}
             />
             {/* <View style={styles.box}>
             <TouchableOpacity
@@ -341,6 +363,21 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
               <Text style={styles.forget_text}>Forgot Your Password?</Text>
             </TouchableOpacity>
           </View> */}
+            {isDropdownOpen && (
+              <View style={styles.dropdownContainer}>
+                <FlatList
+                  data={branches}
+                  keyExtractor={item => item}
+                  renderItem={({item}) => (
+                    <TouchableOpacity onPress={() => handleGenderSelect('branch',item)}>
+                      <View style={styles.dropdownItem}>
+                        <Text>{item}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
+            )}
 
             <Button1
               // disabled={loading}
@@ -401,4 +438,4 @@ const mapDispatchToProps = {
   SignUpApi,
 };
 // export default Register;
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

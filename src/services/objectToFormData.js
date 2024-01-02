@@ -2,7 +2,7 @@ export default (obj) => {
     const form = new FormData()
 
     for (const [key, value] of Object.entries(obj)) {
-        console.log(`${key}: ${value}`);
+        console.log('ObjectToFormData',`${key}: ${value}`);
         if (value == null || value == undefined) {
 
         } else if (typeof (value) == "object" && !value.uri) {
