@@ -76,7 +76,7 @@ export const LoginApi = (postData, navigation, cb) => async dispatch => {
         );
         await AsyncStorage.setItem(
           '@USER_ID',
-          JSON.stringify(response.data.data.id),
+          JSON.stringify(response.data.data.user_id),
         );
         // dispatch({
         //   type: AUTH_TOKEN,

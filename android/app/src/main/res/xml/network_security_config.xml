@@ -2,12 +2,17 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <!-- <domain includeSubdomains="true">192.168.1.44</domain> -->
-        <domain includeSubdomains="true">localhost</domain>
-        <domain includeSubdomains="true">127.0.0.1</domain>   
-        <domain includeSubdomains="true">127.0.0.1:8000</domain>
-        <domain includeSubdomains="true">192.168.1.8</domain>
+        <domain includeSubdomains="true">http://ezyclean.theprojecttest.xyz/api/</domain>
+        <domain includeSubdomains="true">http://ezyclean.theprojecttest.xyz/api</domain>
+        <domain includeSubdomains="true">http://ezyclean.theprojecttest.xyz/</domain>
+        <domain includeSubdomains="true">http://ezyclean.theprojecttest.xyz</domain>
+        <domain includeSubdomains="true">ezyclean.theprojecttest.xyz/api/</domain>
+        <domain includeSubdomains="true">ezyclean.theprojecttest.xyz/</domain>
+        <domain includeSubdomains="true">ezyclean.theprojecttest.xyz/api</domain>
+        <domain includeSubdomains="true">ezyclean.theprojecttest.xyz</domain>
     </domain-config>
 </network-security-config>
+
 
 
 

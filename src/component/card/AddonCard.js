@@ -43,7 +43,7 @@ const AddonCard = ({
             onPress={onAddonPress}
             activeOpacity={0.5}
             style={styles.count_btn}>
-            <Icons name={'edit1'} size={16} color={COLORS.white} />
+            <Icons name={'edit1'} size={14} color={COLORS.white} />
           </TouchableOpacity>
           {/* <Text style={styles.addDetails}>Add{'\n'}Details</Text> */}
         </View>
@@ -110,26 +110,27 @@ const styles = StyleSheet.create({
   },
 
   image_box: {
-    flex: 0.25,
-    width: SIZES.width * 0.2,
-    height: SIZES.width * 0.2,
+    // flex: 0.25,
+    width: SIZES.width * 0.14,
+    height: SIZES.width * 0.14,
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: SIZES.width * 0.03,
+    // marginRight: SIZES.width * 0.05,
     borderWidth: 0.7,
     borderColor: COLORS.gray30,
     borderRadius: SIZES.width * 0.03,
+    marginLeft:SIZES.width * 0.02,
   },
 
   image: {
-    width: SIZES.width * 0.15,
-    height: SIZES.width * 0.15,
+    width: SIZES.width * 0.12,
+    height: SIZES.width * 0.12,
   },
 
   product_name: {
     fontFamily: FONTS.semiBold,
-    fontSize: SIZES.width * 0.045,
+    fontSize: SIZES.width * 0.038,
     color: COLORS.secondary,
     marginBottom: -6,
   },
@@ -156,13 +157,14 @@ const styles = StyleSheet.create({
   },
   count_btn: {
     // flex: 0.12,
-    width: SIZES.width * 0.09,
-    height: SIZES.width * 0.09,
+    width: SIZES.width * 0.07,
+    height: SIZES.width * 0.07,
     backgroundColor: COLORS.secondary,
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: COLORS.primary,
-    borderRadius:180/2
+    borderRadius:180/2,
+    marginRight: SIZES.width * 0.02,
     // borderRadius: SIZES.width * 0.08,
   },
 });

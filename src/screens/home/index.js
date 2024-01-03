@@ -87,8 +87,8 @@ const Home = ({
     axios
       .request(config)
       .then(response => {
-        // console.log(JSON.stringify(response.data));
-        setSategory(response.data.data);
+        // console.log('catagoryathome',JSON.stringify(response.data.data));
+        setCategory(response.data.data);
       })
       .catch(error => {
         console.log(error);
@@ -120,7 +120,7 @@ const Home = ({
       });
   }, []);
 
-  const [category, setSategory] = useState();
+  const [category, setCategory] = useState();
   const [service, setService] = useState();
 
   // console.log('discountList at Home', discountList);
@@ -316,7 +316,11 @@ const Home = ({
                 {category && (
                   <FlatList
                     data={category} //categoryList
-                    renderItem={({item, index}) => (
+                    renderItem={({item, index}) => 
+                    {
+                    // console.log('categoryitem',item);
+
+                    return(
                       <CategoryCard
                         marginLeft={SIZES.width * 0.03}
                         mr={
@@ -326,15 +330,17 @@ const Home = ({
                         }
                         category={item.category_name}
                         source={{uri: item.category_image}}
-                        onPress={() =>
+                        // source={{uri: item.images}}
+                        onPress={() =>{
+                          // console.log('categoryitemonclic',item.id);
                           navigation.navigate('Product', {
                             catId: item.id,
-                          })
-                        }
+                          });
+                        }}
                       />
-                    )}
+                    )}}
                     horizontal={true}
-                    key={item => item.id}
+                    key={item => item?.id}
                     showsHorizontalScrollIndicator={false}
                   />
                 )}
@@ -376,8 +382,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 //     created_at: '2023-10-09T06:30:49.000000Z',
 //     updated_at: '2023-10-09T06:30:49.000000Z',
 //     services: [{id: 1, service_name: 'Dry Cleaning'}],
-//     images:
-//       'https://dryfi.theprojecttest.xyz/public/uploads/categories/6b92e366d82c3c92deaed75974fd7545.png',
+//     images:"http://ezyclean.theprojecttest.xyz/public/storage/categories/6b92e366d82c3c92deaed75974fd7545.png",
+//       // 'https://dryfi.theprojecttest.xyz/public/uploads/categories/6b92e366d82c3c92deaed75974fd7545.png',
 //   },
 //   {
 //     id: 2,
@@ -392,8 +398,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 //       {id: 2, service_name: 'Ironing'},
 //       {id: 3, service_name: 'Wash & Clean'},
 //     ],
-//     images:
-//       'https://dryfi.theprojecttest.xyz/public/uploads/categories/2577ecdc7eb5f0141df74358eee429c0.png',
+//     images: "http://ezyclean.theprojecttest.xyz/public/storage/categories/2577ecdc7eb5f0141df74358eee429c0.png",
+//       // 'https://dryfi.theprojecttest.xyz/public/uploads/categories/2577ecdc7eb5f0141df74358eee429c0.png',
 //   },
 //   {
 //     id: 3,
@@ -408,8 +414,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 //       {id: 1, service_name: 'Dry Cleaning'},
 //       {id: 3, service_name: 'Wash & Clean'},
 //     ],
-//     images:
-//       'https://dryfi.theprojecttest.xyz/public/uploads/categories/e2cff0705861f2e45251761b6d3cd44f.png',
+//     images: "http://ezyclean.theprojecttest.xyz/public/storage/categories/e2cff0705861f2e45251761b6d3cd44f.png",
+//       // 'https://dryfi.theprojecttest.xyz/public/uploads/categories/e2cff0705861f2e45251761b6d3cd44f.png',
 //   },
 // ];
 //{ uri: require('../../assets/images/qrimg.jpg') },

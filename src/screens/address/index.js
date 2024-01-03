@@ -24,6 +24,9 @@ import {RadioButton} from 'react-native-paper';
 import InputWithIcon from '../../component/input/InputWithIcon';
 import InputWithIcon1 from '../../component/input/InputWithIcon1';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {RNToasty} from 'react-native-toasty';
+
 const Address = ({
   navigation,
   GetAllAddressApi,
@@ -38,6 +41,25 @@ const Address = ({
   // const [gettingCords, setGettingCords] = useState(false);
   // const [locationAllowed, setLocationAllowed] = useState(false);
   // console.log('address-=-==========--addressScreen', address);
+  const [isTokenSet, setIsTokenSet] = useState(false);
+  const [token, setToken] = useState();
+  const [userId, setUserId] = useState();
+
+  console.log('ContactUs token-------->>', token);
+
+  useEffect(() => {
+    const getToken = async () => {
+      if (!isTokenSet) {
+        const tokenFromStorage = await AsyncStorage.getItem('@USER_TOKEN');
+        const userIdFromStorage = await AsyncStorage.getItem('@USER_ID');
+        setToken(tokenFromStorage);
+        setUserId(userIdFromStorage);
+        setIsTokenSet(true);
+      }
+    };
+
+    getToken();
+  }, [isTokenSet]);
 
   const [secure, setSecure] = useState(true);
 
@@ -58,9 +80,6 @@ const Address = ({
       [name]: value,
     });
   };
-  
-
-
 
   const handleSubmit = () => {
     // navigation.navigate('Login');
@@ -80,10 +99,45 @@ const Address = ({
   };
 
   const onSubmit = () => {
-     if (postData.phone_number) {
-      LoginApi({...postData, fcm_token: fcm}, navigation, data =>
-        setLoading(data),
-      );
+    if (postData.phone_number) {
+      // LoginApi({...postData, fcm_token: fcm}, navigation, data =>
+      //   setLoading(data),
+      // );
+      let data = JSON.stringify({
+        userid: userId,
+        pincode: postData.pincode,
+        address: postData.address,
+        locality:postData.locality,
+        city: postData.city,
+        state: postData.state,
+        country: postData.country,
+        phone_number: postData.phone_number,
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://ezyclean.theprojecttest.xyz/api/add_address',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        data: data,
+      };
+
+      axios
+        .request(config)
+        .then(response => {
+          RNToasty.Success({
+            title: response.data.message,
+            duration: 2,
+          });
+          navigation.navigate('Payment');
+          console.log('adddressdatapost', JSON.stringify(response.data));
+        })
+        .catch(error => {
+          console.log(error);
+        });
       setPostData({
         phone_number: null,
       });
@@ -93,39 +147,6 @@ const Address = ({
         duration: 2,
       });
     }
-    
-    
-    let data = JSON.stringify({
-      userid: 30,
-      pincode: '345678',
-      address: '667/1 nanda nagar ,road',
-      locality: 'zone1',
-      city: 'indore',
-      state: 'goa',
-      country: 'india',
-      phone_number: '8978968677',
-    });
-
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://ezyclean.theprojecttest.xyz/api/add_address',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization:
-          'Bearer 195|F8kaxG4Y4I8P0So08MjcHVJCl21szRnUFMg68m3Adb21c10c',
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then(response => {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(error => {
-        console.log(error);
-      });
   };
 
   // const valuestatus = route.params?.valuestatus;
@@ -199,9 +220,9 @@ const Address = ({
             <InputWithIcon
               placeholder={'Name'}
               // leftIcon={'smartphone'}
-              value={postData.phone_number}
+              value={postData.name}
               keyboardType={'default'}
-              onChangeText={text => handleChange('phone_number', text)}
+              onChangeText={text => handleChange('name', text)}
             />
 
             <InputWithIcon
@@ -229,31 +250,31 @@ const Address = ({
             <InputWithIcon
               placeholder={'Address'}
               // leftIcon={'smartphone'}
-              value={postData.phone_number}
+              value={postData.address}
               keyboardType={'default'}
-              onChangeText={text => handleChange('phone_number', text)}
+              onChangeText={text => handleChange('address', text)}
             />
             <InputWithIcon
               placeholder={'Pin Code'}
               // leftIcon={'smartphone'}
-              value={postData.phone_number}
+              value={postData.pincode}
               keyboardType={'numeric'}
-              onChangeText={text => handleChange('phone_number', text)}
+              onChangeText={text => handleChange('pincode', text)}
             />
             <InputWithIcon
               placeholder={'Locality'}
               // leftIcon={'smartphone'}
-              value={postData.phone_number}
+              value={postData.locality}
               keyboardType={'default'}
-              onChangeText={text => handleChange('phone_number', text)}
+              onChangeText={text => handleChange('locality', text)}
             />
 
             <InputWithIcon
               placeholder={'Country'}
               // leftIcon={'smartphone'}
-              value={postData.phone_number}
-              keyboardType={'numeric'}
-              onChangeText={text => handleChange('phone_number', text)}
+              value={postData.country}
+              // keyboardType={'numeric'}
+              onChangeText={text => handleChange('country', text)}
             />
 
             <InputWithIcon1
@@ -262,8 +283,8 @@ const Address = ({
               rightIcon={secure ? 'down-outline' : 'up-outline'}
               onPress={() => setSecure(!secure)}
               secureTextEntry={secure}
-              value={postData.password}
-              onChangeText={text => handleChange('password', text)}
+              value={postData.city}
+              onChangeText={text => handleChange('city', text)}
             />
             <InputWithIcon1
               placeholder={'State'}
@@ -271,8 +292,8 @@ const Address = ({
               rightIcon={secure ? 'down-outline' : 'up-outline'}
               onPress={() => setSecure(!secure)}
               secureTextEntry={secure}
-              value={postData.password}
-              onChangeText={text => handleChange('password', text)}
+              value={postData.state}
+              onChangeText={text => handleChange('state', text)}
             />
             {/* <View style={styles.box}>
 <TouchableOpacity
@@ -365,19 +386,20 @@ const Address = ({
           )} */}
           <Button1
             style={styles.btn}
-            onPress={() => {
-              navigation.navigate('Payment');
-              // if (locationAllowed) {
-              //   navigation.navigate('AddNewAddress', {
-              //     currentCoords: currentCoords,
-              //   });
-              // } else {
-              //   Alert.alert(
-              //     'Location Permission',
-              //     'Please allow location permission first.',
-              //   );
-              // }
-            }}>
+            // onPress={() => {
+            //   navigation.navigate('Payment');
+            //   // if (locationAllowed) {
+            //   //   navigation.navigate('AddNewAddress', {
+            //   //     currentCoords: currentCoords,
+            //   //   });
+            //   // } else {
+            //   //   Alert.alert(
+            //   //     'Location Permission',
+            //   //     'Please allow location permission first.',
+            //   //   );
+            //   // }
+            // }}
+            onPress={onSubmit}>
             Save
           </Button1>
         </View>

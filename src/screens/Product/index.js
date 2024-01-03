@@ -27,6 +27,10 @@ import Button1 from '../../component/button/Button1';
 import {useFocusEffect} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+
+
+
 const Product = ({
   navigation,
   route,
@@ -51,6 +55,10 @@ const Product = ({
     //   setRefreshing(false);
     // });
   };
+
+  const alldatapro = useSelector(state=>state.product.productData);
+
+console.log('Detailsalldatapro',alldatapro);
 
   useEffect(() => {
     let config = {
@@ -178,6 +186,10 @@ const Product = ({
     GetProductByServiceId();
     GetProductFeatures();
     GetActiveSubscription();
+  }, []);
+
+  useEffect(() => {
+    GetAllProduct();
   }, []);
 
   // console.log('itemList', itemList);
@@ -359,7 +371,7 @@ const Product = ({
                         // source={{uri: item.image}}
                         productName={item?.product_name}
                         quantity={item?.qty}
-                        price={`₹ ${item.amount ? item.amount : 0}`}
+                        price={`₹ ${item?.amount ? item.amount : 0}`}
                         service_name={item?.service_name}
                         source={{uri: item.image}}
                         onPlusPress={() => {
