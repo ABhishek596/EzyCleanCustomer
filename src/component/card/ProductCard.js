@@ -26,8 +26,8 @@ const ProductCard = ({
         <Image source={source} style={styles.image} resizeMode="contain" />
       </View>
       <View style={styles.content_box}>
-        <View style={{marginTop: SIZES.height * -0.014}}>
-          <Text style={styles.product_name}>{productName.slice(0, 7)}...</Text>
+        <View style={{marginTop: SIZES.height * 0.0}}>
+          <Text style={styles.product_name}>{productName.slice(0, 8)}...</Text>
           <View style={{height: 5}} />
           <Text style={styles.price}>{price}</Text>
           <Text style={styles.service}>{service_name}</Text>
@@ -39,7 +39,20 @@ const ProductCard = ({
             style={{...styles.count_btn}}>
             <Icons name={'plus'} size={16} color={COLORS.white} />
           </TouchableOpacity>
-          <Text style={styles.count_text}>{quantity}</Text>
+          <View
+            style={{
+              // backgroundColor: 'red',
+              alignSelf: 'center',
+              width: SIZES.width * 0.05,
+              height: SIZES.height * 0.03,
+              alignItems:'center',
+              justifyContent:'center',
+              borderWidth:1,
+              borderColor:COLORS.secondary
+              // borderRadius:5
+            }}>
+            <Text style={styles.count_text}>{quantity}</Text>
+          </View>
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={onMinusPress}
@@ -117,7 +130,7 @@ const styles = StyleSheet.create({
 
   product_name: {
     fontFamily: FONTS.bold,
-    fontSize: SIZES.width * 0.045,
+    fontSize: SIZES.width * 0.038,
     color: COLORS.secondary,
     // color: COLORS.white,
     marginBottom: -6,
@@ -165,10 +178,12 @@ const styles = StyleSheet.create({
     fontSize: SIZES.width * 0.03,
     color: COLORS.secondary,
     // marginBottom: -2,
-    borderWidth: 1.2,
-    paddingHorizontal: 5,
-    paddingVertical: 2,
+    // borderWidth: 1.2,
+    // paddingHorizontal: 5,
+    // paddingVertical: 2,
     borderColor: COLORS.secondary,
+    alignSelf: 'center',
+    // padding:3
   },
 
   // ============ buttons ===========

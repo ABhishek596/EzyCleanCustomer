@@ -107,7 +107,7 @@ const Address = ({
         userid: userId,
         pincode: postData.pincode,
         address: postData.address,
-        locality:postData.locality,
+        locality: postData.locality,
         city: postData.city,
         state: postData.state,
         country: postData.country,
@@ -277,12 +277,28 @@ const Address = ({
               onChangeText={text => handleChange('country', text)}
             />
 
-            <InputWithIcon1
+            <InputWithIcon
+              placeholder={'City'}
+              // leftIcon={'smartphone'}
+              value={postData.city}
+              keyboardType={'default'}
+              onChangeText={text => handleChange('city', text)}
+            />
+
+            <InputWithIcon
+              placeholder={'State'}
+              // leftIcon={'smartphone'}
+              value={postData.state}
+              // keyboardType={'numeric'}
+              onChangeText={text => handleChange('state', text)}
+            />
+
+            {/* <InputWithIcon1
               placeholder={'City'}
               // leftIcon={'lock'}
               rightIcon={secure ? 'down-outline' : 'up-outline'}
               onPress={() => setSecure(!secure)}
-              secureTextEntry={secure}
+              // secureTextEntry={secure}
               value={postData.city}
               onChangeText={text => handleChange('city', text)}
             />
@@ -291,10 +307,11 @@ const Address = ({
               // leftIcon={'lock'}
               rightIcon={secure ? 'down-outline' : 'up-outline'}
               onPress={() => setSecure(!secure)}
-              secureTextEntry={secure}
+              // secureTextEntry={secure}
               value={postData.state}
               onChangeText={text => handleChange('state', text)}
-            />
+            /> */}
+
             {/* <View style={styles.box}>
 <TouchableOpacity
   onPress={() => navigation.navigate('Otp')}

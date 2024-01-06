@@ -68,7 +68,7 @@ const EditProfile = ({
       height: SIZES.height * 0.15,
       cropping: true,
     }).then(image => {
-      console.log('editProfileImage',image);
+      console.log('editProfileImage', image);
       setProfileImage({uri: image.path});
       handleChange('profile_image', {
         uri: image.path,
@@ -171,14 +171,14 @@ const EditProfile = ({
                 <Icons name={'edit'} size={15} color={COLORS.secondary} />
               </TouchableOpacity>
             </TouchableOpacity>
-            <View style={{height:SIZES.height * .05}}/>
+            <View style={{height: SIZES.height * 0.05}} />
             <View style={{flex: 1}}>
               {/* button container */}
               <KeyboardAwareScrollView
                 keyboardShouldPersistTaps={'handled'}
                 showsVerticalScrollIndicator={false}
                 // style={{top: SIZES.height * -0.08, flex: 1}}
-                >
+              >
                 <View style={styles.box}>
                   <Text style={styles.title}>Basic Details</Text>
 
@@ -277,6 +277,7 @@ const EditProfile = ({
                         }}
                         inputTextStyle={{width: SIZES.width * 0.29}}
                         style={{marginLeft: SIZES.width * 0.02}}
+                        iconColor={COLORS.white}
                       />
                     </View>
                     <View>
@@ -309,6 +310,7 @@ const EditProfile = ({
                         }}
                         inputTextStyle={{width: SIZES.width * 0.29}}
                         style={{marginLeft: SIZES.width * 0.02}}
+                        iconColor={COLORS.white}
                       />
                     </View>
                   </View>
@@ -335,6 +337,7 @@ const EditProfile = ({
                     secureTextEntry={false}
                     value={postData.city}
                     onChangeText={text => handleChange('password', text)}
+                    iconColor={COLORS.white}
                   />
                   <InputWithIcon
                     placeholder={'Type Address...'}

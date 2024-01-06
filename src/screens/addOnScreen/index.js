@@ -58,7 +58,7 @@ const AddOnScreen = ({
   navigation,
   route,
   userData,
-  deliveryTypeList,
+  // deliveryTypeList,
   colorList,
   // damageList,
   // packingList,
@@ -66,20 +66,32 @@ const AddOnScreen = ({
   // stainsList,
   subsDetails,
 }) => {
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleModal = () => {
-    !isModalVisible;
+    !isModalVisible
     // navigation.navigate('PickupSchedule');
   };
+
   console.log('addonList====', addonList);
-  const {items, discountObj, csIds} = route.params;
-  // const [filterBottom, setFilterBottom] = useState(false);
+  console.log('addonList====', addonList.length);
+  // const {items} = route?.params;
+  const {items,discountObj, csIds} = route?.params;
+  const [filterBottom, setFilterBottom] = useState(false);
+  console.log('Get items item from discount screen', items);
+  console.log('Get discountObj item from discount screen', discountObj?.discount);
+  // console.log('Get all item from product screen total', items.length);
 
-  console.log('Get all item from product screen', items);
 
-  console.log('Get addonsList ', addonsList);
 
+  const [shwitem, setShwitem] = useState([]);
+  console.log('Actual show item ', shwitem.length);
+  const totalAmount = shwitem.reduce((total, item) => total + item.amount, 0);
+  // const totalItems = addonList.length;
+
+  console.log('totalAmountt====', totalAmount);
+  // console.log('totalItemst====', totalItems);
   const [type, setType] = useState(1);
   const [addonsList, setAddonsList] = useState([]);
   // const [addonList, setAddonList] = useState([]);
@@ -100,7 +112,7 @@ const AddOnScreen = ({
   const onColorChangeComplete = color => {
     // Handle color change complete
   };
-
+  console.log('Get addonsList ', JSON.stringify(addonsList));
   //For color picker
   // const [color, setColor] = useState('#FF5733'); // Initial color
 
@@ -127,6 +139,8 @@ const AddOnScreen = ({
       }
     });
 
+    console.log('Get addonsList of items allallala', outputArray);
+    setShwitem(outputArray);
     setAddonsList(outputArray);
   };
 
@@ -181,16 +195,16 @@ const AddOnScreen = ({
     {id: 8, type: 'Delivery'},
   ];
 
-  // const ironList = [
-  //   {
-  //     id: 1,
-  //     iron: 'Yes',
-  //   },
-  //   {
-  //     id: 0,
-  //     iron: 'No',
-  //   },
-  // ];
+  const ironList = [
+    {
+      id: 1,
+      iron: 'Yes',
+    },
+    {
+      id: 0,
+      iron: 'No',
+    },
+  ];
 
   const [itemsData, setItemsData] = useState({
     customer_id: 0,
@@ -217,13 +231,13 @@ const AddOnScreen = ({
     delivery: deliveryTypeList?.[0] || 0,
   });
 
-  // const [productId, setProductId] = useState();
-  // const [product, setProduct] = useState();
-  // const [packingCharge, setPackingCharge] = useState(0);
-  // const [addOnCharge, setAddonCharge] = useState(0);
-  // const [ironCharge, setIronCharge] = useState(0);
-  // const [totalItem, setTotalItem] = useState(0);
-  // const [deliveryCharge, setDeliveryCharge] = useState(0);
+  const [productId, setProductId] = useState();
+  const [product, setProduct] = useState();
+  const [packingCharge, setPackingCharge] = useState(0);
+  const [addOnCharge, setAddonCharge] = useState(0);
+  const [ironCharge, setIronCharge] = useState(0);
+  const [totalItem, setTotalItem] = useState(0);
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
 
   const handleChange = (name, value) => {
     setPostData({
@@ -232,36 +246,39 @@ const AddOnScreen = ({
     });
   };
 
-  // const reset = () => {
-  //   setPostData({
-  //     product_id: 0,
-  //     service_id: 0,
-  //     iron: ironList[1],
-  //     color1: 0,
-  //     color2: 0,
-  //     damage_id: 0,
-  //     packing_id: 0,
-  //     stain_id: 0,
-  //     addon_id: 0,
-  //     price: 0,
-  //     qty: 0,
-  //     delivery: deliveryTypeList?.[0] || 0,
-  //   });
-  // };
+  const reset = () => {
+    setPostData({
+      product_id: 0,
+      service_id: 0,
+      iron: ironList[1],
+      color1: 0,
+      color2: 0,
+      damage_id: 0,
+      packing_id: 0,
+      stain_id: 0,
+      addon_id: 0,
+      price: 0,
+      qty: 0,
+      delivery: deliveryTypeList?.[0] || 0,
+    });
+  };
 
-  // const handleApplyChange = () => {
-  //   const temArr = [];
-  //   addonsList.map(item => {
-  //     if (item.uid === productId) {
-  //       temArr.push({...item, dataAddon: {...postData}});
-  //     } else {
-  //       temArr.push(item);
-  //     }
-  //   });
-  //   setAddonsList(temArr);
-  //   setFilterBottom(false);
-  //   reset();
-  // };
+  const handleApplyChange = () => {
+    setIsModalVisible(!isModalVisible);
+    const temArr = [];
+    addonsList.map(item => {
+      if (item.uid === productId) {
+        temArr.push({...item, dataAddon: {...postData}});
+      } else {
+        temArr.push(item);
+      }
+    });
+    setAddonsList(temArr);
+    // setFilterBottom(false);
+    reset();
+    setVisible(true);
+  };
+
 
   // const getTotalAmt = itemArr => {
   //   let total = 0;
@@ -438,8 +455,9 @@ const AddOnScreen = ({
                 //   setFilterBottom(true);
                 // }}
                 serName={item.service_name}
-                catName={item.category_name}
-                onAddonPress={toggleModal}
+                catName={item.category_name} 
+                // onAddonPress={()=>{toggleModal(true)}}
+                onAddonPress={()=>{setIsModalVisible(!isModalVisible)}}
               />
             )}
             keyExtractor={item => item.uid}
@@ -450,7 +468,10 @@ const AddOnScreen = ({
 
       <View style={{height: SIZES.height * 0.015}} /> */}
 
-        <Modal transparent={true} visible={isModalVisible} animationType="fade">
+        <Modal transparent={true} visible={isModalVisible} animationType="fade"  onRequestClose={() => {
+          
+          setIsModalVisible(!isModalVisible);
+        }}>
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.texta}>Edit Product</Text>
@@ -575,8 +596,8 @@ const AddOnScreen = ({
                         renderItem={({item, index}) => (
                           <FeatureRow
                             title={item.damage}
-                            // value={postData.damage_id == item ? true : false}
-                            // onValueChange={() => handleChange('damage_id', item)}
+                            value={postData.damage_id == item ? true : false}
+                            onValueChange={() => handleChange('damage_id', item)}
                           />
                         )}
                         key={item => item.id}
@@ -592,8 +613,8 @@ const AddOnScreen = ({
                       renderItem={({item, index}) => (
                         <FeatureRow
                           title={item.stains}
-                          // value={postData.stain_id == item ? true : false}
-                          // onValueChange={() => handleChange('stain_id', item)}
+                          value={postData.stain_id == item ? true : false}
+                          onValueChange={() => handleChange('stain_id', item)}
                         />
                       )}
                       key={item => item.id}
@@ -619,12 +640,12 @@ const AddOnScreen = ({
                             alignItems: 'center',
                           }}
 
-                          // price={item.price}
-                          // value={postData.packing_id == item ? true : false}
-                          // onValueChange={() => {
-                          //   handleChange('packing_id', item),
-                          //     setPackingCharge(item.price);
-                          // }}
+                          price={item.price}
+                          value={postData.packing_id == item ? true : false}
+                          onValueChange={() => {
+                            handleChange('packing_id', item),
+                              setPackingCharge(item.price);
+                          }}
                         />
                       )}
                       key={item => item.id}
@@ -639,11 +660,11 @@ const AddOnScreen = ({
                         <FeatureRow
                           title={item.addon_name}
                           price={item.price}
-                          // value={postData.addon_id == item ? true : false}
-                          // onValueChange={() => {
-                          //   handleChange('addon_id', item),
-                          //     setAddonCharge(item.price);
-                          // }}
+                          value={postData.addon_id == item ? true : false}
+                          onValueChange={() => {
+                            handleChange('addon_id', item),
+                              setAddonCharge(item.price);
+                          }}
                         />
                       )}
                       horizontal
@@ -658,17 +679,17 @@ const AddOnScreen = ({
                       renderItem={({item, index}) => (
                         <FeatureRow
                           title={item.iron}
-                          // value={postData.iron.id == item.id ? true : false}
-                          // onValueChange={() => {
-                          //   handleChange('iron', item),
-                          //     setIronCharge(
-                          //       item.id
-                          //         ? product?.iron_price
-                          //           ? Number(product?.iron_price)
-                          //           : 0
-                          //         : 0,
-                          //     );
-                          // }}
+                          value={postData.iron.id == item.id ? true : false}
+                          onValueChange={() => {
+                            handleChange('iron', item),
+                              setIronCharge(
+                                item.id
+                                  ? product?.iron_price
+                                    ? Number(product?.iron_price)
+                                    : 0
+                                  : 0,
+                              );
+                          }}
                         />
                       )}
                       key={item => item.id}
@@ -677,7 +698,7 @@ const AddOnScreen = ({
                     />
                   )}
 
-                  {/* {deliveryTypeList && type == 8 && (
+                  {deliveryTypeList && type == 8 && (
                 <FlatList
                   data={deliveryTypeList}
                   renderItem={({item, index}) => (
@@ -700,24 +721,36 @@ const AddOnScreen = ({
                   key={item => item.id}
                   showsVerticalScrollIndicator={false}
                 />
-              )} */}
+              )}
                 </View>
               </View>
+
+              
               <View style={styles.buttonRow}>
-                <TouchableOpacity style={styles.button1} onPress={toggleModal}>
+                <TouchableOpacity style={styles.button1} 
+                 onPress={() => {
+                  // handleItemsList('Reset')
+                  reset();
+                  // setIsModalVisible(isModalVisible)
+                }}
+                // onPress={toggleModal}
+                >
                   <Text style={styles.yes}>Reset</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
                     // Handle 'Yes' button click here
-                    toggleModal();
-                    setVisible(true);
+                    // toggleModal();
+                    // setVisible(true);
                     // navigation.navigate('OnBoardingScreen');
+                    handleApplyChange();
+
                   }}>
                   <Text style={styles.cancle}>Apply</Text>
                 </TouchableOpacity>
               </View>
+
             </View>
           </View>
         </Modal>
@@ -742,7 +775,10 @@ const AddOnScreen = ({
                   alignItems: 'center',
                 },
               ]}
-              onPress={() => navigation.navigate('Coupon')}>
+              // onPress={() => navigation.navigate('Coupon',{
+              //   items,
+              // })}
+              >
               <Text style={[styles.btn_text, {color: COLORS.secondary}]}>
                 Add Coupon
               </Text>
@@ -758,7 +794,9 @@ const AddOnScreen = ({
                   alignItems: 'center',
                 },
               ]}
-              onPress={() => navigation.navigate('Discount')}>
+              onPress={() => navigation.navigate('Discount', {
+                items,
+              } )}>
               <Text
                 style={[
                   styles.btn_text,
@@ -806,9 +844,9 @@ const AddOnScreen = ({
                     // marginTop: SIZES.height * 0.04,
                   }}>
                   <Text style={{color: COLORS.secondary}}>
-                    Total Price (4 Items)
+                    Total Price ({shwitem.length} Items)
                   </Text>
-                  <Text style={{color: COLORS.secondary}}>₹ 400</Text>
+                  <Text style={{color: COLORS.secondary}}>₹ {totalAmount}</Text>
                 </View>
                 <View
                   style={{
@@ -822,7 +860,7 @@ const AddOnScreen = ({
                     Discount
                   </Text>
                   <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
-                    ₹ 40
+                    {discountObj?.discount?discountObj?.discount+"%":0}
                   </Text>
                 </View>
                 <View
@@ -838,7 +876,7 @@ const AddOnScreen = ({
                     Subtotal
                   </Text>
                   <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
-                    ₹ 400
+                    ₹ {discountObj?.discount?(totalAmount-(totalAmount * Number(discountObj?.discount)) / 100) :totalAmount}
                   </Text>
                 </View>
               </View>
@@ -852,20 +890,21 @@ const AddOnScreen = ({
                     // marginBottom: SIZES.width * 0.01,
                     width: SIZES.width * 0.38,
                   }}
-                  onPress={() => {
-                    navigation.navigate('PickupSchedule', {
-                      ...itemsData,
-                    });
-                    // handleConfimOrder();
-                    // confirmColor1();
-                  }}
                   // onPress={() => {
-                  //   if (visible === false) {
-                  //     setIsModalVisible(!isModalVisible);
-                  //   } else if (visible === true) {
-                  //     navigation.navigate('PickupSchedule');
-                  //   }
+                  //   navigation.navigate('PickupSchedule', {
+                  //     ...itemsData,
+                  //     pickupmylaundry:false
+                  //   });
+                  //   // handleConfimOrder();
+                  //   // confirmColor1();
                   // }}
+                  onPress={() => {
+                    if (visible === false) {
+                      setIsModalVisible(!isModalVisible);
+                    } else if (visible === true) {
+                      navigation.navigate('PickupSchedule');
+                    }
+                  }}
                 >
                   Continue Order
                 </Button1>
@@ -959,3 +998,55 @@ const packingList = [
 //   },
 //   // Add more items as needed
 // ];
+
+
+const deliveryTypeList =[
+  {
+      "id": 1,
+      "type": "Normal",
+      "type_ar": "طبيعي",
+      "num_days": 5,
+      "urgent_charge": "0.00",
+      "added_by": 3,
+      "modify_by": null,
+      "modify_date": null,
+      "created_at": "2023-06-02 18:08:55",
+      "updated_at": "2023-10-14 17:08:39"
+  },
+  {
+      "id": 2,
+      "type": "Fast",
+      "type_ar": "سريع",
+      "num_days": 2,
+      "urgent_charge": "100.00",
+      "added_by": 3,
+      "modify_by": null,
+      "modify_date": null,
+      "created_at": "2023-06-02 18:17:48",
+      "updated_at": "2023-06-02 18:19:55"
+  },
+  {
+      "id": 3,
+      "type": "Super Fast",
+      "type_ar": "سريع جدا",
+      "num_days": 1,
+      "urgent_charge": "200.00",
+      "added_by": 3,
+      "modify_by": null,
+      "modify_date": null,
+      "created_at": "2023-06-02 18:19:40",
+      "updated_at": "2023-06-02 18:19:40"
+  },
+  {
+      "id": 6,
+      "type": "Medium",
+      "type_ar": null,
+      "num_days": 3,
+      "urgent_charge": "50.00",
+      "added_by": 3,
+      "modify_by": null,
+      "modify_date": null,
+      "created_at": "2023-10-03 12:59:01",
+      "updated_at": "2023-10-03 12:59:01"
+  }
+]

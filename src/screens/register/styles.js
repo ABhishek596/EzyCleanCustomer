@@ -90,8 +90,8 @@ export default StyleSheet.create({
       },
       dropdownContainer: {
         // position: 'absolute',
-        // top: 60, // Adjust this value based on your design
-        width: '80%',
+        top: 10, // Adjust this value based on your design
+        width: '100%',
         borderWidth: 1,
         borderColor: '#ccc',
         backgroundColor: '#fff',
@@ -100,6 +100,16 @@ export default StyleSheet.create({
         padding: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
+      },
+      button: {
+        // alignItems: 'center',
+        // backgroundColor: '#DDDDDD',
+        padding: 12,
+        borderWidth: 1.2,
+        borderRadius: SIZES.width * 0.024,
+        borderColor:COLORS.borderColor,
+        flexDirection:'row',
+        justifyContent:'space-between'
       },
 
 })

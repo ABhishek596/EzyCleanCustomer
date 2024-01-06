@@ -66,14 +66,15 @@ export default StyleSheet.create({
         alignItems: "flex-end",
         justifyContent: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: COLORS.black1,
+        borderBottomColor:  '#E93838',
     },
 
     signup_text: {
         fontFamily: FONTS.medium,
-        fontSize: 14,
-        marginBottom: -5,
-        color: COLORS.black1,
+        fontSize:  SIZES.width * .038,
+        // marginBottom: -5,
+        // color: COLORS.black1,
+        color: '#E93838'
     },
     time: {
         fontFamily: FONTS.semiBold,
@@ -84,7 +85,7 @@ export default StyleSheet.create({
     
       btn_text: {
         fontFamily: FONTS.regular,
-        fontSize:  SIZES.width * .045,
+        fontSize:  SIZES.width * .04,
         color: COLORS.blueezy,
         marginBottom: -4,
       },

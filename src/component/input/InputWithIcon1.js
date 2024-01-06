@@ -16,6 +16,7 @@ const InputWithIcon1 = ({
     onPress,
     rightIcon,
     inputStyle,
+    iconColor,
     style }) => {
 
     const [focusColor, setFocusColor] = useState(COLORS.borderColor)
@@ -48,7 +49,9 @@ const InputWithIcon1 = ({
                 <Icons
                     name={rightIcon}
                     size={20}
-                    color={focusColor == COLORS.secondary ? COLORS.secondary : COLORS.placeholderColor}
+                    // color={focusColor == COLORS.secondary ? COLORS.secondary : COLORS.placeholderColor}
+                    color={iconColor || (focusColor == COLORS.secondary ? COLORS.secondary : COLORS.placeholderColor)}
+
                 />
             </TouchableOpacity>
         </View>

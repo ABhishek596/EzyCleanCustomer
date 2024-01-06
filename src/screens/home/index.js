@@ -42,7 +42,9 @@ const Home = ({
 }) => {
   const OfferItem = ({item}) => {
     return (
-      <Pressable onPress={() => navigation.navigate('Discount')}>
+      <Pressable 
+      // onPress={() => navigation.navigate('Discount',{ items :{}})}
+      >
         <LinearGradient
           colors={['#651898', '#2C0D8F']}
           style={[styles.offer_box]}
@@ -335,6 +337,7 @@ const Home = ({
                           // console.log('categoryitemonclic',item.id);
                           navigation.navigate('Product', {
                             catId: item.id,
+                           
                           });
                         }}
                       />

@@ -183,7 +183,7 @@ const Login = ({navigation, LoginApi, AuthFunction, GoogleLoginApi}) => {
             </Text>
           </View>
           <InputWithIcon
-            placeholder={'Enter Email'}
+            placeholder={'Email'}
             // leftIcon={'smartphone'}
             value={postData.email}
             keyboardType={'email-address'}
@@ -230,11 +230,11 @@ const Login = ({navigation, LoginApi, AuthFunction, GoogleLoginApi}) => {
                 Login by OTP
               </Text>
             </TouchableOpacity>
-            <Text
+            {/* <Text
               style={styles.time}
               onPress={() => navigation.navigate('Register')}>
               Register
-            </Text>
+            </Text> */}
           </View>
 
           <Button1
@@ -266,15 +266,15 @@ const Login = ({navigation, LoginApi, AuthFunction, GoogleLoginApi}) => {
             </TouchableOpacity>
           </View> */}
         </View>
-        {/* 
+        <View style={{marginTop:SIZES.height * 0.08}}/>
         <View style={globalStyles.row}>
-          <Text style={globalStyles.text}>Don’t have an account? </Text>
+          <Text style={[globalStyles.text,{marginTop:SIZES.height * 0.0}]}>Don’t have an account? </Text>
           <TouchableOpacity
             style={styles.signup_btn}
-            onPress={() => navigation.navigate('SignUp')}>
+            onPress={() => navigation.navigate('Register')}>
             <Text style={styles.signup_text}>Sign up</Text>
           </TouchableOpacity>
-        </View> */}
+        </View>
       </View>
     </KeyboardAwareScrollView>
   );

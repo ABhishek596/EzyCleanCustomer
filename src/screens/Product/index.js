@@ -41,13 +41,13 @@ const Product = ({
   // serviceList,
   GetProductByServiceId,
   GetActiveSubscription,
-  // subsDetails,
+  subsDetails,
 }) => {
   const [itemList, setItemList] = useState(alldata);
   const [refreshing, setRefreshing] = useState(false);
   const [alldata, setAlldata] = useState();
   // console.log('subsDetails=========>>>>>',subsDetails);
-  console.log('completedata product from API', productData);
+  // console.log('completedata product from API', productData);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -56,9 +56,9 @@ const Product = ({
     // });
   };
 
-  const alldatapro = useSelector(state=>state.product.productData);
+//   const alldatapro = useSelector(state=>state.product.productData);
 
-console.log('Detailsalldatapro',alldatapro);
+// console.log('Detailsalldatapro',alldatapro);
 
   useEffect(() => {
     let config = {
@@ -123,6 +123,8 @@ console.log('Detailsalldatapro',alldatapro);
       })
     : [];
   // console.log('Selected filteredProducts :', filteredProducts);
+  // console.log('data qtyqty :', filteredProducts.length);
+
 
   const handleGenderPress = gender => {
     setCatId(gender);
@@ -175,6 +177,7 @@ console.log('Detailsalldatapro',alldatapro);
       return product;
     });
     setItemList(updatedArray);
+    setShwitem(updatedArray);
   }
 
   // useEffect(() => {
@@ -201,11 +204,14 @@ console.log('Detailsalldatapro',alldatapro);
         totalQty = totalQty + item.qty;
       }
     });
+    if(additem === 0){
+        Alert.alert('You have not chose any item yet');
+    }else{
     navigation.navigate('AddOn', {
       // csIds: {...route?.params},
       items: filteredProducts,
     });
-
+    }
     // if (
     //   totalQty <=
     //   Number(
@@ -224,26 +230,83 @@ console.log('Detailsalldatapro',alldatapro);
     // }
   };
 
+  // useEffect(() => {
+  //   availibleOrder();
+  // }, []);
+
+  // const availibleOrder = () => {
+  //   let totalQty = 0;
+  //   filteredProducts.map(item => {
+  //     if (item.qty > 0) {
+  //       totalQty = totalQty + item.qty;
+  //     }
+  //   });
+    
+  //   setShwitem(filteredProducts);
+
+  //   // if (
+  //   //   totalQty <=
+  //   //   Number(
+  //   //     subsDetails?.existing_subscription_details?.available_no_of_bookings,
+  //   //   )
+  //   // ) {
+  //   //   navigation.navigate('AddOn', {
+  //   //     csIds: {...route?.params},
+  //   //     items: itemList,
+  //   //   });
+  //   // } else {
+  //   //   Alert.alert(
+  //   //     'Subscription Alert!',
+  //   //     `Your available number of booking is ${subsDetails?.existing_subscription_details?.available_no_of_bookings} less than your order quantity ${totalQty}`,
+  //   //   );
+  //   // }
+  // };
+
+
+  
+
+
+
+
+  // const filteredItems = filteredProducts.filter(item => item.qty);
+  // console.log('This is filteredItems name', filteredItems);
+
+  // const [shwitem, setShwitem] = useState([]);
+  // console.log('product by state ', shwitem);
+  // const totalAmount = shwitem.reduce((total, item) => total + item.amount, 0);
+
+  // console.log('total product page Amountt====', totalAmount);
+
+
+  // useEffect(() => {
+  //   setShwitem(filteredItems);
+  // }, []);
+
+
+
+
+
   const continueFunc = () => {
-    navigation.navigate('AddOn');
-    // if (!subsDetails) {
-    //   Alert.alert(
-    //     'Subscription Alert!',
-    //     'Please purchase a subscription plan to continue order',
-    //     [
-    //       {
-    //         text: 'Buy Subscription',
-    //         onPress: () => navigation.navigate('Subscription'),
-    //       },
-    //       {
-    //         text: 'OK',
-    //         onPress: () => {},
-    //       },
-    //     ],
-    //   );
-    // } else {
-    //   checkAvailibleOrder();
-    // }
+    // navigation.navigate('AddOn');
+    if (!subsDetails) {
+      Alert.alert(
+        'Subscription Alert!',
+        'Please purchase a subscription plan to continue order',
+        [
+          {
+            text: 'Buy Subscription',
+            // onPress: () => navigation.navigate('Subscription'),
+            onPress: () => navigation.navigate('ActivePlan'),
+          },
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ],
+      );
+    } else {
+      checkAvailibleOrder();
+    }
   };
 
   // useFocusEffect(
@@ -255,6 +318,54 @@ console.log('Detailsalldatapro',alldatapro);
   //     }
   //   }, [subsDetails])
   // );
+
+  const [additem, setAdditem] = useState();
+  const [amountitem, setAmountitem] = useState();
+
+  const [shwitem, setShwitem] = useState([]);
+  // console.log('New product page Actual show item ', shwitem);
+  // const totalAmount = shwitem.reduce((total, item) => total + item.amount, 0);
+  // const totalItems = addonList.length;
+  // const filteredProductss = shwitem.filter(product => product.qty);
+  // console.log('New filter total product page Amountt====', filteredProductss);
+  // console.log('New total length product page Amountt====', filteredProductss.length);
+  
+useEffect(() => {
+  const filteredProductss = shwitem.filter(product => product.qty);
+  const totalAmount = filteredProductss.reduce((total, item) => total + item.amount*item.qty , 0);
+  // console.log('New filter total product page Amountt====', filteredProductss);
+  console.log('New total length product page Amountt====', filteredProductss.length);
+  // console.log('Total paisa', totalAmount);
+  setAdditem(filteredProductss.length);
+  setAmountitem(totalAmount);
+  }, [shwitem]);
+
+//   useEffect(() => {
+//   const transformArray = () => {
+//     const outputArray = [];
+//     let uniqueId = 1;
+//     filteredProducts?.forEach(item => {
+//       if (item.qty > 1) {
+//         for (let i = 1; i <= item.qty; i++) {
+//           const newItem = {...item};
+//           newItem.product_name += ` ${i}`;
+//           newItem.uid = uniqueId++;
+//           outputArray.push({...newItem, dataAddon: {...postData}});
+//         }
+//       } else if (item.qty == 1) {
+//         item.uid = uniqueId++;
+//         outputArray.push({...item, dataAddon: {...postData}});
+//       }
+//     });
+
+//     // console.log('Get addonsList of items allallala', outputArray);
+//     setShwitem(outputArray);                                          //last
+//   };
+  
+//   transformArray();
+
+// }, []);
+
 
   return (
     <View style={globalStyles.container}>
@@ -306,7 +417,7 @@ console.log('Detailsalldatapro',alldatapro);
               // colors={['#E9C7FF', '#CFC0FF']}
               colors={['#FFFFFF', '#FFFFFF']}
               style={{
-                backgroundColor: '#fff',
+                // backgroundColor: 'red',
                 width: SIZES.width * 0.22,
                 borderRadius: SIZES.width * 0.03,
                 alignItems: 'center',
@@ -320,7 +431,7 @@ console.log('Detailsalldatapro',alldatapro);
                 renderItem={({item, index}) => (
                   <CategoryButton
                     // marginLeft={index == 0 ? SIZES.width * 0.03 : 0}
-                    marginBottom={SIZES.height * 0.007}
+                    marginBottom={SIZES.height * 0.02}
                     title={item.service?.service_name}
                     isActive={serviceId == item.service?.id ? true : false}
                     onPress={() => {
@@ -330,20 +441,24 @@ console.log('Detailsalldatapro',alldatapro);
                     }}
                     titlestyl={{
                       // fontFamily: FONTS.semiBold,
-                      fontSize: SIZES.width * 0.035,
+                      fontSize: SIZES.width * 0.03,
                       // color: COLORS.secondary,
                       width: SIZES.width * 0.16,
                       alignSelf: 'center',
                       // marginBottom: -4,
+                      numberOfLines:2
+
                     }}
                     style={{
-                      borderWidth: 0,
-                      width: SIZES.width * 0.17,
+                      borderWidth: 0.4,
+                      width: SIZES.width * 0.19,
                       height: SIZES.width * 0.13,
                       alignSelf: 'center',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      // alignItems: 'center',
+                      // justifyContent: 'center',
                       marginRight: SIZES.width * 0.0,
+                      marginTop: SIZES.height * 0.005,
+                      // backgroundColor:'red'
                     }}
                   />
                 )}
@@ -480,8 +595,8 @@ console.log('Detailsalldatapro',alldatapro);
               // marginTop: SIZES.height * 0.04,
               width: SIZES.width * 0.5,
             }}>
-            <Text style={{color: COLORS.secondary}}>Total Price (4 Items)</Text>
-            <Text style={{color: COLORS.secondary}}>₹ 400</Text>
+            <Text style={{color: COLORS.secondary}}>Total Price ({additem} Items)</Text>
+            <Text style={{color: COLORS.secondary}}>₹ {amountitem}</Text>
           </View>
           <View
             style={{
@@ -495,7 +610,7 @@ console.log('Detailsalldatapro',alldatapro);
               Subtotal
             </Text>
             <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
-              ₹ 400
+              ₹ {amountitem}
             </Text>
           </View>
         </View>
@@ -539,53 +654,53 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
 // export default Product;
 
-const category = [
-  {
-    id: 1,
-    category_name: 'Men',
-    category_name_ar: null,
-    category_image: 'categories/6b92e366d82c3c92deaed75974fd7545.png',
-    service_id: ['1'],
-    status: 1,
-    created_at: '2023-10-09T06:30:49.000000Z',
-    updated_at: '2023-10-09T06:30:49.000000Z',
-    services: [{id: 1, service_name: 'Dry Cleaning'}],
-    images:
-      'https://dryfi.theprojecttest.xyz/public/uploads/categories/6b92e366d82c3c92deaed75974fd7545.png',
-  },
-  {
-    id: 2,
-    category_name: 'Women',
-    category_name_ar: null,
-    category_image: 'categories/2577ecdc7eb5f0141df74358eee429c0.png',
-    service_id: ['2', '3'],
-    status: 1,
-    created_at: '2023-10-09T06:31:49.000000Z',
-    updated_at: '2023-10-09T06:31:49.000000Z',
-    services: [
-      {id: 2, service_name: 'Ironing'},
-      {id: 3, service_name: 'Wash & Clean'},
-    ],
-    images:
-      'https://dryfi.theprojecttest.xyz/public/uploads/categories/2577ecdc7eb5f0141df74358eee429c0.png',
-  },
-  {
-    id: 3,
-    category_name: 'Kids',
-    category_name_ar: null,
-    category_image: 'categories/e2cff0705861f2e45251761b6d3cd44f.png',
-    service_id: ['1', '3'],
-    status: 1,
-    created_at: '2023-10-09T06:32:06.000000Z',
-    updated_at: '2023-10-09T06:32:06.000000Z',
-    services: [
-      {id: 1, service_name: 'Dry Cleaning'},
-      {id: 3, service_name: 'Wash & Clean'},
-    ],
-    images:
-      'https://dryfi.theprojecttest.xyz/public/uploads/categories/e2cff0705861f2e45251761b6d3cd44f.png',
-  },
-];
+// const category = [
+//   {
+//     id: 1,
+//     category_name: 'Men',
+//     category_name_ar: null,
+//     category_image: 'categories/6b92e366d82c3c92deaed75974fd7545.png',
+//     service_id: ['1'],
+//     status: 1,
+//     created_at: '2023-10-09T06:30:49.000000Z',
+//     updated_at: '2023-10-09T06:30:49.000000Z',
+//     services: [{id: 1, service_name: 'Dry Cleaning'}],
+//     images:
+//       'https://dryfi.theprojecttest.xyz/public/uploads/categories/6b92e366d82c3c92deaed75974fd7545.png',
+//   },
+//   {
+//     id: 2,
+//     category_name: 'Women',
+//     category_name_ar: null,
+//     category_image: 'categories/2577ecdc7eb5f0141df74358eee429c0.png',
+//     service_id: ['2', '3'],
+//     status: 1,
+//     created_at: '2023-10-09T06:31:49.000000Z',
+//     updated_at: '2023-10-09T06:31:49.000000Z',
+//     services: [
+//       {id: 2, service_name: 'Ironing'},
+//       {id: 3, service_name: 'Wash & Clean'},
+//     ],
+//     images:
+//       'https://dryfi.theprojecttest.xyz/public/uploads/categories/2577ecdc7eb5f0141df74358eee429c0.png',
+//   },
+//   {
+//     id: 3,
+//     category_name: 'Kids',
+//     category_name_ar: null,
+//     category_image: 'categories/e2cff0705861f2e45251761b6d3cd44f.png',
+//     service_id: ['1', '3'],
+//     status: 1,
+//     created_at: '2023-10-09T06:32:06.000000Z',
+//     updated_at: '2023-10-09T06:32:06.000000Z',
+//     services: [
+//       {id: 1, service_name: 'Dry Cleaning'},
+//       {id: 3, service_name: 'Wash & Clean'},
+//     ],
+//     images:
+//       'https://dryfi.theprojecttest.xyz/public/uploads/categories/e2cff0705861f2e45251761b6d3cd44f.png',
+//   },
+// ];
 
 // const itemList1 = [
 //   {

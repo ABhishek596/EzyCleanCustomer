@@ -6,7 +6,8 @@ import {
   Linking,
   StatusBar,
   ScrollView,
-  FlatList
+  FlatList,
+  TouchableWithoutFeedback
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {connect} from 'react-redux';
@@ -34,15 +35,14 @@ import {
 // import Loader from '../../component/Loader/Loader';
 // import messaging from '@react-native-firebase/messaging';
 import axios from 'axios';
-
+import Icons from '../../component/Icons';
 const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
   const [loading, setLoading] = useState(false);
   const [secure, setSecure] = useState(true);
   const [branch, setBranch] = useState(true);
   const [fcm, setFcm] = useState();
 
-
-  const branches = ['Main', 'Local', 'Special'];
+  const branches = ['Vijay Nagar', 'LIG', 'Bhawarkuan','Scheme No.71'];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState(null);
 
@@ -50,7 +50,7 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleGenderSelect = (name,branch) => {
+  const handleGenderSelect = (name, branch) => {
     setSelectedBranch(branch);
     setIsDropdownOpen(false);
     setPostData({
@@ -341,11 +341,11 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
                   fontSize: SIZES.body3,
                   fontWeight: 'bold',
                 }}>
-                Enter Branch
+                Enter Location
               </Text>
             </View>
-            <InputWithIcon1
-              placeholder={'Enter Branch'}
+            {/* <InputWithIcon1
+              placeholder={'Enter Location'}
               // leftIcon={'lock'}
               rightIcon={isDropdownOpen ? 'up-outline' : 'down-outline'}
               onPress={toggleDropdown}
@@ -355,7 +355,18 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
               // value={selectedBranch}
               value={postData.branch}
               // onChangeText={text => handleChange('branch', text)}
-            />
+            /> */}
+            <TouchableWithoutFeedback onPress={toggleDropdown} >
+              <View style={styles.button}>
+                <Text style={{color:COLORS.secondary}}>{postData.branch?postData.branch:'Enter Location'}</Text>
+                <Icons
+                    name={isDropdownOpen ? 'down-outline' : 'up-outline'}
+                    size={20}
+                    // color={focusColor == COLORS.secondary ? COLORS.secondary : COLORS.placeholderColor}
+                    color={COLORS.gray30}
+                />
+              </View>
+            </TouchableWithoutFeedback>
             {/* <View style={styles.box}>
             <TouchableOpacity
               onPress={() => navigation.navigate('Otp')}
@@ -369,9 +380,10 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
                   data={branches}
                   keyExtractor={item => item}
                   renderItem={({item}) => (
-                    <TouchableOpacity onPress={() => handleGenderSelect('branch',item)}>
+                    <TouchableOpacity
+                      onPress={() => handleGenderSelect('branch', item)}>
                       <View style={styles.dropdownItem}>
-                        <Text>{item}</Text>
+                        <Text style={{color:COLORS.black1}}>{item}</Text>
                       </View>
                     </TouchableOpacity>
                   )}
@@ -438,4 +450,4 @@ const mapDispatchToProps = {
   SignUpApi,
 };
 // export default Register;
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

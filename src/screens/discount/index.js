@@ -11,11 +11,13 @@ import globalStyles from '../../styles/globalStyles';
 import LinearGradient from 'react-native-linear-gradient';
 
 const Discount = ({navigation, discountList, GetDiscountList, route}) => {
-  // const {items} = route.params;
+  const {items} = route?.params;
   const [id, setId] = useState();
   const [discount, setDiscount] = useState(null);
   const [subtotal, setSubtotal] = useState(0);
   // console.log('discountListdiscountListdiscountList', discountList);
+  console.log('discount data', discount);
+  console.log('discount id', id);
   useEffect(() => {
     GetDiscountList();
   }, []);
@@ -33,11 +35,11 @@ const Discount = ({navigation, discountList, GetDiscountList, route}) => {
   // }, [route.params, discount]);
 
   const handleSubmit = () => {
-    // navigation.navigate('AddOn', {
-    //   discountObj: discount,
-    //   items: items,
-    // });
-    navigation.goBack();
+    navigation.navigate('AddOn', {
+      discountObj: discount,
+      items: items,
+    });
+    // navigation.goBack();
   };
 
   return (
@@ -61,7 +63,7 @@ const Discount = ({navigation, discountList, GetDiscountList, route}) => {
                       // key={item.id}
                       activeOpacity={0.5}
                       onPress={() => {
-                        // setDiscount(item), setId(item.id);
+                        setDiscount(item), setId(item.id);
                       }}>
                       <LinearGradient
                         colors={['#651898', '#2C0D8F']}
@@ -77,7 +79,7 @@ const Discount = ({navigation, discountList, GetDiscountList, route}) => {
                           color={COLORS.white}
                           status={id === item.id ? 'checked' : 'unchecked'}
                           onPress={() => {
-                            setDiscount(item), setId(item.id);
+                            // setDiscount(item), setId(item.id);
                           }}
                         />
                         <View style={styles.box}>

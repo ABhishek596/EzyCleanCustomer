@@ -165,15 +165,15 @@ const PickupSchedule = ({
     pickup_date.push(formattedDate);
   }
 
-  // useEffect(() => {
-  //   if (activeDate) {
-  //     setPostData({
-  //       ...postData,
-  //       pickup_date: activeDate,
-  //     });
-  //     GetTime({date: activeDate});
-  //   }
-  // }, [activeDate]);
+  useEffect(() => {
+    if (activeDate) {
+      setPostData({
+        ...postData,
+        pickup_date: activeDate,
+      });
+      GetTime({date: activeDate});
+    }
+  }, [activeDate]);
 
   useEffect(() => {
     if (timeList && timeList[0]) {
@@ -189,11 +189,11 @@ const PickupSchedule = ({
   const handleNext = () => {
     navigation.navigate('DeliverySchedule');
 
-    // if (postData.pickup_date && postData.pickup_time) {
-    //   navigation.navigate('DeliverySchedule', {data: postData, pickupmylaundry:pickupmylaundry});
-    // } else {
-    //   alert('Please select valid pickup date and time.');
-    // }
+    if (postData.pickup_date && postData.pickup_time) {
+      navigation.navigate('DeliverySchedule', {data: postData, pickupmylaundry:pickupmylaundry});
+    } else {
+      Alert.alert('Please select valid pickup date and time.');
+    }
   };
 
   console.log('timeList ; ', timeList);
