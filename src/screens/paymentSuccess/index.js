@@ -56,11 +56,11 @@ const PaymentSuccess = ({navigation, route}) => {
   //     return () => backHandler.remove();
   // }, []);
 
-  //   useEffect(() => {
-  //     setTimeout(() => {
-  //       navigation.navigate('Home');
-  //     }, 1000);
-  //   }, []);
+    useEffect(() => {
+      setTimeout(() => {
+        navigation.navigate('Product',{package:true});
+      }, 1000);
+    }, []);
 
   return (
     <View style={styles.container}>

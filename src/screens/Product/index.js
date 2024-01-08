@@ -27,9 +27,11 @@ import Button1 from '../../component/button/Button1';
 import {useFocusEffect} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-
-
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  additemToCart,
+  removeItemFromCart,
+} from '../../redux/actions/productAction';
 
 const Product = ({
   navigation,
@@ -48,6 +50,15 @@ const Product = ({
   const [alldata, setAlldata] = useState();
   // console.log('subsDetails=========>>>>>',subsDetails);
   // console.log('completedata product from API', productData);
+  const [demo, setDemo] = useState(false);       //demo
+
+ useEffect(() => {
+  setDemo(route?.params?.package);
+  }, []);
+
+
+
+
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -56,9 +67,19 @@ const Product = ({
     // });
   };
 
-//   const alldatapro = useSelector(state=>state.product.productData);
+  const alldatapro = useSelector(state => state.product);
 
-// console.log('Detailsalldatapro',alldatapro);
+  console.log('Detailsalldatapro', alldatapro.addonList);
+
+  const dispatch = useDispatch();
+
+  const addItemCarts = item => {
+    dispatch(additemToCart(item));
+  };
+
+  const removeItem = index => {
+    dispatch(removeItemFromCart(index));
+  };
 
   useEffect(() => {
     let config = {
@@ -124,7 +145,6 @@ const Product = ({
     : [];
   // console.log('Selected filteredProducts :', filteredProducts);
   // console.log('data qtyqty :', filteredProducts.length);
-
 
   const handleGenderPress = gender => {
     setCatId(gender);
@@ -204,13 +224,13 @@ const Product = ({
         totalQty = totalQty + item.qty;
       }
     });
-    if(additem === 0){
-        Alert.alert('You have not chose any item yet');
-    }else{
-    navigation.navigate('AddOn', {
-      // csIds: {...route?.params},
-      items: filteredProducts,
-    });
+    if (additem === 0) {
+      Alert.alert('You have not chose any item yet');
+    } else {
+      navigation.navigate('AddOn', {
+        // csIds: {...route?.params},
+        items: filteredProducts,
+      });
     }
     // if (
     //   totalQty <=
@@ -241,7 +261,7 @@ const Product = ({
   //       totalQty = totalQty + item.qty;
   //     }
   //   });
-    
+
   //   setShwitem(filteredProducts);
 
   //   // if (
@@ -262,12 +282,6 @@ const Product = ({
   //   // }
   // };
 
-
-  
-
-
-
-
   // const filteredItems = filteredProducts.filter(item => item.qty);
   // console.log('This is filteredItems name', filteredItems);
 
@@ -277,26 +291,21 @@ const Product = ({
 
   // console.log('total product page Amountt====', totalAmount);
 
-
   // useEffect(() => {
   //   setShwitem(filteredItems);
   // }, []);
 
-
-
-
-
   const continueFunc = () => {
     // navigation.navigate('AddOn');
-    if (!subsDetails) {
+    if (demo === false) {
       Alert.alert(
         'Subscription Alert!',
         'Please purchase a subscription plan to continue order',
         [
           {
             text: 'Buy Subscription',
-            // onPress: () => navigation.navigate('Subscription'),
-            onPress: () => navigation.navigate('ActivePlan'),
+            onPress: () => navigation.navigate('subscription'),
+            // onPress: () => navigation.navigate('ActivePlan'),
           },
           {
             text: 'OK',
@@ -329,43 +338,48 @@ const Product = ({
   // const filteredProductss = shwitem.filter(product => product.qty);
   // console.log('New filter total product page Amountt====', filteredProductss);
   // console.log('New total length product page Amountt====', filteredProductss.length);
-  
-useEffect(() => {
-  const filteredProductss = shwitem.filter(product => product.qty);
-  const totalAmount = filteredProductss.reduce((total, item) => total + item.amount*item.qty , 0);
-  // console.log('New filter total product page Amountt====', filteredProductss);
-  console.log('New total length product page Amountt====', filteredProductss.length);
-  // console.log('Total paisa', totalAmount);
-  setAdditem(filteredProductss.length);
-  setAmountitem(totalAmount);
+
+  useEffect(() => {
+    const filteredProductss = shwitem.filter(product => product.qty);
+    const totalAmount = filteredProductss.reduce(
+      (total, item) => total + item.amount * item.qty,
+      0,
+    );
+    // console.log('New filter total product page Amountt====', filteredProductss);
+    console.log(
+      'New total length product page Amountt====',
+      filteredProductss.length,
+    );
+    // console.log('Total paisa', totalAmount);
+    setAdditem(filteredProductss.length);
+    setAmountitem(totalAmount);
   }, [shwitem]);
 
-//   useEffect(() => {
-//   const transformArray = () => {
-//     const outputArray = [];
-//     let uniqueId = 1;
-//     filteredProducts?.forEach(item => {
-//       if (item.qty > 1) {
-//         for (let i = 1; i <= item.qty; i++) {
-//           const newItem = {...item};
-//           newItem.product_name += ` ${i}`;
-//           newItem.uid = uniqueId++;
-//           outputArray.push({...newItem, dataAddon: {...postData}});
-//         }
-//       } else if (item.qty == 1) {
-//         item.uid = uniqueId++;
-//         outputArray.push({...item, dataAddon: {...postData}});
-//       }
-//     });
+  //   useEffect(() => {
+  //   const transformArray = () => {
+  //     const outputArray = [];
+  //     let uniqueId = 1;
+  //     filteredProducts?.forEach(item => {
+  //       if (item.qty > 1) {
+  //         for (let i = 1; i <= item.qty; i++) {
+  //           const newItem = {...item};
+  //           newItem.product_name += ` ${i}`;
+  //           newItem.uid = uniqueId++;
+  //           outputArray.push({...newItem, dataAddon: {...postData}});
+  //         }
+  //       } else if (item.qty == 1) {
+  //         item.uid = uniqueId++;
+  //         outputArray.push({...item, dataAddon: {...postData}});
+  //       }
+  //     });
 
-//     // console.log('Get addonsList of items allallala', outputArray);
-//     setShwitem(outputArray);                                          //last
-//   };
-  
-//   transformArray();
+  //     // console.log('Get addonsList of items allallala', outputArray);
+  //     setShwitem(outputArray);                                          //last
+  //   };
 
-// }, []);
+  //   transformArray();
 
+  // }, []);
 
   return (
     <View style={globalStyles.container}>
@@ -446,8 +460,7 @@ useEffect(() => {
                       width: SIZES.width * 0.16,
                       alignSelf: 'center',
                       // marginBottom: -4,
-                      numberOfLines:2
-
+                      numberOfLines: 2,
                     }}
                     style={{
                       borderWidth: 0.4,
@@ -595,7 +608,9 @@ useEffect(() => {
               // marginTop: SIZES.height * 0.04,
               width: SIZES.width * 0.5,
             }}>
-            <Text style={{color: COLORS.secondary}}>Total Price ({additem} Items)</Text>
+            <Text style={{color: COLORS.secondary}}>
+              Total Price ({additem} Items)
+            </Text>
             <Text style={{color: COLORS.secondary}}>₹ {amountitem}</Text>
           </View>
           <View
@@ -616,8 +631,8 @@ useEffect(() => {
         </View>
         <View>
           <Button1
-            // onPress={() => continueFunc()}
-            onPress={() => checkAvailibleOrder()}
+            onPress={() => continueFunc()}
+            // onPress={() => checkAvailibleOrder()}
             style={{
               backgroundColor: COLORS.secondary,
               width: SIZES.width * 0.38,

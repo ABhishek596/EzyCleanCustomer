@@ -6,7 +6,7 @@ import address from './address';
 import notification from './notification';
 import order from './order';
 import subscription from './subscription';
-
+import incdec from './incdec';
 export default combineReducers({
   auth,
   home,
@@ -15,4 +15,5 @@ export default combineReducers({
   notification,
   order,
   subscription,
+  incdec
 });

@@ -182,7 +182,7 @@ const ActivePlan = ({
       <Button1
         style={styles.activeSubBtn}
         onPress={() => {
-          navigation.navigate('SubscriptionDetails');
+          navigation.navigate('subscription');
         }}>
         Upgrade Subcription
       </Button1>

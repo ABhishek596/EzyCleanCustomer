@@ -10,6 +10,8 @@ import {
   PRODUCT_DATA,
   STAINS_LIST,
   TIME_LIST,
+  ADD_ITEM,
+  DELETE_ITEM,           //remove
 } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import objectToFormData from '../../services/objectToFormData';
@@ -495,3 +497,15 @@ export const GetTime = postData => async dispatch => {
       });
     });
 };
+
+
+export const additemToCart =(data)=>({
+  type: ADD_ITEM,
+  payload: data,
+})
+
+
+export const removeItemFromCart =(index)=>({
+  type: DELETE_ITEM,
+  payload: index,
+})

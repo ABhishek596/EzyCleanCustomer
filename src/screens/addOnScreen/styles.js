@@ -282,10 +282,11 @@ export default StyleSheet.create({
   },
   container1: {
     // flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+    // flexDirection: 'row',
+    // alignItems: 'center',
     alignSelf:'center',
-    top:20
+    top:10
+    // height:SIZES.height * .
   },
   btn_text: {
     fontFamily: FONTS.medium,

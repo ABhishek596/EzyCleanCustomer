@@ -24,6 +24,9 @@ export const STAINS_LIST = 'STAINS_LIST';
 export const PACKING_LIST = 'PACKING_LIST';
 export const DELIVERY_TYPE_LIST = 'DELIVERY_TYPE_LIST';
 
+export const ADD_ITEM = 'ADDON_LIST';
+export const DELETE_ITEM = 'ADDON_LIST';
+
 // notification
 export const NOTIFICATION = 'NOTIFICATION';
 

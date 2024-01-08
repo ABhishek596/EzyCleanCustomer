@@ -14,10 +14,7 @@ export default StyleSheet.create({
         marginTop: SIZES.height * 0.02,
         borderRadius: SIZES.width * 0.032,
     },
-    logo: {
-        width: 66,
-        height: 58,
-    },
+   
     heading: {
         fontFamily: FONTS.bold,
         fontSize: SIZES.width * .048,
@@ -52,7 +49,7 @@ export default StyleSheet.create({
     },
     iconBox: {
         width: SIZES.width * .1,
-        height: SIZES.height * .07,
+        height: SIZES.width * .1,
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: SIZES.width * .03,

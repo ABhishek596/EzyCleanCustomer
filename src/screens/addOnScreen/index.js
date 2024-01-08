@@ -20,10 +20,12 @@ import {connect} from 'react-redux';
 // import { BottomSheet } from 'react-native-btr';
 // import Icons from '../../component/Icons';
 import CheckBox from '@react-native-community/checkbox';
-import ColorPicker from 'react-native-wheel-color-picker';
+// import ColorPicker from 'react-native-wheel-color-picker';
+import {ColorPicker} from 'react-native-color-picker';
 import Slider from '@react-native-community/slider';
 import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
+
 const FeatureRow = ({
   title,
   onValueChange,
@@ -66,24 +68,24 @@ const AddOnScreen = ({
   // stainsList,
   subsDetails,
 }) => {
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleModal = () => {
-    !isModalVisible
+    !isModalVisible;
     // navigation.navigate('PickupSchedule');
   };
 
   console.log('addonList====', addonList);
   console.log('addonList====', addonList.length);
   // const {items} = route?.params;
-  const {items,discountObj, csIds} = route?.params;
+  const {items, discountObj, csIds} = route?.params;
   const [filterBottom, setFilterBottom] = useState(false);
   console.log('Get items item from discount screen', items);
-  console.log('Get discountObj item from discount screen', discountObj?.discount);
+  console.log(
+    'Get discountObj item from discount screen',
+    discountObj?.discount,
+  );
   // console.log('Get all item from product screen total', items.length);
-
-
 
   const [shwitem, setShwitem] = useState([]);
   console.log('Actual show item ', shwitem.length);
@@ -220,8 +222,8 @@ const AddOnScreen = ({
     product_id: 0,
     service_id: 0,
     iron: ironList[1],
-    color1: 0,
-    color2: 0,
+    color1: ' ',
+    color2: ' ',
     damage_id: 0,
     packing_id: 0,
     stain_id: 0,
@@ -230,6 +232,8 @@ const AddOnScreen = ({
     qty: 0,
     delivery: deliveryTypeList?.[0] || 0,
   });
+  const centeredText =
+    '\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B\u200B';
 
   const [productId, setProductId] = useState();
   const [product, setProduct] = useState();
@@ -251,8 +255,8 @@ const AddOnScreen = ({
       product_id: 0,
       service_id: 0,
       iron: ironList[1],
-      color1: 0,
-      color2: 0,
+      color1: ' ',
+      color2: ' ',
       damage_id: 0,
       packing_id: 0,
       stain_id: 0,
@@ -278,7 +282,6 @@ const AddOnScreen = ({
     reset();
     setVisible(true);
   };
-
 
   // const getTotalAmt = itemArr => {
   //   let total = 0;
@@ -428,16 +431,10 @@ const AddOnScreen = ({
     return newColor;
   };
 
-  // Function to handle slider value change
-  const handleSliderChange = value => {
-    const newColor = {...color, r: value};
-    setColor(newColor);
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{flex: 1}}>
-        <View style={{flex:1}}>
+        <View style={{flex: 1}}>
           <FlatList
             data={addonsList}
             renderItem={({item, index}) => (
@@ -455,9 +452,11 @@ const AddOnScreen = ({
                 //   setFilterBottom(true);
                 // }}
                 serName={item.service_name}
-                catName={item.category_name} 
+                catName={item.category_name}
                 // onAddonPress={()=>{toggleModal(true)}}
-                onAddonPress={()=>{setIsModalVisible(!isModalVisible)}}
+                onAddonPress={() => {
+                  setIsModalVisible(!isModalVisible);
+                }}
               />
             )}
             keyExtractor={item => item.uid}
@@ -468,10 +467,13 @@ const AddOnScreen = ({
 
       <View style={{height: SIZES.height * 0.015}} /> */}
 
-        <Modal transparent={true} visible={isModalVisible} animationType="fade"  onRequestClose={() => {
-          
-          setIsModalVisible(!isModalVisible);
-        }}>
+        <Modal
+          transparent={true}
+          visible={isModalVisible}
+          animationType="fade"
+          onRequestClose={() => {
+            setIsModalVisible(!isModalVisible);
+          }}>
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.texta}>Edit Product</Text>
@@ -518,63 +520,32 @@ const AddOnScreen = ({
                 <View style={styles.rightBox}>
                   {type == 1 && (
                     <View style={styles.container1}>
-                      <View
-                        {...panResponder.panHandlers}
+                      <ColorPicker
+                        hideSliders
+                        onColorSelected={color => {
+                          handleChange('color1', color);
+                          Alert.alert(`Color selected successfully`, centeredText);
+                          // console.log('Color selected:', color);
+                        }}
                         style={{
-                          backgroundColor: `rgb(${color.r},${color.g},${color.b})`,
-                          width: 100,
-                          height: 100,
-                          borderRadius: 5,
+                          width: SIZES.width * 0.4,
+                          height: SIZES.height * 0.25,
+                          alignSelf: 'center',
                         }}
                       />
-
-                      <Slider
-                        style={styles.slider}
-                        minimumValue={0}
-                        maximumValue={255}
-                        step={1}
-                        value={color.r}
-                        onValueChange={handleSliderChange}
-                      />
+                      <Text
+                        style={{
+                          fontSize: SIZES.width * 0.035,
+                          alignSelf: 'center',
+                          color: COLORS.secondary,
+                        }}>
+                        Chose the color and tap into center
+                      </Text>
                     </View>
-
-                    //   <View style={{ flexDirection: 'row'}}>
-                    //   <ColorPicker
-                    //     ref={pickerRef}
-                    //     color={currentColor}
-                    //     swatchesOnly={swatchesOnly}
-                    //     onColorChange={onColorChange}
-                    //     onColorChangeComplete={onColorChangeComplete}
-                    //     thumbSize={40}
-                    //     sliderSize={40}
-                    //     noSnap={true}
-                    //     row={false}
-                    //     swatchesLast={swatchesLast}
-                    //     swatches={swatchesEnabled}
-                    //     discrete={disc}
-                    //   />
-                    //   {/* Replace SomeButton with the actual button component */}
-                    //   {/* <SomeButton onPress={() => pickerRef.current.revert()} /> */}
-                    //   <Button onClick={() => pickerRef.current.revert()} title='Revert Color'></Button>
-                    // </View>
-
-                    // <FlatList
-                    //   data={colorList}
-                    //   renderItem={({item, index}) => (
-                    //     <FeatureRow
-                    //       title={item.color_name}
-                    //       colorCode={item?.color_code}
-                    //       // value={postData.color1 == item ? true : false}
-                    //       // onValueChange={() => handleChange('color1', item)}
-                    //     />
-                    //   )}
-                    //   key={item => item.id}
-                    //   showsVerticalScrollIndicator={false}
-                    // />
                   )}
 
                   {/* {colorList && type == 2 && (
-                <FlatList
+                  <FlatList
                   data={colorList}
                   renderItem={({item, index}) => (
                     <FeatureRow
@@ -586,8 +557,8 @@ const AddOnScreen = ({
                   )}
                   key={item => item.id}
                   showsVerticalScrollIndicator={false}
-                />
-              )} */}
+                  />
+                  )} */}
 
                   <View style={{marginTop: SIZES.height * 0.02}}>
                     {damageList && type == 3 && (
@@ -597,7 +568,9 @@ const AddOnScreen = ({
                           <FeatureRow
                             title={item.damage}
                             value={postData.damage_id == item ? true : false}
-                            onValueChange={() => handleChange('damage_id', item)}
+                            onValueChange={() =>
+                              handleChange('damage_id', item)
+                            }
                           />
                         )}
                         key={item => item.id}
@@ -639,7 +612,6 @@ const AddOnScreen = ({
                             marginVertical: SIZES.height * 0.015,
                             alignItems: 'center',
                           }}
-
                           price={item.price}
                           value={postData.packing_id == item ? true : false}
                           onValueChange={() => {
@@ -699,41 +671,41 @@ const AddOnScreen = ({
                   )}
 
                   {deliveryTypeList && type == 8 && (
-                <FlatList
-                  data={deliveryTypeList}
-                  renderItem={({item, index}) => (
-                    <FeatureRow
-                      title={item.type}
-                      price={item.urgent_charge}
-                      value={postData.delivery.id == item.id ? true : false}
-                      onValueChange={() => {
-                        handleChange('delivery', item),
-                          setDeliveryCharge(
-                            item.id
-                              ? product?.iron_price
-                                ? Number(product?.iron_price)
-                                : 0
-                              : 0,
-                          );
-                      }}
+                    <FlatList
+                      data={deliveryTypeList}
+                      renderItem={({item, index}) => (
+                        <FeatureRow
+                          title={item.type}
+                          price={item.urgent_charge}
+                          value={postData.delivery.id == item.id ? true : false}
+                          onValueChange={() => {
+                            handleChange('delivery', item),
+                              setDeliveryCharge(
+                                item.id
+                                  ? product?.iron_price
+                                    ? Number(product?.iron_price)
+                                    : 0
+                                  : 0,
+                              );
+                          }}
+                        />
+                      )}
+                      key={item => item.id}
+                      showsVerticalScrollIndicator={false}
                     />
                   )}
-                  key={item => item.id}
-                  showsVerticalScrollIndicator={false}
-                />
-              )}
                 </View>
               </View>
 
-              
               <View style={styles.buttonRow}>
-                <TouchableOpacity style={styles.button1} 
-                 onPress={() => {
-                  // handleItemsList('Reset')
-                  reset();
-                  // setIsModalVisible(isModalVisible)
-                }}
-                // onPress={toggleModal}
+                <TouchableOpacity
+                  style={styles.button1}
+                  onPress={() => {
+                    // handleItemsList('Reset')
+                    reset();
+                    // setIsModalVisible(isModalVisible)
+                  }}
+                  // onPress={toggleModal}
                 >
                   <Text style={styles.yes}>Reset</Text>
                 </TouchableOpacity>
@@ -745,172 +717,172 @@ const AddOnScreen = ({
                     // setVisible(true);
                     // navigation.navigate('OnBoardingScreen');
                     handleApplyChange();
-
                   }}>
                   <Text style={styles.cancle}>Apply</Text>
                 </TouchableOpacity>
               </View>
-
             </View>
           </View>
         </Modal>
-
-       
       </ScrollView>
       <View style={{}}>
-          <View // Button Add Coupon Check Discount
+        <View // Button Add Coupon Check Discount
+          style={{
+            flexDirection: 'row',
+            alignSelf: 'center',
+            marginVertical: 15,
+          }}>
+          <TouchableOpacity
+            style={[
+              styles.btn,
+              {
+                borderWidth: 2,
+                borderColor: COLORS.secondary,
+                backgroundColor: COLORS.white,
+                width: SIZES.width * 0.4,
+                alignItems: 'center',
+              },
+            ]}
+            // onPress={() => navigation.navigate('Coupon',{
+            //   items,
+            // })}
+          >
+            <Text style={[styles.btn_text, {color: COLORS.secondary}]}>
+              Add Coupon
+            </Text>
+          </TouchableOpacity>
+          <View style={{width: SIZES.width * 0.066}} />
+          <TouchableOpacity
+            style={[
+              styles.btn,
+              {
+                borderWidth: 2,
+                borderColor: COLORS.secondary,
+                backgroundColor: COLORS.white,
+                alignItems: 'center',
+              },
+            ]}
+            onPress={() =>
+              navigation.navigate('Discount', {
+                items,
+              })
+            }>
+            <Text
+              style={[
+                styles.btn_text,
+                {color: COLORS.secondary, marginBottom: 0},
+              ]}>
+              Check Discount
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <LinearGradient
+          colors={['#651898', '#2C0D8F']}
+          style={{
+            backgroundColor: COLORS.secondary,
+            width: SIZES.width * 1.0,
+            borderTopLeftRadius: SIZES.width * 0.1,
+            borderTopRightRadius: SIZES.width * 0.1,
+          }} // Your styles for the LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}>
+          <View
             style={{
               flexDirection: 'row',
-              alignSelf: 'center',
-              marginVertical: 15,
-            }}>
-            <TouchableOpacity
-              style={[
-                styles.btn,
-                {
-                  borderWidth: 2,
-                  borderColor: COLORS.secondary,
-                  backgroundColor: COLORS.white,
-                  width: SIZES.width * 0.4,
-                  alignItems: 'center',
-                },
-              ]}
-              // onPress={() => navigation.navigate('Coupon',{
-              //   items,
-              // })}
-              >
-              <Text style={[styles.btn_text, {color: COLORS.secondary}]}>
-                Add Coupon
-              </Text>
-            </TouchableOpacity>
-            <View style={{width: SIZES.width * 0.066}} />
-            <TouchableOpacity
-              style={[
-                styles.btn,
-                {
-                  borderWidth: 2,
-                  borderColor: COLORS.secondary,
-                  backgroundColor: COLORS.white,
-                  alignItems: 'center',
-                },
-              ]}
-              onPress={() => navigation.navigate('Discount', {
-                items,
-              } )}>
-              <Text
-                style={[
-                  styles.btn_text,
-                  {color: COLORS.secondary, marginBottom: 0},
-                ]}>
-                Check Discount
-              </Text>
-            </TouchableOpacity>
-          </View>
-        
-
-          <LinearGradient
-            colors={['#651898', '#2C0D8F']}
-            style={{
-              backgroundColor: COLORS.secondary,
+              justifyContent: 'space-between',
+              // marginHorizontal: SIZES.width * 0.08,
+              // marginTop: SIZES.height * 0.04,
               width: SIZES.width * 1.0,
-              borderTopLeftRadius: SIZES.width * 0.1,
-              borderTopRightRadius: SIZES.width * 0.1,
-            }} // Your styles for the LinearGradient
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                // marginHorizontal: SIZES.width * 0.08,
-                // marginTop: SIZES.height * 0.04,
-                width: SIZES.width * 1.0,
-                alignItems: 'center',
-                backgroundColor: '#ffffff',
-                // margin:15,
-                alignSelf: 'center',
-                paddingVertical: SIZES.height * 0.005,
-                paddingHorizontal: 5,
-                // position: 'absolute',
-                // bottom: 0,
-              }}>
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    // marginHorizontal: SIZES.width * 0.08,
-                    width: SIZES.width * 0.5,
-                    // marginTop: SIZES.height * 0.04,
-                  }}>
-                  <Text style={{color: COLORS.secondary}}>
-                    Total Price ({shwitem.length} Items)
-                  </Text>
-                  <Text style={{color: COLORS.secondary}}>₹ {totalAmount}</Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    // marginHorizontal: SIZES.width * 0.08,
-                    marginTop: SIZES.height * 0.01,
-                    width: SIZES.width * 0.5,
-                  }}>
-                  <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
-                    Discount
-                  </Text>
-                  <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
-                    {discountObj?.discount?discountObj?.discount+"%":0}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    // marginHorizontal: SIZES.width * 0.08,
-                    marginTop: SIZES.height * 0.01,
-                    // paddingBottom: SIZES.height * 0.02,
-                    width: SIZES.width * 0.5,
-                  }}>
-                  <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
-                    Subtotal
-                  </Text>
-                  <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
-                    ₹ {discountObj?.discount?(totalAmount-(totalAmount * Number(discountObj?.discount)) / 100) :totalAmount}
-                  </Text>
-                </View>
+              alignItems: 'center',
+              backgroundColor: '#ffffff',
+              // margin:15,
+              alignSelf: 'center',
+              paddingVertical: SIZES.height * 0.005,
+              paddingHorizontal: 5,
+              // position: 'absolute',
+              // bottom: 0,
+            }}>
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  // marginHorizontal: SIZES.width * 0.08,
+                  width: SIZES.width * 0.5,
+                  // marginTop: SIZES.height * 0.04,
+                }}>
+                <Text style={{color: COLORS.secondary}}>
+                  Total Price ({shwitem.length} Items)
+                </Text>
+                <Text style={{color: COLORS.secondary}}>₹ {totalAmount}</Text>
               </View>
-              <View >
-                <Button1
-                  style={{
-                    // borderWidth: 2,
-                    // alignSelf: 'center',
-                    borderRadius: SIZES.width * 0.02,
-                    borderColor: COLORS.primary,
-                    // marginBottom: SIZES.width * 0.01,
-                    width: SIZES.width * 0.38,
-                  }}
-                  // onPress={() => {
-                  //   navigation.navigate('PickupSchedule', {
-                  //     ...itemsData,
-                  //     pickupmylaundry:false
-                  //   });
-                  //   // handleConfimOrder();
-                  //   // confirmColor1();
-                  // }}
-                  onPress={() => {
-                    if (visible === false) {
-                      setIsModalVisible(!isModalVisible);
-                    } else if (visible === true) {
-                      navigation.navigate('PickupSchedule');
-                    }
-                  }}
-                >
-                  Continue Order
-                </Button1>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  // marginHorizontal: SIZES.width * 0.08,
+                  marginTop: SIZES.height * 0.01,
+                  width: SIZES.width * 0.5,
+                }}>
+                <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+                  Discount
+                </Text>
+                <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+                  {discountObj?.discount ? discountObj?.discount + '%' : 0}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  // marginHorizontal: SIZES.width * 0.08,
+                  marginTop: SIZES.height * 0.01,
+                  // paddingBottom: SIZES.height * 0.02,
+                  width: SIZES.width * 0.5,
+                }}>
+                <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+                  Subtotal
+                </Text>
+                <Text style={{color: COLORS.secondary, fontWeight: 'bold'}}>
+                  ₹{' '}
+                  {discountObj?.discount
+                    ? totalAmount -
+                      (totalAmount * Number(discountObj?.discount)) / 100
+                    : totalAmount}
+                </Text>
               </View>
             </View>
-            {/* <View
+            <View>
+              <Button1
+                style={{
+                  // borderWidth: 2,
+                  // alignSelf: 'center',
+                  borderRadius: SIZES.width * 0.02,
+                  borderColor: COLORS.primary,
+                  // marginBottom: SIZES.width * 0.01,
+                  width: SIZES.width * 0.38,
+                }}
+                // onPress={() => {
+                //   navigation.navigate('PickupSchedule', {
+                //     ...itemsData,
+                //     pickupmylaundry:false
+                //   });
+                //   // handleConfimOrder();
+                //   // confirmColor1();
+                // }}
+                onPress={() => {
+                  if (visible === false) {
+                    setIsModalVisible(!isModalVisible);
+                  } else if (visible === true) {
+                    navigation.navigate('PickupSchedule');
+                  }
+                }}>
+                Continue Order
+              </Button1>
+            </View>
+          </View>
+          {/* <View
             style={{
               height: SIZES.height * 0.01,
               borderTopWidth: 1,
@@ -920,9 +892,9 @@ const AddOnScreen = ({
               marginTop: SIZES.height * 0.02,
             }}
           /> */}
-            {/* <View style={{height: SIZES.height * 0.01}} /> */}
-          </LinearGradient>
-        </View>
+          {/* <View style={{height: SIZES.height * 0.01}} /> */}
+        </LinearGradient>
+      </View>
     </SafeAreaView>
   );
 };
@@ -999,54 +971,53 @@ const packingList = [
 //   // Add more items as needed
 // ];
 
-
-const deliveryTypeList =[
+const deliveryTypeList = [
   {
-      "id": 1,
-      "type": "Normal",
-      "type_ar": "طبيعي",
-      "num_days": 5,
-      "urgent_charge": "0.00",
-      "added_by": 3,
-      "modify_by": null,
-      "modify_date": null,
-      "created_at": "2023-06-02 18:08:55",
-      "updated_at": "2023-10-14 17:08:39"
+    id: 1,
+    type: 'Normal',
+    type_ar: 'طبيعي',
+    num_days: 5,
+    urgent_charge: '0.00',
+    added_by: 3,
+    modify_by: null,
+    modify_date: null,
+    created_at: '2023-06-02 18:08:55',
+    updated_at: '2023-10-14 17:08:39',
   },
   {
-      "id": 2,
-      "type": "Fast",
-      "type_ar": "سريع",
-      "num_days": 2,
-      "urgent_charge": "100.00",
-      "added_by": 3,
-      "modify_by": null,
-      "modify_date": null,
-      "created_at": "2023-06-02 18:17:48",
-      "updated_at": "2023-06-02 18:19:55"
+    id: 2,
+    type: 'Fast',
+    type_ar: 'سريع',
+    num_days: 2,
+    urgent_charge: '100.00',
+    added_by: 3,
+    modify_by: null,
+    modify_date: null,
+    created_at: '2023-06-02 18:17:48',
+    updated_at: '2023-06-02 18:19:55',
   },
   {
-      "id": 3,
-      "type": "Super Fast",
-      "type_ar": "سريع جدا",
-      "num_days": 1,
-      "urgent_charge": "200.00",
-      "added_by": 3,
-      "modify_by": null,
-      "modify_date": null,
-      "created_at": "2023-06-02 18:19:40",
-      "updated_at": "2023-06-02 18:19:40"
+    id: 3,
+    type: 'Super Fast',
+    type_ar: 'سريع جدا',
+    num_days: 1,
+    urgent_charge: '200.00',
+    added_by: 3,
+    modify_by: null,
+    modify_date: null,
+    created_at: '2023-06-02 18:19:40',
+    updated_at: '2023-06-02 18:19:40',
   },
   {
-      "id": 6,
-      "type": "Medium",
-      "type_ar": null,
-      "num_days": 3,
-      "urgent_charge": "50.00",
-      "added_by": 3,
-      "modify_by": null,
-      "modify_date": null,
-      "created_at": "2023-10-03 12:59:01",
-      "updated_at": "2023-10-03 12:59:01"
-  }
-]
+    id: 6,
+    type: 'Medium',
+    type_ar: null,
+    num_days: 3,
+    urgent_charge: '50.00',
+    added_by: 3,
+    modify_by: null,
+    modify_date: null,
+    created_at: '2023-10-03 12:59:01',
+    updated_at: '2023-10-03 12:59:01',
+  },
+];

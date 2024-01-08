@@ -32,6 +32,7 @@ import discount from '../../screens/discount';
 // import addCurrentAddress from '../../screens/addCurrentAddress';
 // import Subscription from '../../screens/subscription';
 // import SubscriptionDetails from '../../screens/subscriptionDetails';
+import subscription from '../../screens/subscription';
 import ActivePlan from '../../screens/activePlan';
 // import CheckOut from '../../screens/checkout';
 import AddOnScreen from '../../screens/addOnScreen';
@@ -324,6 +325,19 @@ const StackNavigator = () => {
             <HeaderLeft
               navigation={navigation}
               title={'Active Subscription'}
+              showNotificationButton={true}
+            />
+          ),
+        })}
+      />
+         <Stack.Screen
+        name="subscription"
+        component={subscription}
+        options={({navigation}) => ({
+          header: () => (
+            <HeaderLeft
+              navigation={navigation}
+              title={'Subscription'}
               showNotificationButton={true}
             />
           ),

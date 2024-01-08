@@ -18,9 +18,18 @@ import {connect} from 'react-redux';
 import styles from './styles';
 import {GetAllNotification} from '../../redux/actions/notificationAction';
 import NoDataBox from '../../component/noDataBox';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 const Notification = ({navigation, loading, GetAllNotification}) => {
   const [notification, setNotification] = useState();
+
+  useEffect(async () => {
+    const token = await AsyncStorage.getItem('@USER_TOKEN');
+    setToken(token);
+  }, []);
+
+  const [token, setToken] = useState();
+  console.log('notification token-------->>', token);
   // useEffect(() => {
   //     GetAllNotification()
   // }, [])
@@ -31,10 +40,7 @@ const Notification = ({navigation, loading, GetAllNotification}) => {
       maxBodyLength: Infinity,
       url: 'http://ezyclean.theprojecttest.xyz/api/notifications/1',
       headers: {
-        Authorization:
-          'Bearer 160|LMkKJ9t0E4aTjRqXYRa5d10wByUbQ2wRkxJldtKj1f90965d',
-        Cookie:
-          'XSRF-TOKEN=eyJpdiI6IlNqWXRBUTlycDFIY0F6M3dna1ZPV2c9PSIsInZhbHVlIjoiTWtodGpUaHRCdk96NEJxaTE1d0Rsc2JWd0prSnh0bWFla3prUWdlUVlnM1BtVWZQTjlzWUtYL1RIVkREVndaMFJWRW12dGZBSlNCQTVCZnFZdi9wbWw3MzVNdm5mTjlTWFhkNHNpamMwdksvb3NwNnVqem52WkZzbDByOVNvS2giLCJtYWMiOiJhYTIxN2I5MTk3YzNkZWI5M2ZkYjU5ZjVmMzI5YWM0NmFhNDNjZTc3N2U0NzRiYzkwNWQ3YjJiNWQxZmJhZmJhIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6IjZLdFFrQVlldjRaVVprZmZzeWhnY2c9PSIsInZhbHVlIjoiZ3FEc0hYUmhkZm5EZmplTENmN3JGM3k1Z01naVpvQ0hnSDB4bEQzSnJDUlJTYzNvRHhhT1FHSGxnSlVvT0l5VS8yUXh3YjdGcVNDZGl6UnJJeUpYUjErVmpiZm9nTlhEREROQkRHd2Nvajdsd093b1lZeEVEeGtMWXY2MDdjcFAiLCJtYWMiOiJlYTMzMjE3Njk5YWNhYjI5NmRmMjFjNjAzYTJlMDZmOTRkZDYwZTU2NjRlN2Y4NGU4NDY3NTE0YjNlOTE3NmNjIiwidGFnIjoiIn0%3D',
+        Authorization: `Bearer ${token}`,
       },
     };
 
