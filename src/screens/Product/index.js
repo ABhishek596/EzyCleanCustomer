@@ -48,17 +48,22 @@ const Product = ({
   const [itemList, setItemList] = useState(alldata);
   const [refreshing, setRefreshing] = useState(false);
   const [alldata, setAlldata] = useState();
-  // console.log('subsDetails=========>>>>>',subsDetails);
-  // console.log('completedata product from API', productData);
-  const [demo, setDemo] = useState(false);       //demo
+  // // console.log('subsDetails=========>>>>>',subsDetails);
+  // // console.log('completedata product from API', productData);
 
- useEffect(() => {
-  setDemo(route?.params?.package);
-  }, []);
+  const [demo, setDemo] = useState(false); //demo  for demo subscription
+  // console.log('set demo ',demo);
+  const setSubs = route?.params?.package;
 
+  // console.log('set subscription ',setSubs);
 
-
-
+  useEffect(() => {
+    if (setSubs === undefined) {
+      setDemo(false);
+    } else if (setSubs === true) {
+      setDemo(true);
+    }
+  }, [setSubs]);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -67,19 +72,19 @@ const Product = ({
     // });
   };
 
-  const alldatapro = useSelector(state => state.product);
+  // const alldatapro = useSelector(state => state.product);
 
-  console.log('Detailsalldatapro', alldatapro.addonList);
+  // console.log('Detailsalldatapro', alldatapro.addonList);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const addItemCarts = item => {
-    dispatch(additemToCart(item));
-  };
+  // const addItemCarts = item => {
+  //   dispatch(additemToCart(item));
+  // };
 
-  const removeItem = index => {
-    dispatch(removeItemFromCart(index));
-  };
+  // const removeItem = index => {
+  //   dispatch(removeItemFromCart(index));
+  // };
 
   useEffect(() => {
     let config = {
@@ -92,14 +97,14 @@ const Product = ({
     axios
       .request(config)
       .then(response => {
-        // console.log(
+        // // console.log(
         //   'completedata product',
         //   JSON.stringify(response.data.result),
         // );
         setAlldata(response.data.result);
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -115,8 +120,8 @@ const Product = ({
   //   GetActiveSubscription();
   // }, []);
 
-  // console.log('categoryList', categoryList);
-  // console.log('serviceList', serviceList);
+  // // console.log('categoryList', categoryList);
+  // // console.log('serviceList', serviceList);
 
   // const [currentCatName, setcurrentCatName] = useState('');
   // const [currentServName, setCurrentServName] = useState('');
@@ -125,8 +130,8 @@ const Product = ({
     route?.params?.catId ? route?.params?.catId : 1,
   );
 
-  // console.log('catId', route?.params?.catId);
-  // console.log('serviceId', route?.params?.serviceId);
+  // // console.log('catId', route?.params?.catId);
+  // // console.log('serviceId', route?.params?.serviceId);
 
   const [serviceId, setServiceId] = useState(
     route?.params?.serviceId ? route?.params?.serviceId : 1,
@@ -143,8 +148,8 @@ const Product = ({
         return matchGender && matchService;
       })
     : [];
-  // console.log('Selected filteredProducts :', filteredProducts);
-  // console.log('data qtyqty :', filteredProducts.length);
+  // // console.log('Selected filteredProducts :', filteredProducts);
+  // // console.log('data qtyqty :', filteredProducts.length);
 
   const handleGenderPress = gender => {
     setCatId(gender);
@@ -155,7 +160,7 @@ const Product = ({
   };
 
   const handleItemPress = item => {
-    // console.log('Selected flatlist data:', item);
+    // // console.log('Selected flatlist data:', item);
     // Do other things with the selected item if needed
   };
 
@@ -172,8 +177,8 @@ const Product = ({
   //   });
   // }, [serviceId, catId]);
 
-  // console.log('This is service name', currentServName);
-  // console.log('This is cat name', currentCatName);
+  // // console.log('This is service name', currentServName);
+  // // console.log('This is cat name', currentCatName);
 
   function updateQuantity(productId, serveId, categoryId, action) {
     const updatedArray = filteredProducts.map(product => {
@@ -215,7 +220,7 @@ const Product = ({
     GetAllProduct();
   }, []);
 
-  // console.log('itemList', itemList);
+  // // console.log('itemList', itemList);
 
   const checkAvailibleOrder = () => {
     let totalQty = 0;
@@ -283,13 +288,13 @@ const Product = ({
   // };
 
   // const filteredItems = filteredProducts.filter(item => item.qty);
-  // console.log('This is filteredItems name', filteredItems);
+  // // console.log('This is filteredItems name', filteredItems);
 
   // const [shwitem, setShwitem] = useState([]);
-  // console.log('product by state ', shwitem);
+  // // console.log('product by state ', shwitem);
   // const totalAmount = shwitem.reduce((total, item) => total + item.amount, 0);
 
-  // console.log('total product page Amountt====', totalAmount);
+  // // console.log('total product page Amountt====', totalAmount);
 
   // useEffect(() => {
   //   setShwitem(filteredItems);
@@ -332,12 +337,12 @@ const Product = ({
   const [amountitem, setAmountitem] = useState();
 
   const [shwitem, setShwitem] = useState([]);
-  // console.log('New product page Actual show item ', shwitem);
+  // // console.log('New product page Actual show item ', shwitem);
   // const totalAmount = shwitem.reduce((total, item) => total + item.amount, 0);
   // const totalItems = addonList.length;
   // const filteredProductss = shwitem.filter(product => product.qty);
-  // console.log('New filter total product page Amountt====', filteredProductss);
-  // console.log('New total length product page Amountt====', filteredProductss.length);
+  // // console.log('New filter total product page Amountt====', filteredProductss);
+  // // console.log('New total length product page Amountt====', filteredProductss.length);
 
   useEffect(() => {
     const filteredProductss = shwitem.filter(product => product.qty);
@@ -345,12 +350,12 @@ const Product = ({
       (total, item) => total + item.amount * item.qty,
       0,
     );
-    // console.log('New filter total product page Amountt====', filteredProductss);
-    console.log(
-      'New total length product page Amountt====',
-      filteredProductss.length,
-    );
-    // console.log('Total paisa', totalAmount);
+    //  console.log('New filter total product page Amountt====', filteredProductss);
+    // console.log(
+    //   'New total length product page Amountt====',
+    //   filteredProductss.length,
+    // );
+    // // console.log('Total paisa', totalAmount);
     setAdditem(filteredProductss.length);
     setAmountitem(totalAmount);
   }, [shwitem]);
@@ -373,7 +378,7 @@ const Product = ({
   //       }
   //     });
 
-  //     // console.log('Get addonsList of items allallala', outputArray);
+  //     // // console.log('Get addonsList of items allallala', outputArray);
   //     setShwitem(outputArray);                                          //last
   //   };
 
@@ -397,7 +402,7 @@ const Product = ({
               title={item.category_name}
               isActive={catId == item.id ? true : false}
               onPress={() => {
-                // console.log('idididididididi------------------', item.id);
+                // // console.log('idididididididi------------------', item.id);
                 // setCatId(item.id);
                 handleGenderPress(item.id);
               }}
@@ -449,7 +454,7 @@ const Product = ({
                     title={item.service?.service_name}
                     isActive={serviceId == item.service?.id ? true : false}
                     onPress={() => {
-                      // console.log('idid.service?di', item.id);
+                      // // console.log('idid.service?di', item.id);
                       // setServiceId(item.id);
                       handleServicePress(item.id);
                     }}

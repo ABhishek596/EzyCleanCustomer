@@ -143,7 +143,7 @@ const EditProfile = ({
             <ImageBackground
               source={images.bg}
               style={styles.header_bg}
-              resizeMode="contain">
+              resizeMode='stretch'>
               <View style={styles.header_row}>
                 <TouchableOpacity
                   style={styles.back_btn}

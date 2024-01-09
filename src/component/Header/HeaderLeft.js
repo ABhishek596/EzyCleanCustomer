@@ -10,7 +10,7 @@ const HeaderLeft = ({ showBack,showNotificationButton, title, navigation, }) => 
         <ImageBackground
             source={images.bg}
             style={styles.header}
-            resizeMode='contain'
+            resizeMode='stretch'
         >
             <View style={styles.header_row}>
                 <View style={styles.row}>

@@ -255,7 +255,7 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
               </Text>
             </View>
             <InputWithIcon
-              placeholder={'Enter Name'}
+              placeholder={'Your Name'}
               // leftIcon={'smartphone'}
               value={postData.name}
               keyboardType={'default'}
@@ -277,7 +277,7 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
               </Text>
             </View>
             <InputWithIcon
-              placeholder={'Enter Email'}
+              placeholder={'Your Email'}
               // leftIcon={'smartphone'}
               value={postData.email}
               keyboardType={'email-address'}
@@ -299,7 +299,7 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
               </Text>
             </View>
             <InputWithIcon1
-              placeholder={'Enter Password'}
+              placeholder={'Set Password'}
               // leftIcon={'lock'}
               rightIcon={secure ? 'eye-off' : 'eye'}
               onPress={() => setSecure(!secure)}

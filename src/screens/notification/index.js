@@ -34,7 +34,7 @@ const Notification = ({navigation, loading, GetAllNotification}) => {
   //     GetAllNotification()
   // }, [])
   // console.log("notification : ", notification)
-  useEffect(() => {
+  useEffect(async() => {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
@@ -44,7 +44,7 @@ const Notification = ({navigation, loading, GetAllNotification}) => {
       },
     };
 
-    axios
+    await axios
       .request(config)
       .then(response => {
         // console.log(JSON.stringify(response.data));

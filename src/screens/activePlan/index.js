@@ -103,7 +103,6 @@ const ActivePlan = ({
                   )}
                 </Text>
               </View>
-              <View style={styles.horizLine} />
             </View>
             {/* {subsDetails ? (
               <View style={styles.mainSubView}>

@@ -432,7 +432,7 @@ export const GetAddonList = () => async dispatch => {
   http
     .get('addons')
     .then(async response => {
-      console.log('response.data addons addons', response.data.addons);
+      console.log('response.data addons addons from productAction js', response.data.addons);
       if (response.data.message === "Success") {
         dispatch({
           type: ADDON_LIST,

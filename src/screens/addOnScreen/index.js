@@ -447,16 +447,17 @@ const AddOnScreen = ({
                   addItem(item?.id, quan, item.amount ? item.amount : 0)
                 }
                 price={`₹${item.amount ? item.amount : 0}`}
-                // onAddonPress={() => {
-                //   setProductId(item.uid);
-                //   setFilterBottom(true);
-                // }}
+                onAddonPress={() => {
+                  setProductId(item.uid);
+                  setFilterBottom(true);
+                  setIsModalVisible(!isModalVisible);
+                }}
                 serName={item.service_name}
                 catName={item.category_name}
                 // onAddonPress={()=>{toggleModal(true)}}
-                onAddonPress={() => {
-                  setIsModalVisible(!isModalVisible);
-                }}
+                // onAddonPress={() => {
+                //   setIsModalVisible(!isModalVisible);
+                // }}
               />
             )}
             keyExtractor={item => item.uid}
@@ -524,8 +525,11 @@ const AddOnScreen = ({
                         hideSliders
                         onColorSelected={color => {
                           handleChange('color1', color);
-                          Alert.alert(`Color selected successfully`, centeredText);
-                          // console.log('Color selected:', color);
+                          // Alert.alert(
+                          //   `Color selected successfully`,
+                          //   centeredText,
+                          // );
+                          console.log('Color selected:', color);
                         }}
                         style={{
                           width: SIZES.width * 0.4,

@@ -31,7 +31,7 @@ const PaymentByCard = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{flex: 1,backgroundColor:COLORS.white}}>
         <Image
           style={styles.tinyLogo}
           source={require('../../assets/images/atncard.png')}

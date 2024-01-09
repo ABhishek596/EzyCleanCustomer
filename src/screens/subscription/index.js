@@ -7,7 +7,7 @@ import {
   RefreshControl,
   FlatList,
   TouchableOpacity,
-  Alert
+  Alert,
 } from 'react-native';
 import React, {useEffect, useCallback, useState} from 'react';
 import styles from './styles';
@@ -19,6 +19,7 @@ import Button1 from '../../component/button/Button1';
 import {useFocusEffect} from '@react-navigation/native';
 import {SIZES, COLORS} from '../../constants';
 import LinearGradient from 'react-native-linear-gradient';
+import RazorpayCheckout from 'react-native-razorpay';
 
 const Subscription = ({
   loading,
@@ -102,7 +103,10 @@ const Subscription = ({
           <View>
             <LinearGradient
               colors={['#651898', '#2C0D8F']}
-              style={{marginVertical: SIZES.height * 0.03,alignItems:'center'}} // Your styles for the LinearGradient
+              style={{
+                marginVertical: SIZES.height * 0.03,
+                alignItems: 'center',
+              }} // Your styles for the LinearGradient
               start={{x: 0, y: 0}}
               end={{x: 1, y: 0}}>
               <FlatList
@@ -173,7 +177,7 @@ const Subscription = ({
               <Button1
                 style={styles.activeSubBtn}
                 onPress={() => {
-                  navigation.navigate('PaymentOnline');
+                  // navigation.navigate('PaymentOnline');
                   // Alert.alert(
                   //   'Subscription Alert!',
                   //   'Please purchase a subscription plan to continue order',
@@ -189,6 +193,37 @@ const Subscription = ({
                   //     },
                   //   ],
                   // );
+                  var options = {
+                    description: 'EzyCleaneCustomer App',
+                    image: 'https://i.imgur.com/3g7nmJC.png',
+                    currency: 'INR',
+                    key: 'rzp_test_pnG5OaLilqPgMb', // Your api key
+                    amount: '1000' * 100,
+                    name: 'EzyCleaneCustomer',
+                    prefill: {
+                      email: 'void@razorpay.com',
+                      contact: '9191919191',
+                      name: 'Razorpay Software',
+                    },
+                    theme: {color: '#1C1364'},
+                  };
+                  RazorpayCheckout.open(options)
+                    .then(data => {
+                      // handle success
+                      Alert.alert(`Success: ${data.razorpay_payment_id}`);
+                      console.log('data', data);
+                      if (data.status_code === 200) {
+                        setTimeout(() => {
+                          navigation.navigate('Product', {package: true});
+                        }, 4000);
+                      }
+                    })
+                    .catch(error => {
+                      // handle failure
+                      Alert.alert(
+                        `Error: ${error.code} | ${error.description}`,
+                      );
+                    });
                 }}>
                 Buy Subscription
               </Button1>

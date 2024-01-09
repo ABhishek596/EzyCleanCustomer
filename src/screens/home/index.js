@@ -89,11 +89,11 @@ const Home = ({
     axios
       .request(config)
       .then(response => {
-        // console.log('catagoryathome',JSON.stringify(response.data.data));
+         // console.log('catagoryathome',JSON.stringify(response.data.data));
         setCategory(response.data.data);
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -114,27 +114,27 @@ const Home = ({
     axios
       .request(config)
       .then(response => {
-        // console.log(JSON.stringify(response.data));
+         // console.log(JSON.stringify(response.data));
         setService(response.data.data);
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
   const [category, setCategory] = useState();
   const [service, setService] = useState();
 
-  // console.log('discountList at Home', discountList);
+  // // console.log('discountList at Home', discountList);
   // const  data  = route?.params?.data;
-  // console.log("userdatattthome", data);
+  // // console.log("userdatattthome", data);
   // messaging().setBackgroundMessageHandler(async remoteMessage => {
   //   // GetNotificationApi(navigation)
-  //   console.log('Message handled in the background!', remoteMessage);
+  //   // console.log('Message handled in the background!', remoteMessage);
   // });
 
   // messaging().getInitialNotification(async remoteMessage => {
-  //   console.log('Message handled in the background!', remoteMessage);
+  //   // console.log('Message handled in the background!', remoteMessage);
   // });
 
   // useEffect(() => {
@@ -149,10 +149,10 @@ const Home = ({
   //   GetActiveSubscription();
   // }, []);
 
-  // console.log('category list : ====>>>>', JSON.stringify(categoryList));
-  // console.log('service list :===>>>>', serviceList);
+  // // console.log('category list : ====>>>>', JSON.stringify(categoryList));
+  // // console.log('service list :===>>>>', serviceList);
 
-  // console.log("skldjf : ",  userData?.profile_picture?.slice(-10, -4))
+  // // console.log("skldjf : ",  userData?.profile_picture?.slice(-10, -4))
   useEffect(() => {
     GetDiscountList();
   }, []);
@@ -176,7 +176,7 @@ const Home = ({
           <ImageBackground
             source={images.bg}
             style={styles.header_bg}
-            resizeMode="contain">
+            resizeMode='stretch'>
             <View style={styles.header_row}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View style={styles.logo_box}>
@@ -320,7 +320,7 @@ const Home = ({
                     data={category} //categoryList
                     renderItem={({item, index}) => 
                     {
-                    // console.log('categoryitem',item);
+                    // // console.log('categoryitem',item);
 
                     return(
                       <CategoryCard
@@ -334,7 +334,7 @@ const Home = ({
                         source={{uri: item.category_image}}
                         // source={{uri: item.images}}
                         onPress={() =>{
-                          // console.log('categoryitemonclic',item.id);
+                          // // console.log('categoryitemonclic',item.id);
                           navigation.navigate('Product', {
                             catId: item.id,
                            

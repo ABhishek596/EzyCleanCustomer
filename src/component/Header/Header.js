@@ -26,7 +26,7 @@ const Header = ({onPress, source, navigation}) => {
         style={styles.container}> */}
       <ImageBackground
         source={require('../../assets/images/bg.png')}
-        resizeMode='contain'
+        resizeMode='stretch'
         style={styles.container}>
         <View style={{top:SIZES.height * -0.015}}>
           <TouchableOpacity
