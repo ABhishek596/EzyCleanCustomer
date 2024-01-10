@@ -210,12 +210,12 @@ const Subscription = ({
                   RazorpayCheckout.open(options)
                     .then(data => {
                       // handle success
-                      Alert.alert(`Success: ${data.razorpay_payment_id}`);
+                      // Alert.alert(`Success: ${data.razorpay_payment_id}`);
                       console.log('data', data);
                       if (data.status_code === 200) {
                         setTimeout(() => {
                           navigation.navigate('Product', {package: true});
-                        }, 4000);
+                        }, 2000);
                       }
                     })
                     .catch(error => {

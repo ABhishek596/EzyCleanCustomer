@@ -92,6 +92,32 @@ export default StyleSheet.create({
     // color:COLORS.secondary
     backgroundColor:COLORS.secondary,
     borderRadius:30,
-    top:-5
+    marginTop:SIZES.height * 0.04
+
+    // top:-5
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+    alignSelf:'center'
+  },
+  button: {
+    marginHorizontal: 10,
+    padding: 10,
+    backgroundColor: COLORS.secondary,
+    borderRadius: 5,
+  },
+  buttonText: {
+    fontSize:  SIZES.width * 0.04,
+    color: COLORS.white,
+    // fontWeight: 'bold',
+  },
+  date :{
+    fontFamily: FONTS.bold,
+    color: COLORS.secondary,
+    fontSize: SIZES.width * 0.05,
+    position:'absolute',
+    right:SIZES.width * 0.03,
+    marginTop:SIZES.height * 0.0235
   },
 });

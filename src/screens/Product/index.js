@@ -62,6 +62,7 @@ const Product = ({
       setDemo(false);
     } else if (setSubs === true) {
       setDemo(true);
+      Alert.alert('         Subscription  Purches','                     Successfully');
     }
   }, [setSubs]);
 

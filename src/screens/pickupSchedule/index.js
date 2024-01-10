@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from 'react';
 import {
   Alert,
   FlatList,
@@ -8,18 +9,17 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import React from 'react';
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
 import Button1 from '../../component/button/Button1';
-import {useState} from 'react';
 import {COLORS, SIZES} from '../../constants';
 import {connect} from 'react-redux';
 import {GetTime} from '../../redux/actions/productAction';
 import Loading from '../../component/loading';
-import {useEffect} from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Svg, {Circle, Line, Text as SvgText} from 'react-native-svg';
+import CalendarPicker from 'react-native-calendar-picker';
 
 const PickupSchedule = ({
   navigation,
@@ -152,7 +152,6 @@ const PickupSchedule = ({
     const dayOfMonth = date.getDate().toString().padStart(2, '0');
     return `${day} ${dayOfMonth}`;
   }
-
   var pickup_date = [];
 
   const [activeDate, setActiveDate] = useState(formatDate(today_date));
@@ -190,7 +189,10 @@ const PickupSchedule = ({
     navigation.navigate('DeliverySchedule');
 
     if (postData.pickup_date && postData.pickup_time) {
-      navigation.navigate('DeliverySchedule', {data: postData, pickupmylaundry:pickupmylaundry});
+      navigation.navigate('DeliverySchedule', {
+        data: postData,
+        pickupmylaundry: pickupmylaundry,
+      });
     } else {
       Alert.alert('Please select valid pickup date and time.');
     }
@@ -199,26 +201,38 @@ const PickupSchedule = ({
   console.log('timeList ; ', timeList);
   // console.log('pickup postData ; ', postData);
 
+  // Get the current date to show on the top right
+  var currentDate = new Date();
+
+  // Get the current month and year
+  var currentMonth = currentDate.toLocaleString('default', {month: 'short'});
+  var currentYear = currentDate.getFullYear();
+
+  // Combine the month and year in the desired format
+  var monthtoday = currentMonth + ' ' + currentYear;
+
+  console.log('monthString', monthtoday); // Output: "Jan 2024"
+
   // const [selectedStartDate, setSelectedStartDate] = useState(null);
 
-  const onDateChange = val => {
-    // console.log('date...........................',date);
-    var newdate = val;
-    const date = new Date(newdate);
-    const day = date.getUTCDate();
-    const month = date.getUTCMonth() + 1; // Months are 0-indexed, so we add 1
-    const year = date.getUTCFullYear();
+  // const onDateChange = val => {
+  //   // console.log('date...........................',date);
+  //   var newdate = val;
+  //   const date = new Date(newdate);
+  //   const day = date.getUTCDate();
+  //   const month = date.getUTCMonth() + 1; // Months are 0-indexed, so we add 1
+  //   const year = date.getUTCFullYear();
 
-    const formattedDate1 = `${day}-${month < 10 ? '0' : ''}${month}-${year}`;
-    console.log('pickuppageDate------------- ; ', formattedDate1);
+  //   const formattedDate1 = `${day}-${month < 10 ? '0' : ''}${month}-${year}`;
+  //   console.log('pickuppageDate------------- ; ', formattedDate1);
 
-    setActiveDate(formattedDate1), handleChange('pickup_date', formattedDate1);
+  //   setActiveDate(formattedDate1), handleChange('pickup_date', formattedDate1);
 
-    // const valuedate = `"${formattedDate1}"`;
+  //   // const valuedate = `"${formattedDate1}"`;
 
-    // console.log('pickuppageDate------------- ; ', valuedate);
-    // setSelectedStartDate(date);
-  };
+  //   // console.log('pickuppageDate------------- ; ', valuedate);
+  //   // setSelectedStartDate(date);
+  // };
 
   // console.log('selectedStartDateDate-------------', selectedStartDate);
 
@@ -234,6 +248,64 @@ const PickupSchedule = ({
   // const valuedate = `"${formattedDate1}"`;
 
   // console.log('pickuppageDate------------- ; ', valuedate);
+
+  //time by Clock
+
+  const [hours, setHours] = useState(12);
+  const [minutes, setMinutes] = useState(0);
+  const [hourRotation, setHourRotation] = useState(0);
+  const [minuteRotation, setMinuteRotation] = useState(0);
+
+  useEffect(() => {
+    const hourAngle = (hours % 12) * 30 + (minutes / 60) * 30;
+    const minuteAngle = (minutes % 60) * 6;
+
+    setHourRotation(hourAngle);
+    setMinuteRotation(minuteAngle);
+  }, [hours, minutes]);
+
+  const handleHourChange = () => {
+    const newHour = (hours + 1) % 12 || 12;
+    setHours(newHour);
+  };
+
+  const handleMinuteChange = () => {
+    const newMinute = (minutes + 5) % 60;
+    setMinutes(newMinute);
+  };
+
+
+  //Calender
+  // const [selectedStartDate, setSelectedStartDate] = useState(null);
+  // const onDateChange = (val) => {
+  //   // console.log('date...........................',date);
+  //   var newdate = val; 
+  //   const date = new Date(newdate);
+  //   const day = date.getUTCDate();
+  //   const month = date.getUTCMonth() + 1; // Months are 0-indexed, so we add 1
+  //   const year = date.getUTCFullYear();
+    
+  //   const formattedDate1 = `${day}-${month < 10 ? '0' : ''}${month}-${year}`;
+  //   console.log('pickuppageDate------------- ; ',formattedDate1);
+    
+  //   setActiveDate(formattedDate1), handleChange('pickup_date', formattedDate1);
+  
+  //   // const valuedate = `"${formattedDate1}"`;
+  
+  //   // console.log('pickuppageDate------------- ; ', valuedate);
+  //   // setSelectedStartDate(date);
+  // }
+
+
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+
+  const onDateChange = (date) => {
+    setSelectedStartDate(date);
+  };
+
+  const startDate = selectedStartDate ? selectedStartDate.toString() : '';
+  console.log('startDate Calender',startDate);
+ 
 
   return (
     <View style={globalStyles.container}>
@@ -253,8 +325,9 @@ const PickupSchedule = ({
                 <View style={styles.title_box}>
                   <Text style={styles.title}>Pickup Date</Text>
                 </View>
+                {/* <Text style={styles.date}>{monthtoday}</Text> */}
 
-                <FlatList
+                {/* <FlatList
                   data={pickup_date}
                   renderItem={({item, index}) => (
                     <TouchableOpacity
@@ -299,7 +372,14 @@ const PickupSchedule = ({
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
                   key={(_, index) => index}
-                />
+                /> */}
+
+                <View style={{marginTop:SIZES.height * .01}}>
+                  <CalendarPicker onDateChange={onDateChange} 
+                  monthTitleStyle={{color:COLORS.secondary}}
+                  yearTitleStyle={{color:COLORS.secondary}}
+                  />
+                </View>
               </View>
 
               {/* pickup time container */}
@@ -307,7 +387,7 @@ const PickupSchedule = ({
                 <View style={styles.title_box}>
                   <Text style={styles.title}>Pickup Time</Text>
                 </View>
-                <View style={styles.time_container}>
+                {/* <View style={styles.time_container}>
                   {timeList && timeList[0] ? (
                     <FlatList
                       data={timeList}
@@ -345,6 +425,92 @@ const PickupSchedule = ({
                       Sorry no time slots available in this date
                     </Text>
                   )}
+                </View> */}
+                <View style={{alignSelf: 'center', flex: 0.15}}>
+                  <Svg height="300" width="300" >
+                    <Circle
+                      cx="150"
+                      cy="150"
+                      r="140"
+                      stroke={COLORS.secondary}
+                      strokeWidth="2.5"
+                      fill="white"
+                    />
+
+                    {/* Watch markers */}
+                    {Array.from({length: 12}).map((_, index) => (
+                      <React.Fragment key={index}>
+                        <Line
+                          x1="150"
+                          y1="10"
+                          x2="150"
+                          y2="20"
+                          strokeWidth="2"
+                          stroke={COLORS.secondary}
+                          transform={`rotate(${index * 30} 150 150)`}
+                        />
+                        <SvgText
+                          x="150"
+                          y="40"
+                          fontSize="16"
+                          textAnchor="middle"
+                          fill={COLORS.secondary}
+                          // transform={`rotate(${index * 30} 150 150)`}
+                          color='red'
+                          transform={`rotate(${
+                            ((index + 0) % 12) * 30
+                          } 150 150)`}>
+                          {/* {index + 1} */}
+                          {index === 0 ? 12 : index}
+                        </SvgText>
+                      </React.Fragment>
+                    ))}
+
+                    {/* Hour hand */}
+                    <Line
+                      x1="150"
+                      y1="150"
+                      x2="150"
+                      y2="60"
+                      strokeWidth="4"
+                      stroke={COLORS.primary}
+                      transform={`rotate(${hourRotation} 150 150)`}
+                    />
+
+                    {/* Minute hand */}
+                    <Line
+                      x1="150"
+                      y1="150"
+                      x2="150"
+                      y2="40"
+                      strokeWidth="2"
+                      stroke={COLORS.secondary}
+                      transform={`rotate(${minuteRotation} 150 150)`}
+                    />
+
+                    {/* Center dot */}
+                    <Circle cx="150" cy="150" r="3" fill={COLORS.primary} />
+
+                    {/* Display time */}
+                    <SvgText x="150" y="230" fontSize="20" textAnchor="middle" fill={COLORS.secondary}>
+                      {`${String(hours).padStart(2, '0')}:${String(
+                        minutes,
+                      ).padStart(2, '0')}`}
+                    </SvgText>
+                  </Svg>
+
+                  <View style={styles.buttonsContainer}>
+                    <TouchableOpacity
+                      onPress={handleHourChange}
+                      style={styles.button}>
+                      <Text style={styles.buttonText}>Change Hour</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={handleMinuteChange}
+                      style={styles.button}>
+                      <Text style={styles.buttonText}>Change Minute</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </View>
@@ -352,14 +518,14 @@ const PickupSchedule = ({
 
             {/* <View style={{height: '4%'}} /> */}
           </View>
+          <Button1
+            style={styles.btn}
+            backgroundColor={COLORS.secondary}
+            onPress={handleNext}>
+            Next
+          </Button1>
         </ScrollView>
       )}
-      <Button1
-        style={styles.btn}
-        backgroundColor={COLORS.secondary}
-        onPress={handleNext}>
-        Next
-      </Button1>
     </View>
   );
 };

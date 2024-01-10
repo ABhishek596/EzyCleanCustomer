@@ -217,6 +217,8 @@ const products1 = [
   // ... more products
 ];
 
+//Next
+
 // import React, {useState} from 'react';
 // import {View, FlatList, Text, TouchableOpacity, Image} from 'react-native';
 
@@ -550,3 +552,137 @@ const products1 = [
 // );
 
 // export default Picker;
+
+// clock
+
+// Clock.js
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+// import Svg, { Circle, Line, Text as SvgText } from 'react-native-svg';
+
+// const WatchPicker = () => {
+//   const [hours, setHours] = useState(12);
+//   const [minutes, setMinutes] = useState(0);
+//   const [hourRotation, setHourRotation] = useState(0);
+//   const [minuteRotation, setMinuteRotation] = useState(0);
+
+//   useEffect(() => {
+//     const hourAngle = (hours % 12) * 30 + (minutes / 60) * 30;
+//     const minuteAngle = (minutes % 60) * 6;
+
+//     setHourRotation(hourAngle);
+//     setMinuteRotation(minuteAngle);
+//   }, [hours, minutes]);
+
+//   const handleHourChange = () => {
+//     const newHour = (hours + 1) % 12 || 12;
+//     setHours(newHour);
+//   };
+
+//   const handleMinuteChange = () => {
+//     const newMinute = (minutes + 5) % 60;
+//     setMinutes(newMinute);
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <Svg height="300" width="300">
+//         <Circle cx="150" cy="150" r="140" stroke="black" strokeWidth="2.5" fill="white" />
+
+//         {/* Watch markers */}
+//         {Array.from({ length: 12 }).map((_, index) => (
+//           <React.Fragment key={index}>
+//             <Line
+//               x1="150"
+//               y1="10"
+//               x2="150"
+//               y2="20"
+//               strokeWidth="2"
+//               stroke="black"
+//               transform={`rotate(${index * 30} 150 150)`}
+//             />
+//             <SvgText
+//               x="150"
+//               y="40"
+//               fontSize="16"
+//               textAnchor="middle"
+//               // transform={`rotate(${index * 30} 150 150)`}
+//               transform={`rotate(${(index + 0) % 12 * 30} 150 150)`}
+//             >
+//               {/* {index + 1} */}
+//               {index === 0 ? 12 : index}
+//             </SvgText>
+//           </React.Fragment>
+//         ))}
+
+//         {/* Hour hand */}
+//         <Line
+//           x1="150"
+//           y1="150"
+//           x2="150"
+//           y2="60"
+//           strokeWidth="4"
+//           stroke="black"
+//           transform={`rotate(${hourRotation} 150 150)`}
+//         />
+
+//         {/* Minute hand */}
+//         <Line
+//           x1="150"
+//           y1="150"
+//           x2="150"
+//           y2="40"
+//           strokeWidth="2"
+//           stroke="black"
+//           transform={`rotate(${minuteRotation} 150 150)`}
+//         />
+
+//         {/* Center dot */}
+//         <Circle cx="150" cy="150" r="3" fill="black" />
+
+//         {/* Display time */}
+//         <SvgText x="150" y="230" fontSize="20" textAnchor="middle">
+//           {`${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`}
+//         </SvgText>
+//       </Svg>
+
+//       <View style={styles.buttonsContainer}>
+//         <TouchableOpacity onPress={handleHourChange} style={styles.button}>
+//           <Text style={styles.buttonText}>Change Hour</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity onPress={handleMinuteChange} style={styles.button}>
+//           <Text style={styles.buttonText}>Change Minute</Text>
+//         </TouchableOpacity>
+//       </View>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   buttonsContainer: {
+//     flexDirection: 'row',
+//     marginTop: 20,
+//   },
+//   button: {
+//     marginHorizontal: 10,
+//     padding: 10,
+//     backgroundColor: 'lightblue',
+//     borderRadius: 5,
+//   },
+//   buttonText: {
+//     fontSize: 16,
+//     fontWeight: 'bold',
+//   },
+// });
+
+// export default WatchPicker;
+
+
