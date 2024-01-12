@@ -471,24 +471,24 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 //   },
 // ];
 
-const data1 = [
-  // Add your offer objects here
-  {
-    discount: 60,
-    description: 'Only first order',
-    buttonText: 'Special 90%',
-    imageSource: images.offer,
-  },
-  {
-    discount: 20,
-    description: 'For all order',
-    buttonText: 'Special 20%',
-    imageSource: images.offer,
-  },
-  {
-    discount: 67,
-    description: 'Todays first order',
-    buttonText: 'Special 50%',
-    imageSource: images.offer,
-  },
-];
+// const data1 = [
+//   // Add your offer objects here
+//   {
+//     discount: 60,
+//     description: 'Only first order',
+//     buttonText: 'Special 90%',
+//     imageSource: images.offer,
+//   },
+//   {
+//     discount: 20,
+//     description: 'For all order',
+//     buttonText: 'Special 20%',
+//     imageSource: images.offer,
+//   },
+//   {
+//     discount: 67,
+//     description: 'Todays first order',
+//     buttonText: 'Special 50%',
+//     imageSource: images.offer,
+//   },
+// ];

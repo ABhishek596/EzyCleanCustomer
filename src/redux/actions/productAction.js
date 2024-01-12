@@ -32,112 +32,112 @@ function transformArrayOfArraysToObjectArray(arrayOfArrays) {
 
 
 
-export const GetAllProduct = (serviceId, catId) => async dispatch => {
-  dispatch({
-    type: LOADING,
-    payload: true,
-  });
-  let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: 'http://ezyclean.theprojecttest.xyz/api/products',
-      headers: {},
-    };
-
-    axios
-      .request(config)
-      .then(response => {
-        // console.log(
-        //   'completedata product',
-        //   JSON.stringify(response.data.result),
-        // );
-      //   setAlldata(response.data.result);
-      console.log("user data products redux api : ", response.data.result)
-    if (response.data.status === 1) {
-      // const arrObj = await transformArrayOfArraysToObjectArray(
-      //   response.data.result,
-      // );
-      dispatch({
-        type: PRODUCT_DATA,
-        payload:response.data.result
-        // payload: arrObj,
-      });
-      // RNToasty.Success({
-      //     title: response.data.message,
-      //     duration: 2,
-      // });
-      dispatch({
-        type: LOADING,
-        payload: false,
-      });
-    } else {
-      dispatch({
-        type: LOADING,
-        payload: false,
-      });
-      // RNToasty.Info({
-      //     title: response.data.message,
-      //     duration: 2,
-      // });
-    }
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch({
-          type: LOADING,
-          payload: false,
-        });
-      });
-};
 // export const GetAllProduct = (serviceId, catId) => async dispatch => {
 //   dispatch({
 //     type: LOADING,
 //     payload: true,
 //   });
-//   http
-//     .get(`products`)
-//     .then(async response => {
-//       console.log("user data products redux api : ", response.data.result)
-//       if (response.data.status === 1) {
-//         // const arrObj = await transformArrayOfArraysToObjectArray(
-//         //   response.data.result,
+//   let config = {
+//       method: 'get',
+//       maxBodyLength: Infinity,
+//       url: 'http://ezyclean.theprojecttest.xyz/api/products',
+//       headers: {},
+//     };
+
+//     axios
+//       .request(config)
+//       .then(response => {
+//         // console.log(
+//         //   'completedata product',
+//         //   JSON.stringify(response.data.result),
 //         // );
-//         dispatch({
-//           type: PRODUCT_DATA,
-//           payload:response.data.result
-//           // payload: arrObj,
-//         });
-//         // RNToasty.Success({
-//         //     title: response.data.message,
-//         //     duration: 2,
-//         // });
-//         dispatch({
-//           type: LOADING,
-//           payload: false,
-//         });
-//       } else {
-//         dispatch({
-//           type: LOADING,
-//           payload: false,
-//         });
-//         // RNToasty.Info({
-//         //     title: response.data.message,
-//         //     duration: 2,
-//         // });
-//       }
-//     })
-//     .catch(error => {
+//       //   setAlldata(response.data.result);
+//       console.log("user data products redux api : ", response.data.result)
+//     if (response.data.status === 1) {
+//       // const arrObj = await transformArrayOfArraysToObjectArray(
+//       //   response.data.result,
+//       // );
+//       dispatch({
+//         type: PRODUCT_DATA,
+//         payload:response.data.result
+//         // payload: arrObj,
+//       });
+//       // RNToasty.Success({
+//       //     title: response.data.message,
+//       //     duration: 2,
+//       // });
 //       dispatch({
 //         type: LOADING,
 //         payload: false,
 //       });
-//       // console.log("user data error : ", error.response.data)
-//       // RNToasty.Error({
-//       //     title: error.response.data.message,
+//     } else {
+//       dispatch({
+//         type: LOADING,
+//         payload: false,
+//       });
+//       // RNToasty.Info({
+//       //     title: response.data.message,
 //       //     duration: 2,
 //       // });
-//     });
+//     }
+//       })
+//       .catch(error => {
+//         console.log(error);
+//         dispatch({
+//           type: LOADING,
+//           payload: false,
+//         });
+//       });
 // };
+export const GetAllProduct = (serviceId, catId) => async dispatch => {
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  http
+    .get(`products`)
+    .then(async response => {
+      console.log("user data products redux api : ", response.data.result)
+      if (response.data.status === 1) {
+        const arrObj = await transformArrayOfArraysToObjectArray(
+          response.data.result,
+        );
+        dispatch({
+          type: PRODUCT_DATA,
+          // payload:response.data.result
+          payload: arrObj,
+        });
+        // RNToasty.Success({
+        //     title: response.data.message,
+        //     duration: 2,
+        // });
+        dispatch({
+          type: LOADING,
+          payload: false,
+        });
+      } else {
+        dispatch({
+          type: LOADING,
+          payload: false,
+        });
+        // RNToasty.Info({
+        //     title: response.data.message,
+        //     duration: 2,
+        // });
+      }
+    })
+    .catch(error => {
+      dispatch({
+        type: LOADING,
+        payload: false,
+      });
+      // console.log("user data error : ", error.response.data)
+      // RNToasty.Error({
+      //     title: error.response.data.message,
+      //     duration: 2,
+      // });
+    });
+};
 
 export const GetProductByCatId = catId => async dispatch => {
   // const userId = await AsyncStorage.getItem("@USER_ID")

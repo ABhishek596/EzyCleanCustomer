@@ -164,29 +164,29 @@ const PickupSchedule = ({
     pickup_date.push(formattedDate);
   }
 
-  useEffect(() => {
-    if (activeDate) {
-      setPostData({
-        ...postData,
-        pickup_date: activeDate,
-      });
-      GetTime({date: activeDate});
-    }
-  }, [activeDate]);
+  // useEffect(() => {
+  //   if (activeDate) {
+  //     setPostData({
+  //       ...postData,
+  //       pickup_date: activeDate,
+  //     });
+  //     GetTime({date: activeDate});
+  //   }
+  // }, [activeDate]);
 
-  useEffect(() => {
-    if (timeList && timeList[0]) {
-      setActiveTime(timeList[0]);
-      setPostData({
-        ...postData,
-        pickup_date: activeDate,
-        pickup_time: timeList[0],
-      });
-    }
-  }, [timeList]);
+  // useEffect(() => {
+  //   if (timeList && timeList[0]) {
+  //     setActiveTime(timeList[0]);
+  //     setPostData({
+  //       ...postData,
+  //       pickup_date: activeDate,
+  //       pickup_time: timeList[0],
+  //     });
+  //   }
+  // }, [timeList]);
 
   const handleNext = () => {
-    navigation.navigate('DeliverySchedule');
+    // navigation.navigate('DeliverySchedule');
 
     if (postData.pickup_date && postData.pickup_time) {
       navigation.navigate('DeliverySchedule', {
@@ -267,6 +267,29 @@ const PickupSchedule = ({
   const handleHourChange = () => {
     const newHour = (hours + 1) % 12 || 12;
     setHours(newHour);
+
+    var nowIST = new Date().toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata',
+      hour12: false,
+    });
+    console.log('time', nowIST);
+    // Get the current hour in IST
+    var currentHourIST = parseInt(nowIST.split(',')[1].split(':')[0]);
+  
+    console.log('Current hour in IST: ' + currentHourIST);
+  
+    // var currentHour = now.getHours();
+    var currentHour = hours;
+    console.log('Hours', currentHour);
+  
+    if (currentHourIST < 12) {
+      console.log(currentHour + ':00 AM');
+      handleChange('pickup_time', currentHour + ':00 AM');
+
+    } else {
+      console.log('It is currently ' + currentHour + ':00 PM');
+      handleChange('pickup_time', currentHour + ':00 PM');
+    }
   };
 
   const handleMinuteChange = () => {
@@ -274,39 +297,62 @@ const PickupSchedule = ({
     setMinutes(newMinute);
   };
 
+  console.log('Time from Clock---- ', hours + ':00');
 
-  //Calender
-  // const [selectedStartDate, setSelectedStartDate] = useState(null);
-  // const onDateChange = (val) => {
-  //   // console.log('date...........................',date);
-  //   var newdate = val; 
-  //   const date = new Date(newdate);
-  //   const day = date.getUTCDate();
-  //   const month = date.getUTCMonth() + 1; // Months are 0-indexed, so we add 1
-  //   const year = date.getUTCFullYear();
-    
-  //   const formattedDate1 = `${day}-${month < 10 ? '0' : ''}${month}-${year}`;
-  //   console.log('pickuppageDate------------- ; ',formattedDate1);
-    
-  //   setActiveDate(formattedDate1), handleChange('pickup_date', formattedDate1);
-  
-  //   // const valuedate = `"${formattedDate1}"`;
-  
-  //   // console.log('pickuppageDate------------- ; ', valuedate);
-  //   // setSelectedStartDate(date);
+  //time ---------------------------------------------------------------------------------------------------
+  // Create a new Date object for IST
+  // var nowIST = new Date().toLocaleString('en-US', {
+  //   timeZone: 'Asia/Kolkata',
+  //   hour12: false,
+  // });
+  // console.log('time', nowIST);
+  // // Get the current hour in IST
+  // var currentHourIST = parseInt(nowIST.split(',')[1].split(':')[0]);
+
+  // console.log('Current hour in IST: ' + currentHourIST);
+
+  // // var currentHour = now.getHours();
+  // var currentHour = hours;
+  // console.log('Hours', currentHour);
+
+  // if (currentHourIST < 12) {
+  //   console.log(currentHour + ':00 AM');
+  // } else {
+  //   console.log('It is currently ' + currentHour + ':00 PM');
   // }
+  //========================================================================================================
 
+
+  //Calender------------------------------------------------------------------------------------------------
+  // const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const onDateChange = (val) => {
+    // console.log('date...........................',date);
+    var newdate = val;
+    const date = new Date(newdate);
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1; // Months are 0-indexed, so we add 1
+    const year = date.getUTCFullYear();
+
+    const formattedDate1 = `${day}-${month < 10 ? '0' : ''}${month}-${year}`;
+    console.log('pickuppageDate------------- ; ',formattedDate1);
+
+    // setActiveDate(formattedDate1), handleChange('pickup_date', formattedDate1);
+    handleChange('pickup_date', formattedDate1);
+    // const valuedate = `"${formattedDate1}"`;
+
+    // console.log('pickuppageDate------------- ; ', valuedate);
+    setSelectedStartDate(formattedDate1);
+  }
 
   const [selectedStartDate, setSelectedStartDate] = useState(null);
 
-  const onDateChange = (date) => {
-    setSelectedStartDate(date);
-  };
+  // const onDateChange = date => {
+  //   setSelectedStartDate(date);
+  // };
 
-  const startDate = selectedStartDate ? selectedStartDate.toString() : '';
-  console.log('startDate Calender',startDate);
- 
-
+  // const startDate = selectedStartDate ? selectedStartDate.toString() : '';
+  console.log('startDate Calender', selectedStartDate);
+  //=======================================================================================================
   return (
     <View style={globalStyles.container}>
       <StatusBar
@@ -374,10 +420,11 @@ const PickupSchedule = ({
                   key={(_, index) => index}
                 /> */}
 
-                <View style={{marginTop:SIZES.height * .01}}>
-                  <CalendarPicker onDateChange={onDateChange} 
-                  monthTitleStyle={{color:COLORS.secondary}}
-                  yearTitleStyle={{color:COLORS.secondary}}
+                <View style={{marginTop: SIZES.height * 0.01}}>
+                  <CalendarPicker
+                    onDateChange={onDateChange}
+                    monthTitleStyle={{color: COLORS.secondary}}
+                    yearTitleStyle={{color: COLORS.secondary}}
                   />
                 </View>
               </View>
@@ -427,11 +474,11 @@ const PickupSchedule = ({
                   )}
                 </View> */}
                 <View style={{alignSelf: 'center', flex: 0.15}}>
-                  <Svg height="300" width="300" >
+                  <Svg height="300" width="300">
                     <Circle
                       cx="150"
                       cy="150"
-                      r="140"
+                      r="120"
                       stroke={COLORS.secondary}
                       strokeWidth="2.5"
                       fill="white"
@@ -442,21 +489,21 @@ const PickupSchedule = ({
                       <React.Fragment key={index}>
                         <Line
                           x1="150"
-                          y1="10"
+                          y1="30"
                           x2="150"
-                          y2="20"
+                          y2="40"
                           strokeWidth="2"
                           stroke={COLORS.secondary}
                           transform={`rotate(${index * 30} 150 150)`}
                         />
                         <SvgText
                           x="150"
-                          y="40"
+                          y="55"
                           fontSize="16"
                           textAnchor="middle"
                           fill={COLORS.secondary}
                           // transform={`rotate(${index * 30} 150 150)`}
-                          color='red'
+                          color="red"
                           transform={`rotate(${
                             ((index + 0) % 12) * 30
                           } 150 150)`}>
@@ -471,7 +518,7 @@ const PickupSchedule = ({
                       x1="150"
                       y1="150"
                       x2="150"
-                      y2="60"
+                      y2="80"
                       strokeWidth="4"
                       stroke={COLORS.primary}
                       transform={`rotate(${hourRotation} 150 150)`}
@@ -482,7 +529,7 @@ const PickupSchedule = ({
                       x1="150"
                       y1="150"
                       x2="150"
-                      y2="40"
+                      y2="65"
                       strokeWidth="2"
                       stroke={COLORS.secondary}
                       transform={`rotate(${minuteRotation} 150 150)`}
@@ -492,7 +539,12 @@ const PickupSchedule = ({
                     <Circle cx="150" cy="150" r="3" fill={COLORS.primary} />
 
                     {/* Display time */}
-                    <SvgText x="150" y="230" fontSize="20" textAnchor="middle" fill={COLORS.secondary}>
+                    <SvgText
+                      x="150"
+                      y="220"
+                      fontSize="20"
+                      textAnchor="middle"
+                      fill={COLORS.secondary}>
                       {`${String(hours).padStart(2, '0')}:${String(
                         minutes,
                       ).padStart(2, '0')}`}
@@ -540,20 +592,3 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PickupSchedule);
-// export default PickupSchedule;
-
-// const timeList = [
-//   "09:00 AM",
-//   "09:30 AM",
-//   "10:00 AM",
-//   "10:30 AM",
-//   "11:00 AM",
-//   "11:30 AM",
-//   "09:01 AM",
-//   "09:32 AM",
-//   "10:03 AM",
-//   "10:34 AM",
-//   "11:05 AM",
-//   "11:3 AM",
-//   // Add more time slots as needed
-// ];

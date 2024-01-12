@@ -1,7 +1,7 @@
 import {RNToasty} from 'react-native-toasty';
 import http from '../../services/api';
 import {LOADING, NOTIFICATION} from '../types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const GetAllNotification = () => async (dispatch, getState) => {
   // const userId = await AsyncStorage.getItem("@USER_ID")

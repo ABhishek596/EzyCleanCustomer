@@ -326,7 +326,7 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
                     <Circle
                       cx="150"
                       cy="150"
-                      r="140"
+                      r="120"
                       stroke={COLORS.secondary}
                       strokeWidth="2.5"
                       fill="white"
@@ -337,16 +337,16 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
                       <React.Fragment key={index}>
                         <Line
                           x1="150"
-                          y1="10"
+                          y1="30"
                           x2="150"
-                          y2="20"
+                          y2="40"
                           strokeWidth="2"
                           stroke={COLORS.secondary}
                           transform={`rotate(${index * 30} 150 150)`}
                         />
                         <SvgText
                           x="150"
-                          y="40"
+                          y="55"
                           fontSize="16"
                           textAnchor="middle"
                           fill={COLORS.secondary}
@@ -366,7 +366,7 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
                       x1="150"
                       y1="150"
                       x2="150"
-                      y2="60"
+                      y2="80"
                       strokeWidth="4"
                       stroke={COLORS.primary}
                       transform={`rotate(${hourRotation} 150 150)`}
@@ -377,7 +377,7 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
                       x1="150"
                       y1="150"
                       x2="150"
-                      y2="40"
+                      y2="65"
                       strokeWidth="2"
                       stroke={COLORS.secondary}
                       transform={`rotate(${minuteRotation} 150 150)`}
@@ -389,7 +389,7 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
                     {/* Display time */}
                     <SvgText
                       x="150"
-                      y="230"
+                      y="220"
                       fontSize="20"
                       textAnchor="middle"
                       fill={COLORS.secondary}>
