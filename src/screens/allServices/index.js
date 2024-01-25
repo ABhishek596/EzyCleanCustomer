@@ -67,7 +67,7 @@ const AllServices = ({ navigation, loading,  }) => {
                                                 // subTitle={item.service?.description}
                                                 // subTitle={'Premium laundry service employs enzyme presoak for tough dirt, uses optimum temperature...'}
                                                 subTitle={item?.description}
-                                                onPress={() => navigation.navigate("Discount", { serviceId: item.service?.id })}
+                                                // onPress={() => navigation.navigate("Discount", { serviceId: item.service?.id })}
                                             />
                                         </View>
                                     )}

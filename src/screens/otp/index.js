@@ -25,12 +25,12 @@ const Otp = ({
   const [countdownTime, setCountdownTime] = useState(`02:00`);
 
   // console.log("otp data: ", route.params.data, route.params.otp )
-  console.log('otp data from API : ', route.params.data);
-  // console.log("otp postData : ", postData.otp);
-  const userdata = route.params && route.params.data.user_id;
-  console.log('otp data userdata userdata userdata : ',userdata);
+  // console.log('otp data from API : ', route.params.data);
+  // // console.log("otp postData : ", postData.otp);
+  // const userdata = route.params && route.params.data.user_id;
+  // console.log('otp data userdata userdata userdata : ',userdata);
   const [postData, setPostData] = useState({
-    user_id: userdata,
+    // user_id: userdata,
     otp: null,
   });
 

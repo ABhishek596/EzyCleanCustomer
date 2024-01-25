@@ -34,7 +34,7 @@ const Button1 = ({
   btnTextStyle,
 }) => {
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={onPress} disabled={disabled} >
+    <TouchableOpacity activeOpacity={0.5} onPress={onPress} disabled={disabled}>
       <LinearGradient
         colors={['#651898', '#2C0D8F']}
         style={{...styles.btn, ...style, backgroundColor: backgroundColor}} // Your styles for the LinearGradient
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   btn: {
     width: SIZES.width * 0.9,
     // height: SIZES.height * 0.065,
-    paddingVertical: SIZES.height * 0.015,
+    // paddingVertical: SIZES.height * 0.015,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -89,6 +89,6 @@ const styles = StyleSheet.create({
     // fontSize: 15,
     fontSize: SIZES.width * 0.045,
     // marginBottom: -5,
-    marginVertical: SIZES.height * 0.005,
+    // marginVertical: SIZES.height * 0.005,
   },
 });

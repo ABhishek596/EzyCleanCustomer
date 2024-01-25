@@ -49,7 +49,7 @@ const Product = ({
   const [itemList, setItemList] = useState(alldata);
   const [refreshing, setRefreshing] = useState(false);
   const [alldata, setAlldata] = useState();
-  // // console.log('subsDetails=========>>>>>',subsDetails);
+  console.log('subsDetails=========>>>>>',subsDetails);
   // console.log('completedata product from API    ============================================', productData);
 
   const [demo, setDemo] = useState(false); //demo  for demo subscription
@@ -757,51 +757,51 @@ export default connect(mapStateToProps, mapDispatchToProps)(Product);
 //   },
 // ];
 
-// const serviceList = [
-//   {
-//     id: 1,
-//     service: {
-//       id: 101,
-//       service_name: 'Premium Wash',
-//       description:
-//         'Premium laundry service employs enzyme presoak for tough dirt, uses optimum temperature... ',
-//       image: require('../../assets/icons/iron.png'),
-//       price: '$35',
-//     },
-//   },
-//   {
-//     id: 2,
-//     service: {
-//       id: 102,
-//       service_name: 'Dry Cleaning',
-//       description: 'Description for Service 2',
-//       image: 'service2.jpg',
-//       price: '$75',
-//     },
-//   },
-//   {
-//     id: 3,
-//     service: {
-//       id: 103,
-//       service_name: 'Steaming',
-//       description: 'Description for Service 3',
-//       image: 'service3.jpg',
-//       price: '$635',
-//     },
-//   },
-// ];
+const serviceList = [
+  {
+    id: 1,
+    service: {
+      id: 101,
+      service_name: 'Premium Wash',
+      description:
+        'Premium laundry service employs enzyme presoak for tough dirt, uses optimum temperature... ',
+      image: require('../../assets/icons/iron.png'),
+      price: '$35',
+    },
+  },
+  {
+    id: 2,
+    service: {
+      id: 102,
+      service_name: 'Dry Cleaning',
+      description: 'Description for Service 2',
+      image: 'service2.jpg',
+      price: '$75',
+    },
+  },
+  {
+    id: 3,
+    service: {
+      id: 103,
+      service_name: 'Steaming',
+      description: 'Description for Service 3',
+      image: 'service3.jpg',
+      price: '$635',
+    },
+  },
+];
 
-// const categoryList = [
-//   {
-//     id: 1,
-//     category_name: 'MEN',
-//   },
-//   {
-//     id: 2,
-//     category_name: 'WOMEN',
-//   },
-//   {
-//     id: 3,
-//     category_name: 'KIDS',
-//   },
-// ];
+const categoryList = [
+  {
+    id: 1,
+    category_name: 'MEN',
+  },
+  {
+    id: 2,
+    category_name: 'WOMEN',
+  },
+  {
+    id: 3,
+    category_name: 'KIDS',
+  },
+];

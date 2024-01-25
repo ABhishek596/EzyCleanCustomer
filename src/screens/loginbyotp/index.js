@@ -196,12 +196,13 @@ const Logbyotp = ({
             </TouchableOpacity>
             <Text style={styles.time}>Register</Text>
           </View> */}
-
+          <View style={{marginTop: SIZES.height * 0.06}}></View>
           <Button1
             // disabled={loading}
             // loading={loading}
             onPress={handleSubmit}
-            style={{marginTop: 20}}>
+            // style={{marginTop: 20}}
+          >
             Send Code
           </Button1>
 
@@ -249,8 +250,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logbyotp);
-
-
 
 // export default Logbyotp;
 

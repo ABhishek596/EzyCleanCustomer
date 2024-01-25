@@ -11,10 +11,13 @@ import globalStyles from '../../styles/globalStyles';
 import LinearGradient from 'react-native-linear-gradient';
 
 const Discount = ({navigation, discountList, GetDiscountList, route}) => {
+
   const {items} = route?.params;
+  
   const [id, setId] = useState();
   const [discount, setDiscount] = useState(null);
   const [subtotal, setSubtotal] = useState(0);
+  
   // console.log('discountListdiscountListdiscountList', discountList);
   console.log('discount data', discount);
   console.log('discount id', id);

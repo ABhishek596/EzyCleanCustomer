@@ -176,7 +176,7 @@ const Account = ({
                   resizeMode="cover"
                 />
               </View>
-              <Text style={styles.user_name}>{`${userData?.name}`}</Text>
+              <Text style={styles.user_name}>{`${userData?.customer_name}`}</Text>
               <Text style={styles.text}>Welcome Back</Text>
             </View>
           {/* button container */}

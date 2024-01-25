@@ -107,8 +107,8 @@ const EditProfile = ({
 
   useEffect(() => {
     if (userData) {
-      if (userData.profile_image) {
-        setProfileImage({uri: userData.profile_image});
+      if (userData.profile_picture) {
+        setProfileImage({uri: userData.profile_picture});
       }
       setPostData({
         // last_name: userData.last_name,

@@ -17,19 +17,20 @@ export default StyleSheet.create({
     backgroundColor: COLORS.primary,
     paddingHorizontal: SIZES.width * 0.04,
     paddingVertical: SIZES.width * 0.04,
+    alignItems:'center',
     // borderTopLeftRadius: SIZES.width * 0.05,
     // borderTopRightRadius: SIZES.width * 0.05,
   },
   imgView: {
     backgroundColor: COLORS.white,
-    padding: SIZES.width * 0.01,
+    // padding: SIZES.width * 0.01,
     borderRadius: SIZES.width * 0.03,
     alignSelf: 'center',
   },
   img: {
-    height: SIZES.height * 0.1,
-    width: SIZES.width * 0.2,
-    borderRadius: SIZES.width * 5,
+    height: SIZES.width * 0.1,
+    width: SIZES.width * 0.1,
+    // borderRadius: SIZES.width * 5,
     resizeMode: 'contain',
   },
   textView: {
@@ -43,6 +44,9 @@ export default StyleSheet.create({
   feeTxt: {
     color: COLORS.white,
     fontWeight: '500',
+    backgroundColor:COLORS.secondary,
+    padding:SIZES.width * 0.02,
+    borderRadius: SIZES.width * .02,
   },
   subDetailsView: {
     flexDirection: 'row',

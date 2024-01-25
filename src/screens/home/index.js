@@ -43,7 +43,7 @@ const Home = ({
   const OfferItem = ({item}) => {
     return (
       <Pressable 
-      // onPress={() => navigation.navigate('Discount',{ items :{}})}
+      // onPress={() => navigation.navigate('Discount')}
       >
         <LinearGradient
           colors={['#651898', '#2C0D8F']}
@@ -189,7 +189,7 @@ const Home = ({
 
                 <View style={{marginLeft: SIZES.width * 0.04}}>
                   {/* <Text style={styles.user_name}>Hello {userData && (`${userData.name}`)}</Text> */}
-                  <Text style={styles.user_name}>{userData?.name}</Text>
+                  <Text style={styles.user_name}>{userData?.customer_name}</Text>
                   <Text style={styles.text}>Welcome Back</Text>
                 </View>
               </View>

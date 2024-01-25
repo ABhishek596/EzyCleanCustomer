@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     fontSize: SIZES.width * .036,
     color: COLORS.secondary,
     // color: COLORS.white,
-    marginBottom: -4,
+    // marginBottom: -4,
   },
 })

@@ -63,20 +63,20 @@ export const LoginApi = (postData, navigation, cb) => async dispatch => {
   http
     .post('login', postData, formDataHeader)
     .then(async response => {
-      console.log('This is response ', response.data.data);
-      console.log('This is response status ', response.data.response);
-      if (response.data.response === true) {
+      console.log('This is response ', response.data.result);
+      console.log('This is response status ', response.data.status);
+      if (response.data.status == 200) {
         dispatch({
           type: AUTH_TOKEN,
-          payload: response.data.data.token,
+          payload: response.data.token,
         });
         await AsyncStorage.setItem(
           '@USER_TOKEN',
-          response.data.data.token,
+          response.data.token,
         );
         await AsyncStorage.setItem(
           '@USER_ID',
-          JSON.stringify(response.data.data.user_id),
+          JSON.stringify(response.data.result.id),
         );
         // dispatch({
         //   type: AUTH_TOKEN,
@@ -92,7 +92,7 @@ export const LoginApi = (postData, navigation, cb) => async dispatch => {
         // );
         dispatch(InitialCall());
         navigation &&
-        navigation.navigate('StackNavigator', {data: response.data.data});
+        navigation.navigate('StackNavigator', {data: response.data.token});
         RNToasty.Success({
           title: 'User Loggedin successfully.',
           duration: 2,
@@ -176,7 +176,7 @@ export const GetUserDataApi = () => async dispatch => {
     payload: true,
   });
   http
-    .get(`get-user-data/${userId}`)
+    .get(`get-customer-data/${userId}`)
     .then(async response => {
       console.log("usfs fi id data ========; ", response.data)
       if (response.data) {

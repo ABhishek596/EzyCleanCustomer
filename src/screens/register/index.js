@@ -7,7 +7,7 @@ import {
   StatusBar,
   ScrollView,
   FlatList,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {connect} from 'react-redux';
@@ -42,7 +42,7 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
   const [branch, setBranch] = useState(true);
   const [fcm, setFcm] = useState();
 
-  const branches = ['Vijay Nagar', 'LIG', 'Bhawarkuan','Scheme No.71'];
+  const branches = ['Vijay Nagar', 'LIG', 'Bhawarkuan', 'Scheme No.71'];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState(null);
 
@@ -356,14 +356,16 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
               value={postData.branch}
               // onChangeText={text => handleChange('branch', text)}
             /> */}
-            <TouchableWithoutFeedback onPress={toggleDropdown} >
+            <TouchableWithoutFeedback onPress={toggleDropdown}>
               <View style={styles.button}>
-                <Text style={{color:COLORS.secondary}}>{postData.branch?postData.branch:'Enter Location'}</Text>
+                <Text style={{color: COLORS.secondary}}>
+                  {postData.branch ? postData.branch : 'Enter Location'}
+                </Text>
                 <Icons
-                    name={isDropdownOpen ? 'down-outline' : 'up-outline'}
-                    size={20}
-                    // color={focusColor == COLORS.secondary ? COLORS.secondary : COLORS.placeholderColor}
-                    color={COLORS.gray30}
+                  name={isDropdownOpen ? 'down-outline' : 'up-outline'}
+                  size={20}
+                  // color={focusColor == COLORS.secondary ? COLORS.secondary : COLORS.placeholderColor}
+                  color={COLORS.gray30}
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -383,19 +385,20 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
                     <TouchableOpacity
                       onPress={() => handleGenderSelect('branch', item)}>
                       <View style={styles.dropdownItem}>
-                        <Text style={{color:COLORS.black1}}>{item}</Text>
+                        <Text style={{color: COLORS.black1}}>{item}</Text>
                       </View>
                     </TouchableOpacity>
                   )}
                 />
               </View>
             )}
-
+            <View style={{marginTop: SIZES.height * 0.06}}></View>
             <Button1
               // disabled={loading}
               // loading={loading}
               onPress={handleSubmit}
-              style={{marginTop: 20}}>
+              // style={{marginTop: 20}}
+            >
               Submit
             </Button1>
 

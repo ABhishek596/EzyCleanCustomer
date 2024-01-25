@@ -29,15 +29,15 @@ const ActivePlan = ({
     GetActiveSubscription();
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      GetActiveSubscription();
-    }, []),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     GetActiveSubscription();
+  //   }, []),
+  // );
 
-  // useEffect(() => {
-  //   GetActiveSubscription();
-  // }, []);
+  useEffect(() => {
+    GetActiveSubscription();
+  }, []);
 
   return (
     <View style={styles.mainView}>
@@ -56,19 +56,19 @@ const ActivePlan = ({
                   <Image
                     source={{
                       uri: subsDetails?.existing_subscription_details
-                        ?.sub_image,
+                        ?.plan_image,
                     }}
                     style={styles.img}
                   />
                 </View>
                 <View style={styles.textView}>
                   <Text style={styles.nameTxt}>
-                    {subsDetails?.existing_subscription_details?.sub_name}
+                    {subsDetails?.existing_subscription_details?.plan_name}
                   </Text>
                   <Text style={styles.feeTxt}>
                     {
                       subsDetails?.existing_subscription_details
-                        ?.sub_description
+                        ?.plan_description
                     }
                   </Text>
                 </View>

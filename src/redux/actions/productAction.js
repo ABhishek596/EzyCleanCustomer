@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import objectToFormData from '../../services/objectToFormData';
 import {formDataHeader} from '../../services/formDataHeader';
 import axios from 'axios';
+
 function transformArrayOfArraysToObjectArray(arrayOfArrays) {
   const transformedArray = [];
 
@@ -98,7 +99,7 @@ export const GetAllProduct = (serviceId, catId) => async dispatch => {
     .get(`products`)
     .then(async response => {
       console.log("user data products redux api : ", response.data.result)
-      if (response.data.status === 1) {
+      if (response.data.status == 1) {
         const arrObj = await transformArrayOfArraysToObjectArray(
           response.data.result,
         );
