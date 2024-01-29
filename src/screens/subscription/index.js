@@ -23,6 +23,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import RazorpayCheckout from 'react-native-razorpay';
 import http from '../../services/api';
 import axios from 'axios';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import {BuySubscription} from '../../redux/actions/subscriptionAction';
 const Subscription = ({
   loading,
   // GetActiveSubscription,
@@ -36,7 +38,6 @@ const Subscription = ({
   console.log('subsDetails', subsPackageDetails);
   console.log('itembyservice', itembyservice);
   const [packagedata, setPackagedata] = useState([]);
-
   const planType0Data = packagedata.filter(item => item.plan_type === '0');
   const planType1Data = packagedata.filter(item => item.plan_type === '1');
   const onRefresh = () => {
@@ -45,7 +46,7 @@ const Subscription = ({
     GetSubsPackagesDetails();
     //GetActiveSubscription();
   };
-
+  // console.log('buySubStatus//SUBSCRIPTION',buySubStatus);
   // useFocusEffect(
   //   useCallback(() => {
   //     GetActiveSubscription();
@@ -89,6 +90,66 @@ const Subscription = ({
   //   };
   //   GetSubsPackagesDetails();
   // }, []);
+
+  // useEffect(() => {
+  //   if (paymentid) {
+  //     const FormData = require('form-data');
+  //     let data = new FormData();
+  //     data.append('customer_id', '112');
+  //     data.append('sub_id', '1');
+  //     data.append('payment_id', '2fsr55ztyxx');
+  //     BuySubscription({customer_id: 112,sub_id: 1,payment_id: '2fsr55ztyxx'});
+  //   }
+  // }, []);
+
+  //-----------------------------------------  buy Subscription  ---------------------------------------
+
+  // const [paymentid, setPaymentid] = useState();
+  // console.log('paymentid//SUBSCRIPTION', paymentid);
+  // const [subid, setSubid] = useState();
+
+  // useEffect(async () => {
+  //   const idid = await AsyncStorage.getItem('@USER_ID');
+  //   console.log('ididUser//SUBSCRIPTION', idid);
+  //   setIdidUser(idid);
+  // }, []);
+  // const [ididUser, setIdidUser] = useState();
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (paymentid || ididUser || subid) {
+  //       const FormData = require('form-data');
+  //       let data = new FormData();
+  //       data.append('customer_id', ididUser);
+  //       data.append('sub_id', subid);
+  //       data.append('payment_id', paymentid);
+  
+  //       let config = {
+  //         method: 'post',
+  //         maxBodyLength: Infinity,
+  //         url: 'https://ezyclean.theprojecttest.xyz/api/customer/buy_subscription',
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data',
+  //           Authorization:
+  //             'Bearer 280|CnGtPEbeDqzb1NIhPqNaZKt9QXjGnuFXZRFQX0axc0c392de',
+  //         },
+  //         data: data,
+  //       };
+  
+  //       try {
+  //         const response = await axios(config);
+  //         console.log('buyPackageDone', JSON.stringify(response.data));
+  //       } catch (error) {
+  //         console.log('Error-buyPackageDone', error);
+  //       }
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, [paymentid, ididUser, subid]);
+
+  //---------------------------------------  X  ---------------------------------------------------
+  
 
   useEffect(() => {
     let config = {
@@ -257,6 +318,7 @@ const Subscription = ({
                       <Button1
                         style={styles.activeSubBtn}
                         onPress={() => {
+                          // setSubid(item.id);
                           // navigation.navigate('PaymentOnline');
                           // Alert.alert(
                           //   'Subscription Alert!',
@@ -290,7 +352,8 @@ const Subscription = ({
                           RazorpayCheckout.open(options)
                             .then(data => {
                               // handle success
-                              Alert.alert(`Success: ${data.razorpay_payment_id}`);
+                              // Alert.alert(`Success: ${data.razorpay_payment_id}`);
+                              setPaymentid(data.razorpay_payment_id);
                               console.log('data', data);
                               if (data.status_code === 200) {
                                 // setTimeout(() => {
@@ -306,9 +369,7 @@ const Subscription = ({
                                 `Error: ${error.code} | ${error.description}`,
                               );
                             });
-                        }}
-                        
-                        >
+                        }}>
                         Buy Subscription
                       </Button1>
                     </View>
@@ -377,6 +438,7 @@ const Subscription = ({
                       <Button1
                         style={styles.activeSubBtn}
                         onPress={() => {
+                          // setSubid(item.id);
                           // navigation.navigate('PaymentOnline');
                           // Alert.alert(
                           //   'Subscription Alert!',
@@ -410,7 +472,8 @@ const Subscription = ({
                           RazorpayCheckout.open(options)
                             .then(data => {
                               // handle success
-                              Alert.alert(`Success: ${data.razorpay_payment_id}`);
+                              // Alert.alert(`Success: ${data.razorpay_payment_id}`);
+                              setPaymentid(data.razorpay_payment_id);
                               console.log('data', data);
                               if (data.status_code === 200) {
                                 // setTimeout(() => {
@@ -426,8 +489,7 @@ const Subscription = ({
                                 `Error: ${error.code} | ${error.description}`,
                               );
                             });
-                        }}
-                        >
+                        }}>
                         Buy Subscription
                       </Button1>
                     </View>
@@ -526,6 +588,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   // GetActiveSubscription,
   GetSubsPackagesDetails,
+  // BuySubscription,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Subscription);

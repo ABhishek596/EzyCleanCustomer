@@ -22,7 +22,7 @@ import BottomTab from '../navigation/bottomTab';
 // import Notification from '../screens/notification';
 import {InitialCall} from '../redux/actions/authActions';
 import StackNavigator from '../navigation/stackNavigator';
-
+import MapScreen from '../screens/getlocation';
 const Stack = createStackNavigator();
 
 const Root = ({token, InitialCall}) => {
@@ -86,6 +86,13 @@ const Root = ({token, InitialCall}) => {
             })}
           />
           <Stack.Screen
+            name="MapScreen"
+            component={MapScreen}
+            options={({navigation}) => ({
+              header: () => <Header navigation={navigation} />,
+            })}
+          />
+             <Stack.Screen
             name="Register"
             component={Register}
             options={({navigation}) => ({

@@ -27,6 +27,10 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+                <!-- add google map -->
+     <meta-data 
+        android:name="com.google.android.geo.API_KEY" 
+        android:value="AIzaSyCyEktzf7E30JTYeKWqQWbmqYA0d2du9vY"/>
     </application>
 </manifest>
 

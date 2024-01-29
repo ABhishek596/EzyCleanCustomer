@@ -47,7 +47,8 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
   const [selectedBranch, setSelectedBranch] = useState(null);
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    // setIsDropdownOpen(!isDropdownOpen);
+    // navigation.navigate('MapScreen');
   };
 
   const handleGenderSelect = (name, branch) => {
@@ -361,12 +362,12 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
                 <Text style={{color: COLORS.secondary}}>
                   {postData.branch ? postData.branch : 'Enter Location'}
                 </Text>
-                <Icons
+                {/* <Icons
                   name={isDropdownOpen ? 'down-outline' : 'up-outline'}
                   size={20}
                   // color={focusColor == COLORS.secondary ? COLORS.secondary : COLORS.placeholderColor}
                   color={COLORS.gray30}
-                />
+                /> */}
               </View>
             </TouchableWithoutFeedback>
             {/* <View style={styles.box}>
@@ -376,7 +377,9 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
               <Text style={styles.forget_text}>Forgot Your Password?</Text>
             </TouchableOpacity>
           </View> */}
-            {isDropdownOpen && (
+
+
+            {/* {isDropdownOpen && (
               <View style={styles.dropdownContainer}>
                 <FlatList
                   data={branches}
@@ -391,7 +394,9 @@ const Register = ({navigation, SignUpApi, AuthFunction, GoogleLoginApi}) => {
                   )}
                 />
               </View>
-            )}
+            )} */}
+
+
             <View style={{marginTop: SIZES.height * 0.06}}></View>
             <Button1
               // disabled={loading}

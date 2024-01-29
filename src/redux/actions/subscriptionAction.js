@@ -8,6 +8,8 @@ import {
   SUBSCRIPTION_PACKAGE_LIST,
 } from '../types';
 import {RNToasty} from 'react-native-toasty';
+import objectToFormData from '../../services/objectToFormData';
+import {formDataHeader} from '../../services/formDataHeader';
 
 export const GetAllSubsPackages = () => async dispatch => {
   const userId = await AsyncStorage.getItem('@USER_ID');
@@ -176,19 +178,20 @@ export const GetSubsPackagesDetails = id => async dispatch => {
 };
 
 
-export const BuySubscription = (sId, pId) => async dispatch => {
+export const BuySubscription = (postData) => async dispatch => {
   const userId = await AsyncStorage.getItem('@USER_ID');
+  postData = await objectToFormData(postData);
   dispatch({
     type: LOADING,
     payload: true,
   });
   http
     .post(
-      `buy_subscription?customer_id=${userId}&sub_id=${sId}&payment_id=${pId}`,
+      `customer/buy_subscription`,postData,formDataHeader
     )
     .then(async response => {
       console.log('BuySubscription'.response.data);
-      if (response.data?.status === 1) {
+      if (response.data?.status == 200) {
         dispatch({
           type: BUY_SUBSCRIPTION,
           payload: {success: true},
