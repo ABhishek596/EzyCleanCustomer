@@ -103,6 +103,8 @@ const PickupSchedule = ({
     pickup_time: null,
   });
 
+  console.log('databyparams', postData);
+
   const pickupmylaundry = route.params?.pickupmylaundry;
   console.log('pickupmylaundry', pickupmylaundry);
 

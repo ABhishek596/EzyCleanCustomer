@@ -95,7 +95,7 @@ export default StyleSheet.create({
         fontFamily: FONTS.medium,
         color: COLORS.white,
         fontSize: SIZES.width * .04,
-        marginBottom: -4,
+        // marginBottom: -4,
     },
     tinyLogo: {
         width: SIZES.width * .044,

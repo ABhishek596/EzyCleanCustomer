@@ -8,7 +8,7 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
@@ -16,10 +16,34 @@ import {COLORS, SIZES, images, FONTS} from '../../constants';
 import Loading from '../../component/loading';
 // import ServiceCard from '../../component/card/ServiceCard';
 import LinearGradient from 'react-native-linear-gradient';
-
+import axios from 'axios';
 const MyOrders = ({navigation, loading, categoryList}) => {
   // console.log("category data : ", categoryList)
   // const order = [1, 2, 3, 4]
+  const [active, setActive] = useState();
+  useEffect(()=>{
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://ezyclean.theprojecttest.xyz/api/get_orders/112',
+      headers: {
+        Authorization:
+          'Bearer 284|LQC8WFzX2Z9p43wb59yKhSBqzUEHzjGC2hrD6hUxaa58d1b5',
+       },
+    };
+  
+    axios
+      .request(config)
+      .then(response => {
+        console.log("Active order data",JSON.stringify(response.data));
+        setActive(response.data.result);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },[])
+
+  
 
   return (
     <>
@@ -35,18 +59,18 @@ const MyOrders = ({navigation, loading, categoryList}) => {
           <View style={globalStyles.center}>
             {/* category container */}
             <View>
-              {/* {categoryList &&
+              {active &&
                 <FlatList
-                  data={categoryList}
-                  renderItem={({ item, index }) => ( */}
-              <ScrollView showsVerticalScrollIndicator={false}>
+                  data={active}
+                  renderItem={({ item, index }) => (
+             
                 <LinearGradient
                   colors={['#F5E6FF', '#F3E1FF']}
                   style={[styles.box, {marginTop: SIZES.height * 0.025}]} // Your styles for the LinearGradient
                   start={{x: 0, y: 0}}
                   end={{x: 1, y: 0}}>
                   <View style={styles.box_header}>
-                    <Text style={styles.order_id}>Order #Dry0010C1</Text>
+                    <Text style={styles.order_id}>Order {item.order_id}</Text>
                     <TouchableOpacity
                       activeOpacity={0.5}
                       style={styles.cancel_btn}>
@@ -55,7 +79,7 @@ const MyOrders = ({navigation, loading, categoryList}) => {
                   </View>
                   <View style={styles.order_row}>
                     <Text style={styles.order_title}>Product Name</Text>
-                    <Text style={styles.order_text}>Blazer</Text>
+                    <Text style={styles.order_text}>{item.label_name}</Text>
                   </View>
                   <View style={styles.order_row}>
                     <Text style={styles.order_title}>Quantity</Text>
@@ -63,23 +87,23 @@ const MyOrders = ({navigation, loading, categoryList}) => {
                   </View>
                   <View style={styles.order_row}>
                     <Text style={styles.order_title}>Pickup Date</Text>
-                    <Text style={styles.order_text}>18/May/2023</Text>
+                    <Text style={styles.order_text}>{item.pickup_date.slice(0,10)}</Text>
                   </View>
                   <View style={styles.order_row}>
                     <Text style={styles.order_title}>Pickup Time</Text>
-                    <Text style={styles.order_text}>10:00 am</Text>
+                    <Text style={styles.order_text}>{item.pickup_date.slice(11,16)}</Text>
                   </View>
                   <View style={styles.order_row}>
                     <Text style={styles.order_title}>Delivery Date</Text>
-                    <Text style={styles.order_text}>20/Jun/2023</Text>
+                    <Text style={styles.order_text}>{item.delivery_date.slice(0,10)}</Text>
                   </View>
                   <View style={styles.order_row}>
                     <Text style={styles.order_title}>Delivery Time</Text>
-                    <Text style={styles.order_text}>02:00 Pm</Text>
+                    <Text style={styles.order_text}>{item.delivery_date.slice(11,16)}</Text>
                   </View>
                   <View style={styles.order_row}>
                     <Text style={styles.order_title}>Payment Mode</Text>
-                    <Text style={styles.order_text}>cash</Text>
+                    <Text style={styles.order_text}>{item.payment_mode}</Text>
                   </View>
                   <View
                     style={{
@@ -119,7 +143,7 @@ const MyOrders = ({navigation, loading, categoryList}) => {
                       Total
                     </Text>
                     <Text style={[styles.order_text, {fontWeight: 'bold'}]}>
-                      $ 87
+                      $ {item.sub_total}
                     </Text>
                   </View>
                   <View style={{flexDirection: 'row'}}>
@@ -155,12 +179,12 @@ const MyOrders = ({navigation, loading, categoryList}) => {
                     </TouchableOpacity>
                   </View>
                 </LinearGradient>
-              </ScrollView>
-              {/* )}
+             
+              )}
                   key={item => item.id}
                   showsVerticalScrollIndicator={false}
                 />
-              } */}
+              }
             </View>
           </View>
         </View>
@@ -557,8 +581,6 @@ const products1 = [
 
 // Clock.js
 
-
-
 // import React, { useState, useEffect } from 'react';
 // import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 // import Svg, { Circle, Line, Text as SvgText } from 'react-native-svg';
@@ -684,5 +706,3 @@ const products1 = [
 // });
 
 // export default WatchPicker;
-
-

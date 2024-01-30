@@ -270,8 +270,9 @@ const Subscription = ({
                         <View style={styles.imgView}>
                           <Image
                             source={{
-                              uri: subsDetails?.existing_subscription_details
-                                ?.sub_image,
+                              uri:item.plan_image
+                              // uri: subsDetails?.existing_subscription_details
+                              //   ?.sub_image,
                             }}
                             style={styles.img}
                           />
@@ -390,8 +391,9 @@ const Subscription = ({
                         <View style={styles.imgView}>
                           <Image
                             source={{
-                              uri: subsDetails?.existing_subscription_details
-                                ?.sub_image,
+                              uri:item.plan_image
+                              // uri: subsDetails?.existing_subscription_details
+                              //   ?.plan_image,
                             }}
                             style={styles.img}
                           />

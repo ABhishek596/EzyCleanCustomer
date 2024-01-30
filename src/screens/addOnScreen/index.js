@@ -751,7 +751,11 @@ const AddOnScreen = ({
             //   items,
             // })}
           >
-            <Text style={[styles.btn_text, {color: COLORS.secondary,marginBottom: 0}]}>
+            <Text
+              style={[
+                styles.btn_text,
+                {color: COLORS.secondary, marginBottom: 0},
+              ]}>
               Add Coupon
             </Text>
           </TouchableOpacity>
@@ -879,7 +883,16 @@ const AddOnScreen = ({
                   if (visible === false) {
                     setIsModalVisible(!isModalVisible);
                   } else if (visible === true) {
-                    navigation.navigate('PickupSchedule');
+                    navigation.navigate('PickupSchedule', {
+                      item: JSON.stringify(addonsList),
+                      allprice: {
+                        total: totalAmount,
+                        sub_total:
+                          (totalAmount * Number(discountObj?.discount)) / 100,
+                        discount: discountObj?.discount,
+                        qty:shwitem.length
+                      },
+                    });
                   }
                 }}>
                 Continue Order

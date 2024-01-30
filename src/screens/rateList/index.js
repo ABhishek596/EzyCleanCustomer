@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -11,18 +11,18 @@ import {
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
 import {COLORS, SIZES, data, images} from '../../constants';
-import {useState} from 'react';
 import Collapsible from 'react-native-collapsible';
 import Icons from '../../component/Icons';
 import Loading from '../../component/loading';
 // import {connect} from 'react-redux';
 // import {GetPriceList} from '../../redux/actions/homeAction';
 import LinearGradient from 'react-native-linear-gradient';
-
-const Accordion = ({onPress, title}) => {
+import axios from 'axios';
+const Accordion = ({onPress,data, title}) => {
   const [collapsed, setCollapsed] = useState(true);
   const borderRadius = collapsed ? SIZES.width * 0.03 : 0;
   const margin = collapsed ? SIZES.height * 0.02 : 0;
+
   return (
     <View>
       <TouchableOpacity
@@ -43,8 +43,8 @@ const Accordion = ({onPress, title}) => {
       </TouchableOpacity>
       <Collapsible style={{flex: 1}} collapsed={collapsed}>
         <View style={styles.product_box}>
-          {data.rateListwholeData &&
-            data.rateListwholeData?.map(item => (
+          {data &&
+            data?.map(item => (
               <View key={item.product_id} style={styles.product_row}>
                 <Text numberOfLines={1} style={styles.product_name}>
                   {item?.product_name || 'Product Name'}
@@ -60,7 +60,7 @@ const Accordion = ({onPress, title}) => {
   );
 };
 
-// console.log('datarrrrrrrrrrr', data);
+// //console.log('datarrrrrrrrrrr', data);
 
 const OfferItem = ({offer}) => {
   return (
@@ -70,7 +70,7 @@ const OfferItem = ({offer}) => {
       start={{x: 0, y: 0}}
       end={{x: 1, y: 0}}>
       <View>
-        <View style={[globalStyles.row,{alignItems:'center'}]}>
+        <View style={[globalStyles.row, {alignItems: 'center'}]}>
           <Text style={styles.offer}>{offer.discount}% </Text>
           <Text style={styles.off_text}>off</Text>
         </View>
@@ -90,11 +90,34 @@ const OfferItem = ({offer}) => {
   );
 };
 
-
 const RateList = ({navigation, GetPriceList, loading, priceList}) => {
   // useEffect(() => {
   //   GetPriceList();
   // }, []);
+
+  const [val, setVal] = useState();
+
+  useEffect(() => {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'https://ezyclean.theprojecttest.xyz/api/get-alldataby-services',
+      headers: {
+        Accept: 'application/json',
+      },
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        //console.log(JSON.stringify(response.data.data.categories));
+        setVal(response.data.data);
+      })
+      .catch(error => {
+        //console.log(error);
+      });
+  }, []);
+
   return (
     <ScrollView style={globalStyles.container}>
       <StatusBar
@@ -122,7 +145,7 @@ const RateList = ({navigation, GetPriceList, loading, priceList}) => {
           {/* Dry Cleaning Services */}
 
           <FlatList
-            data={val.priceList}
+            data={val}
             keyExtractor={item => item?.service_id}
             renderItem={({item}) => {
               return (
@@ -137,6 +160,7 @@ const RateList = ({navigation, GetPriceList, loading, priceList}) => {
                     {item?.service_name || 'Service Name'}
                   </Text>
                   {item?.categories?.map(cat => {
+                    //console.log('item',cat);
                     return (
                       <Accordion
                         key={cat?.category_id}
@@ -189,42 +213,42 @@ const RateList = ({navigation, GetPriceList, loading, priceList}) => {
 // export default connect(mapStateToProps, mapDispatchToProps)(RateList);
 export default RateList;
 
-const val = {
-  priceList: [
-    {
-      service_id: '1',
-      service_name: 'Service A',
-      categories: [
-        {
-          category_id: '101',
-          category_name: 'Category X',
-          products: ['Product 1', 'Product 2', 'Product 3'],
-        },
-        {
-          category_id: '102',
-          category_name: 'Category Y',
-          products: ['Product A', 'Product B'],
-        },
-      ],
-    },
-    {
-      service_id: '2',
-      service_name: 'Service B',
-      categories: [
-        {
-          category_id: '201',
-          category_name: 'Category Z',
-          products: ['Product X', 'Product Y'],
-        },
-        {
-          category_id: '202',
-          category_name: 'Category A',
-          products: ['Product A', 'Product B'],
-        },
-      ],
-    },
-  ],
-};
+// const val = {
+//   priceList: [
+//     {
+//       service_id: '1',
+//       service_name: 'Service A',
+//       categories: [
+//         {
+//           category_id: '101',
+//           category_name: 'Category X',
+//           products: ['Product 1', 'Product 2', 'Product 3'],
+//         },
+//         {
+//           category_id: '102',
+//           category_name: 'Category Y',
+//           products: ['Product A', 'Product B'],
+//         },
+//       ],
+//     },
+//     {
+//       service_id: '2',
+//       service_name: 'Service B',
+//       categories: [
+//         {
+//           category_id: '201',
+//           category_name: 'Category Z',
+//           products: ['Product X', 'Product Y'],
+//         },
+//         {
+//           category_id: '202',
+//           category_name: 'Category A',
+//           products: ['Product A', 'Product B'],
+//         },
+//       ],
+//     },
+//   ],
+// };
 
 // const data = [
 //   {
