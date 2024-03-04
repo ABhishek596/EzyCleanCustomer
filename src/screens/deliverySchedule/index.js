@@ -146,7 +146,7 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
     //   alert('Please select valid delivery date and time.');
     // }
   };
-  console.log('delivery postdata ; ', postData);
+  // console.log('delivery postdata ; ', postData);
 
   // const onDateChange = val => {
   //   // console.log('date...........................',date);

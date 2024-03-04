@@ -11,7 +11,7 @@ import {
   Pressable,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {connect, useDispatch} from 'react-redux';
+import {connect} from 'react-redux';
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
 import {COLORS, SIZES, icons, images} from '../../constants';

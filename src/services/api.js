@@ -21,7 +21,6 @@ export const http1 = axios.create({
 	},
 });
 
-
 // Dryfi Customer live App      https://software.dryfi.in/api/     Dryfi Customer Test App                  'https://dryfi.theprojecttest.xyz/api/'
 const http = axios.create({
 	baseURL: 'https://ezyclean.theprojectxyz.xyz/api/',

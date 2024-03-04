@@ -19,7 +19,7 @@ import {
   GetProductByServiceId,
   GetProductFeatures,
 } from '../../redux/actions/productAction';
-// import {GetActiveSubscription} from '../../redux/actions/subscriptionAction';
+import {GetActiveSubscription} from '../../redux/actions/subscriptionAction';
 import NoDataBox from '../../component/noDataBox';
 import ProductCard from '../../component/card/ProductCard';
 import CategoryButton from '../../component/button/CategoryButton';
@@ -44,13 +44,15 @@ const Product = ({
   // serviceList,
   GetProductByServiceId,
   GetAllProduct,
+  GetActiveSubscription,
+  subsDetails
 }) => {
+
   // const noti = useSelector(state => state.product.productData)
   //console.log('USESelector---Productdata',noti);
   const [itemList, setItemList] = useState(alldata);
   // const [alldata, setAlldata] = useState();
   const [refreshing, setRefreshing] = useState(false);
-  const [subsDetails, setSubsDetails] = useState(false);
   const [isTokenSet, setIsTokenSet] = useState(false);
   // const [token, setToken] = useState();
   const [userId, setUserId] = useState();
@@ -72,6 +74,8 @@ const Product = ({
     getToken();
   }, [isTokenSet]);
 
+
+  console.log('subsDetails all on product page ',subsDetails);
   // console.log('subsDetails////////////////////',subsDetails.message);
   // console.log('completedata product from API    ============================================', productData);
 
@@ -118,9 +122,9 @@ const Product = ({
   //   await GetProductFeatures();
   // };
 
-  // useEffect(() => {
-  //   GetActiveSubscription();
-  // }, []);
+  useEffect(() => {
+    GetActiveSubscription();
+  }, []);
 
   // // //console.log('categoryList', categoryList);
   // // //console.log('serviceList', serviceList);
@@ -301,45 +305,11 @@ const Product = ({
   //   setShwitem(filteredItems);
   // }, []);
 
-  useEffect(() => {
-    try {
-      const FormData = require('form-data');
-      let data = new FormData();
 
-      let config = {
-        method: 'get',
-        maxBodyLength: Infinity,
-        url: `https://ezyclean.theprojectxyz.xyz/api/customer/subscription/${userId}`,
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        data: data,
-      };
 
-      axios
-        .request(config)
-        .then(response => {
-          console.log('subsdataatproductpage--', JSON.stringify(response.data));
-          if (
-            response.data.message ===
-            'No Plan, Please purchase a subscription for better user experience'
-          ) {
-            setSubsDetails(true);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } catch (err) {
-      console.log('api not hit', err);
-    }
-  }, []);
-
-  console.log('total product subsDetails====', subsDetails);
   const continueFunc = () => {
     // navigation.navigate('AddOn');
-    if (subsDetails === true) {
+    if (!subsDetails) {
       Alert.alert(
         'Subscription Alert!',
         'Please purchase a subscription plan to continue order',
@@ -703,6 +673,7 @@ const mapStateToProps = state => ({
   packingList: state.product.packingList,
   addonList: state.product.addonList,
   stainsList: state.product.stainsList,
+  subsDetails: state.subscription.subsDetails
 });
 
 const mapDispatchToProps = {
@@ -710,6 +681,7 @@ const mapDispatchToProps = {
   GetProductByServiceId,
   GetProductByCatId,
   GetProductFeatures,
+  GetActiveSubscription
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

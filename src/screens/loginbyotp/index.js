@@ -71,7 +71,8 @@ const Logbyotp = ({
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: `https://ezyclean.theprojectxyz.xyz/api/customer/tell-otp?phone_number=${postData.phone_number}`,
+        url: `https://ezyclean.theprojectxyz.xyz/api/
+customer/tell-otp?phone_number=${postData.phone_number}`,
         headers: {}
       };
 

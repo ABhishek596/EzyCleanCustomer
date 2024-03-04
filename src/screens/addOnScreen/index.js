@@ -24,6 +24,7 @@ import CheckBox from '@react-native-community/checkbox';
 import {ColorPicker} from 'react-native-color-picker';
 import Slider from '@react-native-community/slider';
 import LinearGradient from 'react-native-linear-gradient';
+// import {GetActiveSubscription} from '../../redux/actions/subscriptionAction';
 import axios from 'axios';
 
 const FeatureRow = ({
@@ -67,20 +68,24 @@ const AddOnScreen = ({
   // addonList,
   // stainsList,
   subsDetails,
+  // GetActiveSubscription
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [filterBottom, setFilterBottom] = useState(false);
+  console.log('subsDetails addonList////----', subsDetails);
   const toggleModal = () => {
     !isModalVisible;
     // navigation.navigate('PickupSchedule');
   };
 
-  console.log('addonList====', addonList);
-  console.log('addonList====', addonList.length);
+  const [finaltotal, setFinaltotal] = useState();
+
+  // console.log('addonList====', addonList);
+  // console.log('addonListlength/////====', addonList.length);
   // const {items} = route?.params;
   const {items, discountObj, csIds} = route?.params;
-  const [filterBottom, setFilterBottom] = useState(false);
-  console.log('Get items item from discount screen', items);
+
+  // console.log('Get items item from discount screen', items);
   console.log(
     'Get discountObj item from discount screen',
     discountObj?.discount,
@@ -283,118 +288,130 @@ const AddOnScreen = ({
     setVisible(true);
   };
 
-  // const getTotalAmt = itemArr => {
-  //   let total = 0;
-  //   let subTotal = 0;
-  //   addonsList.forEach(item => {
-  //     total = total + Number(item?.amount);
-  //     if (item?.dataAddon?.packing_id?.price) {
-  //       total = total + Number(item?.dataAddon?.packing_id?.price);
-  //     }
-  //     if (item?.dataAddon?.addon_id?.price) {
-  //       total = total + Number(item?.dataAddon?.addon_id?.price);
-  //     }
-  //     if (item?.dataAddon?.delivery?.urgent_charge) {
-  //       total = total + Number(item?.dataAddon?.delivery?.urgent_charge);
-  //     }
-  //   });
-  //   if (discountObj?.discount) {
-  //     subTotal = (total * Number(discountObj?.discount)) / 100;
-  //   }
+  const getTotalAmt = itemArr => {
+    let total = 0;
+    let subTotal = 0;
+    addonsList.forEach(item => {
+      total = total + Number(item?.amount);
+      if (item?.dataAddon?.packing_id?.price) {
+        total = total + Number(item?.dataAddon?.packing_id?.price);
+      }
+      if (item?.dataAddon?.addon_id?.price) {
+        total = total + Number(item?.dataAddon?.addon_id?.price);
+      }
+      if (item?.dataAddon?.delivery?.urgent_charge) {
+        total = total + Number(item?.dataAddon?.delivery?.urgent_charge);
+      }
+    });
+    if (discountObj?.discount) {
+      subTotal = (total * Number(discountObj?.discount)) / 100;
+    }
 
-  //   const obj = {
-  //     customer_id: userData?.customer_details?.id,
-  //     total: total,
-  //     payment_response: 'pending',
-  //     payment_mode: 0,
-  //     s_discount: discountObj?.discount,
-  //     delivery_cost: 0,
-  //     sub_total: subTotal,
-  //   };
+    const obj = {
+      customer_id: userData?.id,
+      total: total,
+      payment_response: 'pending',
+      payment_mode: 0,
+      s_discount: discountObj?.discount, //discount
+      delivery_cost: 0,
+      sub_total: subTotal,
+    };
 
-  //   console.log(
-  //     'This is array of items ',
-  //     itemArr,
-  //     'and this is object of this',
-  //     obj,
-  //   );
+    console.log(
+      'This is array of items ',
+      itemArr,
+      'and this is object of this',
+      obj,
+    );
 
-  //   navigation.navigate('PickupSchedule', {
-  //     ...obj,
-  //     items: itemArr,
-  //     pickupmylaundry:false
-  //   });
-  // };
+    // console.log('in getTotalAmt  itemArr', itemArr);
+    // console.log('in getTotalAmt  obj', obj);
 
-  // const handleConfimOrder = () => {
-  //   const temArr = [];
-  //   let totalQty = 0;
-  //   addonsList.map(item => {
-  //     temArr.push({
-  //       product_id: item?.product_id,
-  //       shipping_price: item?.dataAddon?.delivery?.urgent_charge,
-  //       shipping_name: item?.dataAddon?.delivery?.type,
-  //       color1: item?.dataAddon?.color1?.id,
-  //       color2: item?.dataAddon?.color2?.id,
-  //       packing_id: item?.dataAddon?.packing_id?.id,
-  //       addon_id: item?.dataAddon?.addon_id?.id,
-  //       damage_id: item?.dataAddon?.damage_id?.id,
-  //       stain_id: item?.dataAddon?.stain_id?.id,
-  //       service_id: item?.service_id,
-  //       category_id: item?.category_id,
-  //       iron: item?.dataAddon?.iron?.id,
-  //       qty: '1',
-  //       price: item?.amount,
-  //       product_name: item?.product_name,
-  //       service_name: csIds?.serviceId?.service_name,
-  //       color1_name: item?.dataAddon?.color1?.color_name,
-  //       color2_name: item?.dataAddon?.color2?.color_name,
-  //       packing_name: item?.dataAddon?.packing_id?.packing_style,
-  //       addon_name: item?.dataAddon?.addon_id?.addon_name,
-  //       damage_name: item?.dataAddon?.damage_id?.damage,
-  //       stain_name: item?.dataAddon?.stain_id?.stains,
-  //       iron_price: '0',
-  //       packing_price: item?.dataAddon?.packing_id?.price,
-  //       addon_price: item?.dataAddon?.addon_id?.price,
-  //       barcode: '72614453',
-  //     });
-  //     totalQty += 1;
-  //   });
+    navigation.navigate('PickupSchedule', {
+      ...obj,
+      items: itemArr,
+      pickupmylaundry:false
+    });
+  };
 
-  //   console.log('This is total quantity', totalQty);
+  const handleConfimOrder = () => {
+    const temArr = [];
+    let totalQty = 0;
 
-  //   if (subsDetails == null) {
-  //     Alert.alert(
-  //       'Subscription Alert!',
-  //       'Please purchase a subscription plan to continue order',
-  //     );
-  //   } else {
-  //     if (
-  //       totalQty <=
-  //       Number(
-  //         subsDetails?.existing_subscription_details?.available_no_of_bookings,
-  //       )
-  //     ) {
-  //       getTotalAmt(temArr);
-  //     } else {
-  //       Alert.alert(
-  //         'Subscription Alert!',
-  //         `Your available number of booking is ${subsDetails?.existing_subscription_details?.available_no_of_bookings} less than your order quantity ${totalQty}`,
-  //       );
-  //     }
-  //   }
-  // };
+    addonsList.map(item => {
+      console.log('handleConfimOrder  addonsList item', item);
+      temArr.push({
+        product_id: item?.product_id,
+        shipping_price: item?.dataAddon?.delivery?.urgent_charge,
+        shipping_name: item?.dataAddon?.delivery?.type,
+        color1: item?.dataAddon?.color1.id,
+        // color2: item?.dataAddon?.color2?.id,
+        packing_id: item?.dataAddon?.packing_id?.id,
+        addon_id: item?.dataAddon?.addon_id?.id,
+        damage_id: item?.dataAddon?.damage_id?.id,
+        stain_id: item?.dataAddon?.stain_id?.id,
+        service_id: item?.service_id,
+        category_id: item?.category_id,
+        iron: item?.dataAddon?.iron?.id,
+        qty: '1',
+        price: item?.amount,
+        product_name: item?.product_name,
+        service_name: csIds?.serviceId?.service_name,
+        color1_name: item?.dataAddon?.color1,
+        // color2_name: item?.dataAddon?.color2?.color_name,
+        packing_name: item?.dataAddon?.packing_id?.packing_style,
+        addon_name: item?.dataAddon?.addon_id?.addon_name,
+        damage_name: item?.dataAddon?.damage_id?.damage,
+        stain_name: item?.dataAddon?.stain_id?.stains,
+        iron_price: '0',
+        packing_price: item?.dataAddon?.packing_id?.price,
+        addon_price: item?.dataAddon?.addon_id?.price,
+        barcode: '72614453',
+      });
+      totalQty += 1;
+    });
 
-  // const confirmColor1 = () => {
-  //   for (let i = 0; i < addonsList.length; i++) {
-  //     const object = addonsList[i];
-  //     if (object?.dataAddon?.color1?.color_name == undefined) {
-  //       alert('Please select color its a mandatory filed for all items!');
-  //       return;
-  //     }
-  //   }
-  //   handleConfimOrder();
-  // };
+    console.log('handleConfimOrder  temArr', temArr);
+    console.log('handleConfimOrder total quantity', totalQty);
+
+    if (subsDetails == null) {
+      Alert.alert(
+        'Subscription Alert!',
+        'Please purchase a subscription plan to continue order',
+      );
+      console.log('Please purchase a subscription');
+    } else {
+      if (
+        totalQty <=
+        Number(
+          subsDetails?.existing_subscription_details?.available_no_of_bookings,
+        )
+      ) {
+        getTotalAmt(temArr);
+        console.log('getTotalAmt function call');
+      } else {
+        Alert.alert(
+          'Subscription Alert!',
+          `Your available number of booking is ${subsDetails?.existing_subscription_details?.available_no_of_bookings} less than your order quantity ${totalQty}`,
+        );
+        console.log('Subscription Alert! booking');
+      }
+    }
+  };
+
+  const confirmColor1 = () => {
+    for (let i = 0; i < addonsList.length; i++) {
+      const object = addonsList[i];
+      console.log('color1 defined or not  for loop addonList', addonsList);
+      console.log('color1 defined or not  for loop addonList object', object);
+      if (object?.dataAddon?.color1 == ' ') {
+        console.log('color1 defined or not', object?.dataAddon?.color1);
+        Alert.alert('Please select color its a mandatory filed for all items!');
+        return;
+      }
+    }
+    handleConfimOrder();
+  };
 
   //ColorSlider
   const [color, setColor] = useState({r: 255, g: 0, b: 0}); // Initial color is red
@@ -616,7 +633,7 @@ const AddOnScreen = ({
                             marginVertical: SIZES.height * 0.015,
                             alignItems: 'center',
                           }}
-                          price={item.price}
+                          // price={item.price}
                           value={postData.packing_id == item ? true : false}
                           onValueChange={() => {
                             handleChange('packing_id', item),
@@ -747,10 +764,11 @@ const AddOnScreen = ({
                 alignItems: 'center',
               },
             ]}
-            onPress={() => navigation.navigate('Coupon',{
-              items,
-            })}
-          >
+            onPress={() =>
+              navigation.navigate('Coupon', {
+                items,
+              })
+            }>
             <Text
               style={[
                 styles.btn_text,
@@ -871,30 +889,31 @@ const AddOnScreen = ({
                   // marginBottom: SIZES.width * 0.01,
                   width: SIZES.width * 0.38,
                 }}
-                // onPress={() => {
-                //   navigation.navigate('PickupSchedule', {
-                //     ...itemsData,
-                //     pickupmylaundry:false
-                //   });
-                //   // handleConfimOrder();
-                //   // confirmColor1();
-                // }}
                 onPress={() => {
-                  if (visible === false) {
-                    setIsModalVisible(!isModalVisible);
-                  } else if (visible === true) {
-                    navigation.navigate('PickupSchedule', {
-                      item: JSON.stringify(addonsList),
-                      allprice: {
-                        total: totalAmount,
-                        sub_total:
-                          (totalAmount * Number(discountObj?.discount)) / 100,
-                        discount: discountObj?.discount,
-                        qty:shwitem.length
-                      },
-                    });
-                  }
-                }}>
+                  // navigation.navigate('PickupSchedule', {
+                  //   ...itemsData,
+                  //   pickupmylaundry:false
+                  // });
+                  // handleConfimOrder();
+                  confirmColor1();
+                }}
+                // onPress={() => {
+                //   if (visible === false) {
+                //     setIsModalVisible(!isModalVisible);
+                //   } else if (visible === true) {
+                //     navigation.navigate('PickupSchedule', {
+                //       item: JSON.stringify(addonsList),
+                //       allprice: {
+                //         total: totalAmount,
+                //         sub_total:
+                //           (totalAmount * Number(discountObj?.discount)) / 100,
+                //         discount: discountObj?.discount,
+                //         qty:shwitem.length
+                //       },
+                //     });
+                //   }
+                // }}
+              >
                 Continue Order
               </Button1>
             </View>
@@ -918,7 +937,7 @@ const AddOnScreen = ({
 
 const mapStateToProps = state => ({
   loading: state.product.loading,
-  // userData: state.auth.userData,
+  userData: state.auth.userData,
   // productData: state.product.productData,
   // categoryList: state.home.categoryList,
   // serviceList: state.home.serviceList,
@@ -928,7 +947,7 @@ const mapStateToProps = state => ({
   // addonList: state.product.addonList,
   // stainsList: state.product.stainsList,
   // deliveryTypeList: state.product.deliveryTypeList,
-  // subsDetails: state.subscription.subsDetails,
+  subsDetails: state.subscription.subsDetails,
 });
 
 export default connect(mapStateToProps)(AddOnScreen);
@@ -960,12 +979,12 @@ const addonList = [
 ];
 
 const packingList = [
-  {id: 1, packing_style: 'Special Packing (₹ 100)'},
-  {id: 2, packing_style: 'Normal Packing (₹ 30)'},
-  {id: 3, packing_style: 'Hanger Packing (₹ 80)'},
-  {id: 4, packing_style: 'Handled Bag... (₹ 70)'},
-  {id: 5, packing_style: 'Plastic Bag P... (₹ 50)'},
-  {id: 6, packing_style: 'Paper Bag Pac.. (₹ 50)'},
+  {id: 1, packing_style: 'Special Packing (₹ 100)', price: 100},
+  {id: 2, packing_style: 'Normal Packing (₹ 30)', price: 30},
+  {id: 3, packing_style: 'Hanger Packing (₹ 80)', price: 80},
+  {id: 4, packing_style: 'Handled Bag... (₹ 70)', price: 70},
+  {id: 5, packing_style: 'Plastic Bag P... (₹ 50)', price: 50},
+  {id: 6, packing_style: 'Paper Bag Pac.. (₹ 55)', price: 55},
 ];
 
 // const addonsList = [
