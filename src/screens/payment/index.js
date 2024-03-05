@@ -25,16 +25,31 @@ import { RNToasty } from 'react-native-toasty';
 const Payment = ({
   navigation,
   loading,
+  subsDetails,
   // CreateOrder,
   // GetPaymentMethods,
   // UpdateTransactionApi,
   // // paymentMethods,
-  // route,
+  route,
 }) => {
   // let postData = {
   //   // ...route.params?.data,
   //   // payment_mode: 0,
   // };
+  //console.log('subsDetails', subsDetails);
+  const { data , address } = route?.params;
+  //console.log('PaymentScreen data from -------->>', data);
+  //console.log('PaymentScreen address from -------->>', address);
+  const availableitems = data;
+  
+  // availableitems.items = availableitems.items.map(item => {
+  //   // If iron is 1, set iron to "Yes"; otherwise, set iron to "No"    
+  //   item.iron = item.iron === 1 ? "Yes" : "No";
+  //   return item;
+  // });
+  
+  //console.log("nnnnnnnnnnnnnnnnnnnnnn",availableitems);
+  //console.log("//////////////////////////////",...availableitems.items);
 
   const [paymentMethods, setPaymentMethods] = useState();
   const [isTokenSet, setIsTokenSet] = useState(false);
@@ -53,8 +68,8 @@ const Payment = ({
 
     getToken();
   }, [isTokenSet]);
-  console.log('Payment userId-------->>', userId);
-
+  //console.log('Payment userId-------->>', userId);
+  //console.log('Payment ...availableitems.items', ...availableitems.items);
   const ordercash = () => {
 
     let data = JSON.stringify({
@@ -64,17 +79,17 @@ const Payment = ({
       "pay_status": "Unpaid",
       "bag_id": "16",
       "weight": "2.5",
-      "address_id": 456,
-      "pickup_date": "2023-12-15 10:00:00",
-      "delivery_date": "2023-12-16 14:00:00",
+      "address_id": address.data.address_data.id,
+      "pickup_date": `${availableitems.pickup_date, availableitems.pickup_time}`, 
+      "delivery_date": `${availableitems.delivery_date, availableitems.delivery_time}`,
       "note": "Special instructions",
       "images": [
         "image_url_1",
         "image_url_2"
       ],
-      "total": 50,
+      "total": availableitems.total,
       "discount": 5,
-      "sub_total": 45,
+      "sub_total": availableitems.sub_total,
       "tax_value": 2.25,
       "tax_percent": 5,
       "delivery_cost": 8,
@@ -83,22 +98,9 @@ const Payment = ({
       "payment_mode": 1,
       "order_id": '#' + Math.floor(Math.random() * 100000),
       "status": 1,
-      "items": [
-        {
-          "product_id": 101,
-          "quantity": 2,
-          "price": 20,
-          "iron": "Yes"
-        },
-        {
-          "product_id": 102,
-          "quantity": 1,
-          "price": 15,
-          "iron": "Yes"
-        }
-      ],
-      "s_discount": 2,
-      "cus_sub_id": 789
+      "items": availableitems.items,
+      "s_discount": availableitems.s_discount,
+      "cus_sub_id": subsDetails.existing_subscription_id
     });
 
     let config = {
@@ -114,7 +116,7 @@ const Payment = ({
 
     axios.request(config)
       .then((response) => {
-        console.log("Here create order", JSON.stringify(response.data));
+        //console.log("Here create order", JSON.stringify(response.data));
         setTimeout(() => {
           navigation.navigate('Home');
         }, 500);
@@ -124,7 +126,7 @@ const Payment = ({
         });
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
 
   }
@@ -140,17 +142,17 @@ const Payment = ({
       "payment_id": pid,
       "bag_id": "16",
       "weight": "2.5",
-      "address_id": 456,
-      "pickup_date": "2023-12-15 10:00:00",
-      "delivery_date": "2023-12-16 14:00:00",
+      "address_id": address.data.address_data.id,
+      "pickup_date": `${availableitems.pickup_date, availableitems.pickup_time}`,
+      "delivery_date":  `${availableitems.delivery_date, availableitems.delivery_time}`,
       "note": "Special instructions",
       "images": [
         "image_url_1",
         "image_url_2"
       ],
-      "total": 50,
+      "total": availableitems.total,
       "discount": 5,
-      "sub_total": 4500,
+      "sub_total": availableitems.sub_total,
       "tax_value": 2.25,
       "tax_percent": 5,
       "delivery_cost": 8,
@@ -159,22 +161,9 @@ const Payment = ({
       "payment_mode": 2,
       "order_id": '#' + Math.floor(Math.random() * 100000),
       "status": 1,
-      "items": [
-        {
-          "product_id": 101,
-          "quantity": 2,
-          "price": 20,
-          "iron": "Yes"
-        },
-        {
-          "product_id": 102,
-          "quantity": 1,
-          "price": 15,
-          "iron": "Yes"
-        }
-      ],
-      "s_discount": 2,
-      "cus_sub_id": 789
+      "items": availableitems.items,
+      "s_discount":  availableitems.s_discount,
+      "cus_sub_id": subsDetails.existing_subscription_id
     });
 
     let config = {
@@ -190,10 +179,10 @@ const Payment = ({
 
     axios.request(config)
       .then((response) => {
-        console.log("Here create order", JSON.stringify(response.data));
+        //console.log("Here create order", JSON.stringify(response.data));
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
 
   }
@@ -218,11 +207,11 @@ const Payment = ({
     axios
       .request(config)
       .then(response => {
-        console.log(JSON.stringify(response.data));
+        //console.log(JSON.stringify(response.data));
         setPaymentMethods(response.data.data);
       })
       .catch(error => {
-        console.log(error);
+        //console.log(error);
       });
   }, []);
 
@@ -256,7 +245,7 @@ const Payment = ({
         image: 'https://i.imgur.com/3g7nmJC.png',
         currency: 'INR',
         key: 'rzp_test_pnG5OaLilqPgMb', // Your api key
-        amount: '100' * 4500,
+        amount: '100' * availableitems.sub_total,
         name: 'EzyCleaneCustomer',
         prefill: {
           email: 'void@razorpay.com',
@@ -273,7 +262,7 @@ const Payment = ({
             // Alert.alert(`Success: ${data.razorpay_payment_id}`);
             // setPaymentid(data.razorpay_payment_id);
           }
-          // //console.log('data', data);
+          // ////console.log('data', data);
           if (data.status_code === 200) {
             setTimeout(() => {
               navigation.navigate('Home');
@@ -286,7 +275,7 @@ const Payment = ({
         })
         .catch(error => {
           // handle failure
-          //console.log('data_error', error);
+          ////console.log('data_error', error);
           // Alert.alert(
           //   `Error: ${error.code} | ${error.description}`,
           // );
@@ -323,11 +312,11 @@ const Payment = ({
       //       //   .then(data => {
       //       //     UpdateTransactionApi(data.razorpay_payment_id, navigation, id);
       //       //     // navigation.navigate("PaymentSuccess")
-      //       //     console.log('transaction id : ', data.razorpay_payment_id);
+      //       //     //console.log('transaction id : ', data.razorpay_payment_id);
       //       //   })
       //       //   .catch(error => {
       //       //     navigation.navigate('PaymentFailed');
-      //       //     console.log(`Error: ${error.code} | ${error.description}`);
+      //       //     //console.log(`Error: ${error.code} | ${error.description}`);
       //       //     // alert(`Error: ${error.code} | ${error.description}`);
       //       //   });
       //     }
@@ -400,7 +389,7 @@ const Payment = ({
                     validColor={"black"}
                     invalidColor={"red"}
                     placeholderColor={"darkgray"}
-                    onChange={(text) => console.log("onchange : ", text)}
+                    onChange={(text) => //console.log("onchange : ", text)}
 
                 /> */}
         </View>
@@ -412,6 +401,7 @@ const Payment = ({
 const mapStateToProps = state => ({
   loading: state.order.loading,
   paymentMethods: state.order.paymentMethods,
+  subsDetails: state.subscription.subsDetails,
 });
 
 const mapDispatchToProps = {

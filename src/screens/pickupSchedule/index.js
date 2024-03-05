@@ -16,14 +16,14 @@ import {COLORS, SIZES} from '../../constants';
 import {connect} from 'react-redux';
 import {GetTime} from '../../redux/actions/productAction';
 import Loading from '../../component/loading';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import axios from 'axios';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import Svg, {Circle, Line, Text as SvgText} from 'react-native-svg';
 import CalendarPicker from 'react-native-calendar-picker';
 
 const PickupSchedule = ({
   navigation,
-  GetTime,
+  // GetTime,
   route,
   // timeList,
   loading,
@@ -67,35 +67,35 @@ const PickupSchedule = ({
   //     });
   // }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = await AsyncStorage.getItem('@USER_TOKEN');
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const token = await AsyncStorage.getItem('@USER_TOKEN');
 
-      try {
-        const response = await axios.get(
-          'http://ezyclean.theprojecttest.xyz/api/get_time',
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-            params: {
-              date: '2023-12-27',
-            },
-          },
-        );
+  //     try {
+  //       const response = await axios.get(
+  //         'http://ezyclean.theprojecttest.xyz/api/get_time',
+  //         {
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //           params: {
+  //             date: '2023-12-27',
+  //           },
+  //         },
+  //       );
 
-        console.log('Response========:', response.data.result);
-        setTimeList(response.data.result);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
+  //       console.log('Response========:', response.data.result);
+  //       setTimeList(response.data.result);
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
-  const [timeList, setTimeList] = useState({});
+  // const [timeList, setTimeList] = useState({});
 
   const [postData, setPostData] = useState({
     ...route.params,
@@ -105,8 +105,8 @@ const PickupSchedule = ({
 
   console.log('databyparams', postData);
 
-  const pickupmylaundry = route.params?.pickupmylaundry;
-  console.log('pickupmylaundry', pickupmylaundry);
+  // const pickupmylaundry = route.params?.pickupmylaundry;
+  // console.log('pickupmylaundry', pickupmylaundry);
 
   const handleChange = (name, value) => {
     setPostData({
@@ -193,14 +193,14 @@ const PickupSchedule = ({
     if (postData.pickup_date && postData.pickup_time) {
       navigation.navigate('DeliverySchedule', {
         data: postData,
-        pickupmylaundry: pickupmylaundry,
+        // pickupmylaundry: pickupmylaundry,
       });
     } else {
       Alert.alert('Please select valid pickup date and time.');
     }
   };
 
-  console.log('timeList ; ', timeList);
+  // console.log('timeList ; ', timeList);
   // console.log('pickup postData ; ', postData);
 
   // Get the current date to show on the top right
@@ -277,17 +277,16 @@ const PickupSchedule = ({
     console.log('time', nowIST);
     // Get the current hour in IST
     var currentHourIST = parseInt(nowIST.split(',')[1].split(':')[0]);
-  
+
     console.log('Current hour in IST: ' + currentHourIST);
-  
+
     // var currentHour = now.getHours();
     var currentHour = hours;
     console.log('Hours', currentHour);
-  
+
     if (currentHourIST < 12) {
       console.log(currentHour + ':00 AM');
       handleChange('pickup_time', currentHour + ':00 AM');
-
     } else {
       console.log('It is currently ' + currentHour + ':00 PM');
       handleChange('pickup_time', currentHour + ':00 PM');
@@ -324,10 +323,9 @@ const PickupSchedule = ({
   // }
   //========================================================================================================
 
-
   //Calender------------------------------------------------------------------------------------------------
   // const [selectedStartDate, setSelectedStartDate] = useState(null);
-  const onDateChange = (val) => {
+  const onDateChange = val => {
     // console.log('date...........................',date);
     var newdate = val;
     const date = new Date(newdate);
@@ -336,7 +334,7 @@ const PickupSchedule = ({
     const year = date.getUTCFullYear();
 
     const formattedDate1 = `${day}-${month < 10 ? '0' : ''}${month}-${year}`;
-    console.log('pickuppageDate------------- ; ',formattedDate1);
+    console.log('pickuppageDate------------- ; ', formattedDate1);
 
     // setActiveDate(formattedDate1), handleChange('pickup_date', formattedDate1);
     handleChange('pickup_date', formattedDate1);
@@ -344,7 +342,7 @@ const PickupSchedule = ({
 
     // console.log('pickuppageDate------------- ; ', valuedate);
     setSelectedStartDate(formattedDate1);
-  }
+  };
 
   const [selectedStartDate, setSelectedStartDate] = useState(null);
 

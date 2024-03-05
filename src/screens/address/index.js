@@ -44,10 +44,10 @@ const Address = ({
   const [isTokenSet, setIsTokenSet] = useState(false);
   const [token, setToken] = useState();
   const [userId, setUserId] = useState();
-
+  const productdataall = route?.params?.data;
   // console.log('ContactUs token-------->>', token);
   // console.log('addrss userId-------->>', userId);
-
+  console.log('addrss from productdataall-------->>', productdataall);
   useEffect(() => {
     const getToken = async () => {
       if (!isTokenSet) {
@@ -133,8 +133,8 @@ const Address = ({
             title: response.data.message,
             duration: 2,
           });
-          navigation.navigate('Payment');
           console.log('adddressdatapost', JSON.stringify(response.data));
+          navigation.navigate('Payment',{data: productdataall,address:response.data});
         })
         .catch(error => {
           console.log(error);
@@ -428,12 +428,12 @@ const Address = ({
 
 const mapStateToProps = state => ({
   loading: state.address.loading,
-  address: state.address.address,
+  // address: state.address.address,
 });
 
 const mapDispatchToProps = {
-  GetAllAddressApi,
-  DeleteAddressApi,
+  // GetAllAddressApi,
+  // DeleteAddressApi,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Address);

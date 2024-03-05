@@ -10,11 +10,11 @@ import {
 import React from 'react';
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
-import Button1 from '../../component/button/Button1';
+import Button1 from '../../component/button/Button1'; 
 import {useState} from 'react';
 import {COLORS, SIZES} from '../../constants';
 import {connect} from 'react-redux';
-import {GetTime} from '../../redux/actions/productAction';
+// import {GetTime} from '../../redux/actions/productAction';
 import Loading from '../../component/loading';
 import {useEffect} from 'react';
 import axios from 'axios';
@@ -22,35 +22,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Svg, {Circle, Line, Text as SvgText} from 'react-native-svg';
 import CalendarPicker from 'react-native-calendar-picker';
 const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = await AsyncStorage.getItem('@USER_TOKEN');
 
-      try {
-        const response = await axios.get(
-          'http://ezyclean.theprojecttest.xyz/api/get_time',
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-            params: {
-              date: '2023-12-27',
-            },
-          },
-        );
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const token = await AsyncStorage.getItem('@USER_TOKEN');
 
-        console.log('Response========:', response.data.result);
-        setTimeList(response.data.result);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
+  //     try {
+  //       const response = await axios.get(
+  //         'http://ezyclean.theprojecttest.xyz/api/get_time',
+  //         {
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //           params: {
+  //             date: '2023-12-27',
+  //           },
+  //         },
+  //       );
 
-    fetchData();
-  }, []);
+  //       console.log('Response========:', response.data.result);
+  //       setTimeList(response.data.result);
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //     }
+  //   };
 
-  const [timeList, setTimeList] = useState({});
+  //   fetchData();
+  // }, []);
+
+  // const [timeList, setTimeList] = useState({});
 
   const [postData, setPostData] = useState({
     ...route.params?.data,
@@ -58,8 +59,8 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
     delivery_time: null,
   });
 
-  const valuestatus = route.params?.pickupmylaundry;
-  console.log('valuestatus--------->>>>>>>', valuestatus);
+  // const valuestatus = route.params?.pickupmylaundry;
+  // console.log('valuestatus--------->>>>>>>', valuestatus);
 
   const handleChange = (name, value) => {
     setPostData({
@@ -67,6 +68,9 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
       [name]: value,
     });
   };
+
+
+  
 
   // let tommorrow_date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
@@ -139,34 +143,18 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
   // }, [timeList]);
 
   const handleNext = () => {
-    navigation.navigate('Address');
-    // if (postData.delivery_date && postData.delivery_time) {
-    //   navigation.navigate('Address', {data: postData,valuestatus:valuestatus});
-    // } else {
-    //   alert('Please select valid delivery date and time.');
-    // }
+    // navigation.navigate('Address');
+    if (postData.delivery_date && postData.delivery_time) {
+      navigation.navigate('Address', {data: postData});
+      // console.log('delivery postdata-----------/-------------', postData);
+ 
+    } else {
+      alert('Please select valid delivery date and time.');
+    }
   };
   // console.log('delivery postdata ; ', postData);
 
-  // const onDateChange = val => {
-  //   // console.log('date...........................',date);
-  //   var newdate = val;
-  //   const date = new Date(newdate);
-  //   const day = date.getUTCDate();
-  //   const month = date.getUTCMonth() + 1; // Months are 0-indexed, so we add 1
-  //   const year = date.getUTCFullYear();
 
-  //   const formattedDate1 = `${day}-${month < 10 ? '0' : ''}${month}-${year}`;
-  //   console.log('pickuppageDate------------- ; ', formattedDate1);
-
-  //   setActiveDate(formattedDate1),
-  //     handleChange('delivery_date', formattedDate1);
-
-  //   // const valuedate = `"${formattedDate1}"`;
-
-  //   // console.log('pickuppageDate------------- ; ', valuedate);
-  //   // setSelectedStartDate(date);
-  // };
 
   //time by Clock
 
@@ -183,9 +171,36 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
     setMinuteRotation(minuteAngle);
   }, [hours, minutes]);
 
+  // const handleHourChange = () => {
+  //   const newHour = (hours + 1) % 12 || 12;
+  //   setHours(newHour);
+  // };
+
   const handleHourChange = () => {
     const newHour = (hours + 1) % 12 || 12;
     setHours(newHour);
+
+    var nowIST = new Date().toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata',
+      hour12: false,
+    });
+    console.log('time', nowIST);
+    // Get the current hour in IST
+    var currentHourIST = parseInt(nowIST.split(',')[1].split(':')[0]);
+
+    console.log('Current hour in IST: ' + currentHourIST);
+
+    // var currentHour = now.getHours();
+    var currentHour = hours;
+    console.log('Hours', currentHour);
+
+    if (currentHourIST < 12) {
+      console.log(currentHour + ':00 AM');
+      handleChange('delivery_time', currentHour + ':00 AM');
+    } else {
+      console.log('It is currently ' + currentHour + ':00 PM');
+      handleChange('delivery_time', currentHour + ':00 PM');
+    }
   };
 
   const handleMinuteChange = () => {
@@ -193,12 +208,40 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
     setMinutes(newMinute);
   };
 
-  // Calander
+
+  const onDateChange = val => {
+    // console.log('date...........................',date);
+    var newdate = val;
+    const date = new Date(newdate);
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1; // Months are 0-indexed, so we add 1
+    const year = date.getUTCFullYear();
+
+    const formattedDate1 = `${day}-${month < 10 ? '0' : ''}${month}-${year}`;
+    console.log('delivery_date------------- ; ', formattedDate1);
+
+    // setActiveDate(formattedDate1), handleChange('pickup_date', formattedDate1);
+    handleChange('delivery_date', formattedDate1);
+    // const valuedate = `"${formattedDate1}"`;
+
+    // console.log('pickuppageDate------------- ; ', valuedate);
+    setSelectedStartDate(formattedDate1);
+  };
+
   const [selectedStartDate, setSelectedStartDate] = useState(null);
 
-  const onDateChange = date => {
-    setSelectedStartDate(date);
-  };
+  // const onDateChange = date => {
+  //   setSelectedStartDate(date);
+  // };
+
+  // const startDate = selectedStartDate ? selectedStartDate.toString() : '';
+  console.log('startDate Calender', selectedStartDate);
+
+  // Calander
+
+  // const onDateChange = date => {
+  //   setSelectedStartDate(date);
+  // };
 
   const startDate = selectedStartDate ? selectedStartDate.toString() : '';
   console.log('startDate Calender', startDate);
@@ -430,17 +473,17 @@ const DeliverySchedule = ({navigation, GetTime, route, loading}) => {
   );
 };
 
-// const mapStateToProps = state => ({
-//   loading: state.product.loading,
-//   timeList: state.product.timeList,
-// });
+const mapStateToProps = state => ({
+  loading: state.product.loading,
+  // timeList: state.product.timeList,
+});
 
-// const mapDispatchToProps = {
-//   GetTime,
-// };
+const mapDispatchToProps = {
+  // GetTime,
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(DeliverySchedule);
-export default DeliverySchedule;
+export default connect(mapStateToProps, mapDispatchToProps)(DeliverySchedule);
+// export default DeliverySchedule;
 
 // const timeList = [
 //   "09:00 AM",

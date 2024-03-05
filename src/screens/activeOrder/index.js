@@ -101,11 +101,11 @@ const MyOrders = ({ navigation, loading, categoryList }) => {
                       </View>
                       <View style={styles.order_row}>
                         <Text style={styles.order_title}>Product Name</Text>
-                        <Text style={styles.order_text}>{item.label_name}</Text>
+                        <Text style={{}}>{item.label_name}</Text>
                       </View>
                       <View style={styles.order_row}>
                         <Text style={styles.order_title}>Quantity</Text>
-                        <Text style={styles.order_text}>09 Items</Text>
+                        <Text style={styles.order_text}>{item ? item.items.length : "2"}</Text>
                       </View>
                       <View style={styles.order_row}>
                         <Text style={styles.order_title}>Pickup Date</Text>
@@ -152,8 +152,7 @@ const MyOrders = ({ navigation, loading, categoryList }) => {
                             color: COLORS.secondary,
                             marginTop: SIZES.height * 0.01,
                           }}>
-                          Yashwant Kunj Lbs Marg Hariniwa Main Road, Nagpur 512505 ,
-                          M.H.
+                          {item.address}
                         </Text>
                       </View>
                       <View
