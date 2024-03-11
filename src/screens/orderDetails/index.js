@@ -100,8 +100,6 @@ const OrderDetails = ({
 
   console.log('This is objjjjjj-->>>>', singleOrder);
 
-
-
   const [active, setActive] = useState(1);
 
   // useEffect(() => {
@@ -112,7 +110,6 @@ const OrderDetails = ({
     <View style={styles.container}>
       {singleOrder && (
         <ScrollView showsVerticalScrollIndicator={false}>
-
           <LinearGradient
             colors={['#F5E6FF', '#F3E1FF']}
             style={[styles.box, {marginTop: SIZES.height * 0.025}]} // Your styles for the LinearGradient

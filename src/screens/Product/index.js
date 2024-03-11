@@ -550,16 +550,16 @@ const Product = ({
                   }
                   keyExtractor={(item, index) => item + index}
                   showsVerticalScrollIndicator={false}
-                  // refreshControl={
-                  //   <RefreshControl
-                  //     refreshing={refreshing}
-                  //     onRefresh={onRefresh}
-                  //     // You can customize the loading indicator style
-                  //     // tintColor="yourColor"
-                  //     // title="Pull to refresh..."
-                  //     // titleColor="yourColor"
-                  //   />
-                  // }
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                      // You can customize the loading indicator style
+                      tintColor="yourColor"
+                      title="Pull to refresh..."
+                      // titleColor="yourColor"
+                    />
+                  }
                 />
               )}
               {/* // : (
@@ -572,7 +572,7 @@ const Product = ({
         )}
 
         {/* <Text style={{alignSelf:'center', fontSize:20}}>In Progress</Text> */}
-        <View style={{}}>
+        <View>
           {filteredProducts && (
             <View style={styles.bottom_container}>
               <LinearGradient

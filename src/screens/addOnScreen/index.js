@@ -304,7 +304,7 @@ const AddOnScreen = ({
       }
     });
     if (discountObj?.discount) {
-      subTotal = (total * Number(discountObj?.discount)) / 100;
+      subTotal = total- (total * Number(discountObj?.discount)) / 100;
     }
 
     const obj = {
@@ -327,9 +327,9 @@ const AddOnScreen = ({
     // console.log('in getTotalAmt  itemArr', itemArr);
     // console.log('in getTotalAmt  obj', obj);
 
-    navigation.navigate('PickupSchedule', {
+    navigation.navigate('CheckOut', {
       ...obj,
-      items: itemArr,
+      data: itemArr,          // items: itemArr,
       pickupmylaundry:false
     });
   };

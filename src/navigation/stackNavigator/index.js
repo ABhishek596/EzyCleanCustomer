@@ -45,7 +45,8 @@ import Address from '../../screens/address';
 import PaymentOnline from '../../screens/paymentonline';
 import PaymentByCard from '../../screens/paymentbycard';
 import Invoice from '../../screens/invoice';
-
+import History from '../../screens/history';
+import CheckOut from '../../screens/checkout';
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -330,7 +331,33 @@ const StackNavigator = () => {
           ),
         })}
       />
-         <Stack.Screen
+      <Stack.Screen
+        name="History"
+        component={History}
+        options={({navigation}) => ({
+          header: () => (
+            <HeaderLeft
+              navigation={navigation}
+              title={'History'}
+              showNotificationButton={true}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="CheckOut"
+        component={CheckOut}
+        options={({navigation}) => ({
+          header: () => (
+            <HeaderLeft
+              navigation={navigation}
+              title={'CheckOut'}
+              showNotificationButton={true}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
         name="subscription"
         component={subscription}
         options={({navigation}) => ({

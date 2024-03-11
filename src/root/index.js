@@ -57,7 +57,7 @@ const Root = ({token, InitialCall}) => {
   }, []);
 
   console.log('root token : ', token);
-  console.log('root loading : ', rootLoading);
+  // console.log('root loading : ', rootLoading);
   // token = null
 
   return (

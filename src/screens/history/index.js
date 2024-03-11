@@ -19,7 +19,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
-const MyOrders = ({navigation, loading, categoryList}) => {
+const History = ({navigation, loading, categoryList}) => {
   // console.log("category data : ", categoryList)
   // const order = [1, 2, 3, 4]
   const [paymentMethods, setPaymentMethods] = useState();
@@ -54,9 +54,9 @@ const MyOrders = ({navigation, loading, categoryList}) => {
       };
 
       const response = await axios.request(config);
-      // console.log('Active order data', JSON.stringify(response.data));
-      let pending = response.data.result.filter(item => item.status !== 7);
-      setActive(pending);
+      console.log('Active order data', JSON.stringify(response.data));
+      let history = response.data.result.filter(item => item.status === 7);
+      setActive(history);
     } catch (error) {
       console.log(error);
     }
@@ -77,11 +77,7 @@ const MyOrders = ({navigation, loading, categoryList}) => {
           />
           <View style={globalStyles.center}>
             {/* category container */}
-            <Text
-              style={styles.header_txt}
-              onPress={() => navigation.navigate('History')}>
-              view order history
-            </Text>
+        
             <View>
               {active && active.length > 0 ? (
                 <FlatList
@@ -99,7 +95,7 @@ const MyOrders = ({navigation, loading, categoryList}) => {
                         <TouchableOpacity
                           activeOpacity={0.5}
                           style={styles.cancel_btn}>
-                          <Text style={styles.cancel}>{item.status === 1 ? "Assigned" : "Processing"}</Text>
+                          <Text style={styles.cancel}>Completed</Text>
                         </TouchableOpacity>
                       </View>
                       <View style={styles.order_row}>
@@ -253,7 +249,7 @@ const MyOrders = ({navigation, loading, categoryList}) => {
 // }
 
 // export default connect(mapStateToProps, mapDispatchToProps)(MyOrders)
-export default MyOrders;
+export default History;
 
 // const products1 = [
 //   {

@@ -98,7 +98,7 @@ const Payment = ({
       "payment_mode": 1,
       "order_id": '#' + Math.floor(Math.random() * 100000),
       "status": 1,
-      "items": availableitems.items,
+      "items": availableitems.data,  //items
       "s_discount": availableitems.s_discount,
       "cus_sub_id": subsDetails.existing_subscription_id
     });
@@ -116,7 +116,7 @@ const Payment = ({
 
     axios.request(config)
       .then((response) => {
-        //console.log("Here create order", JSON.stringify(response.data));
+        console.log("Here create order", JSON.stringify(response.data));
         setTimeout(() => {
           navigation.navigate('Home');
         }, 500);
@@ -126,7 +126,7 @@ const Payment = ({
         });
       })
       .catch((error) => {
-        //console.log(error);
+        console.log("not order",error);
       });
 
   }
@@ -161,7 +161,7 @@ const Payment = ({
       "payment_mode": 2,
       "order_id": '#' + Math.floor(Math.random() * 100000),
       "status": 1,
-      "items": availableitems.items,
+      "items": availableitems.data,
       "s_discount":  availableitems.s_discount,
       "cus_sub_id": subsDetails.existing_subscription_id
     });
