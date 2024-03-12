@@ -169,27 +169,27 @@ const AddOnScreen = ({
     transformArray();
   }, [items]);
 
-  useEffect(() => {
-    let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: 'http://ezyclean.theprojecttest.xyz/api/addons',
-      headers: {
-        Authorization:
-          'Bearer 148|ioaeHFkU68imPMGx1SGi8VQs0vD4BDHCOdcT0oNv44264102',
-      },
-    };
+  // useEffect(() => {
+  //   let config = {
+  //     method: 'get',
+  //     maxBodyLength: Infinity,
+  //     url: 'http://ezyclean.theprojecttest.xyz/api/addons',
+  //     headers: {
+  //       Authorization:
+  //         'Bearer 148|ioaeHFkU68imPMGx1SGi8VQs0vD4BDHCOdcT0oNv44264102',
+  //     },
+  //   };
 
-    axios
-      .request(config)
-      .then(response => {
-        // console.log('Adddddddddddd', JSON.stringify(response.data));
-        // setAddonList(response.data.addons)
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+  //   axios
+  //     .request(config)
+  //     .then(response => {
+  //       // console.log('Adddddddddddd', JSON.stringify(response.data));
+  //       // setAddonList(response.data.addons)
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   const featureType = [
     {id: 1, type: 'Color'},
@@ -305,6 +305,8 @@ const AddOnScreen = ({
     });
     if (discountObj?.discount) {
       subTotal = total- (total * Number(discountObj?.discount)) / 100;
+    }else if (!discountObj?.discount){
+      subTotal = total
     }
 
     const obj = {
@@ -470,7 +472,7 @@ const AddOnScreen = ({
                   setIsModalVisible(!isModalVisible);
                 }}
                 serName={item.service_name}
-                catName={item.category_name}
+                // catName={item.category_name}
                 // onAddonPress={()=>{toggleModal(true)}}
                 // onAddonPress={() => {
                 //   setIsModalVisible(!isModalVisible);
@@ -914,7 +916,7 @@ const AddOnScreen = ({
                 //   }
                 // }}
               >
-                Continue Order
+                Checkout
               </Button1>
             </View>
           </View>

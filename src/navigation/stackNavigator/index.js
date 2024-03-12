@@ -22,14 +22,15 @@ import PrivacyPolicy from '../../screens/privacyPolicy';
 // import services from '../../screens/services';
 import Product from '../../screens/Product';
 // import editAddress from '../../screens/editAddress';
-// import AddNewAddress from '../../screens/addNewAddress';
+import editAddress from '../../screens/editAddress';
+import AddNewAddress from '../../screens/addNewAddress';
 // import address from '../../screens/address';
 // import schedule from '../../screens/schedule';
 import PickupSchedule from '../../screens/pickupSchedule';
 import DeliverySchedule from '../../screens/deliverySchedule';
 import OrderDetails from '../../screens/orderDetails';
 import discount from '../../screens/discount';
-// import addCurrentAddress from '../../screens/addCurrentAddress';
+import AddCurrentAddress from '../../screens/addCurrentAddress';
 // import Subscription from '../../screens/subscription';
 // import SubscriptionDetails from '../../screens/subscriptionDetails';
 import subscription from '../../screens/subscription';
@@ -365,6 +366,45 @@ const StackNavigator = () => {
             <HeaderLeft
               navigation={navigation}
               title={'Subscription'}
+              showNotificationButton={true}
+            />
+          ),
+        })}
+      />
+       <Stack.Screen
+        name="AddNewAddress"
+        component={AddNewAddress}
+        options={({navigation}) => ({
+          header: () => (
+            <HeaderLeft
+              navigation={navigation}
+              title={'AddNewAddress'}
+              showNotificationButton={true}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="AddCurrentAddress"
+        component={AddCurrentAddress}
+        options={({navigation}) => ({
+          header: () => (
+            <HeaderLeft
+              navigation={navigation}
+              title={'AddCurrentAddress'}
+              showNotificationButton={true}
+            />
+          ),
+        })}
+      />
+        <Stack.Screen
+        name="editAddress"
+        component={editAddress}
+        options={({navigation}) => ({
+          header: () => (
+            <HeaderLeft
+              navigation={navigation}
+              title={'EditAddress'}
               showNotificationButton={true}
             />
           ),

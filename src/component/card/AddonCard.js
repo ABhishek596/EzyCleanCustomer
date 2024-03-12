@@ -32,7 +32,7 @@ const AddonCard = ({
             {productName}
           </Text>
           <Text style={styles.pWash}>
-            {serName} / {catName}
+            {serName}  {catName}
           </Text>
         </View>
         <Text numberOfLines={1} style={styles.price}>

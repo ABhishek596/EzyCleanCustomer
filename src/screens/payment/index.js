@@ -37,18 +37,18 @@ const Payment = ({
   //   // payment_mode: 0,
   // };
   //console.log('subsDetails', subsDetails);
-  const { data , address } = route?.params;
-  //console.log('PaymentScreen data from -------->>', data);
-  //console.log('PaymentScreen address from -------->>', address);
-  const availableitems = data;
-  
+  const { data } = route?.params;
+  console.log('PaymentScreen data from -------->>', JSON.stringify(data));
+  // console.log('PaymentScreen address from -------->>', address);
+  const availableitems = data.data;
+  const usraddrsid = data.address_id;
   // availableitems.items = availableitems.items.map(item => {
   //   // If iron is 1, set iron to "Yes"; otherwise, set iron to "No"    
   //   item.iron = item.iron === 1 ? "Yes" : "No";
   //   return item;
   // });
   
-  //console.log("nnnnnnnnnnnnnnnnnnnnnn",availableitems);
+  console.log("availableitems--------nnnnn",availableitems);
   //console.log("//////////////////////////////",...availableitems.items);
 
   const [paymentMethods, setPaymentMethods] = useState();
@@ -79,7 +79,7 @@ const Payment = ({
       "pay_status": "Unpaid",
       "bag_id": "16",
       "weight": "2.5",
-      "address_id": address.data.address_data.id,
+      "address_id": usraddrsid,
       "pickup_date": `${availableitems.pickup_date, availableitems.pickup_time}`, 
       "delivery_date": `${availableitems.delivery_date, availableitems.delivery_time}`,
       "note": "Special instructions",
@@ -142,7 +142,7 @@ const Payment = ({
       "payment_id": pid,
       "bag_id": "16",
       "weight": "2.5",
-      "address_id": address.data.address_data.id,
+      "address_id": usraddrsid,
       "pickup_date": `${availableitems.pickup_date, availableitems.pickup_time}`,
       "delivery_date":  `${availableitems.delivery_date, availableitems.delivery_time}`,
       "note": "Special instructions",

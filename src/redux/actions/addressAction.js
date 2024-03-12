@@ -5,6 +5,61 @@ import {ADDRESS, LOADING} from '../types';
 import objectToFormData from '../../services/objectToFormData';
 import {formDataHeader} from '../../services/formDataHeader';
 
+// export const CreateNewAddressApi =
+//   (postData, navigation, cb) => async dispatch => {
+//     const userId = await AsyncStorage.getItem('@USER_ID');
+//     // console.log("postData : ",userId, postData)
+
+//     postData = await objectToFormData(postData);
+
+//     cb && cb(true);
+//     dispatch({
+//       type: LOADING,
+//       payload: true,
+//     });
+//     http
+//       .post(`add_address`, postData, formDataHeader)
+//       .then(response => {
+//         // console.log("res : ", response.data)
+//         if (response.data.response) {
+//           dispatch(GetAllAddressApi());
+//           RNToasty.Success({
+//             title: response.data.message,
+//             duration: 2,
+//           });
+//           cb && cb(false);
+//           dispatch({
+//             type: LOADING,
+//             payload: false,
+//           });
+//           //   navigation?.goBack('Address');
+//           navigation?.goBack();
+//         } else {
+//           cb && cb(false);
+//           dispatch({
+//             type: LOADING,
+//             payload: false,
+//           });
+//           RNToasty.Info({
+//             title: response.data.message,
+//             duration: 2,
+//           });
+//         }
+//       })
+//       .catch(error => {
+//         cb && cb(false);
+//         dispatch({
+//           type: LOADING,
+//           payload: false,
+//         });
+//         console.log('error address : ', error);
+//         RNToasty.Error({
+//           title: error.response.data?.message,
+//           duration: 2,
+//         });
+//       });
+//   };
+
 export const CreateNewAddressApi =
   (postData, navigation, cb) => async dispatch => {
     const userId = await AsyncStorage.getItem('@USER_ID');
@@ -18,7 +73,7 @@ export const CreateNewAddressApi =
       payload: true,
     });
     http
-      .post(`add_address`, postData, formDataHeader)
+      .post(`add_address?userid=${userId}`, postData, formDataHeader)
       .then(response => {
         // console.log("res : ", response.data)
         if (response.data.response) {
@@ -69,16 +124,16 @@ export const GetAllAddressApi = () => async dispatch => {
   // console.log("get address ; ", userId)
 
   http
-    .get(`address_data`)
+    .get(`show_address?id=${userId}`)
     .then(response => {
-      if (response.data.response) {
+      if (response.data.data) {
         dispatch({
           type: LOADING,
           payload: false,
         });
         dispatch({
           type: ADDRESS,
-          payload: response.data.data,
+          payload: response.data.data.addresses,
         });
         // RNToasty.Success({
         //     title: response.data.message,
@@ -115,7 +170,7 @@ export const DeleteAddressApi = addressId => async dispatch => {
   });
 
   http
-    .get(`delete_address?id=${addressId}&userid=${userId}`)
+    .get(`delete_address?id=${addressId}`)
     .then(response => {
       if (response.data.response) {
         dispatch(GetAllAddressApi());
@@ -165,7 +220,7 @@ export const UpdateAddressApi =
 
     http
       .post(
-        `edit_address?id=${addressId}&userid=${userId}`,
+        `edit_address?addressid=${addressId}&userid=${userId}`,
         postData,
         formDataHeader,
       )
