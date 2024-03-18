@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, PermissionsAndroid, Button} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import {getDistance} from 'geolib';
 import Icons from '../../component/Icons';
 import styles from './styles';
-import { icons } from '../../constants';
+import {icons} from '../../constants';
 const MapScreen = ({navigation}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [markers, setMarkers] = useState([
@@ -52,11 +52,18 @@ const MapScreen = ({navigation}) => {
   useEffect(() => {
     const requestLocationPermission = async () => {
       try {
-        const granted = await PermissionsAndroid.request(
+        const fineLocationGranted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         );
 
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const coarseLocationGranted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+        );
+
+        if (
+          fineLocationGranted === PermissionsAndroid.RESULTS.GRANTED &&
+          coarseLocationGranted === PermissionsAndroid.RESULTS.GRANTED
+        ) {
           getCurrentLocation();
         } else {
           alert('Location permission denied. Please enable it in settings.');
@@ -68,6 +75,26 @@ const MapScreen = ({navigation}) => {
 
     requestLocationPermission();
   }, []);
+
+  // useEffect(() => {
+  //   const requestLocationPermission = async () => {
+  //     try {
+  //       const granted = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //       );
+
+  //       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //         getCurrentLocation();
+  //       } else {
+  //         alert('Location permission denied. Please enable it in settings.');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error requesting location permission:', error);
+  //     }
+  //   };
+
+  //   requestLocationPermission();
+  // }, []);
 
   useEffect(() => {
     if (currentLocation && markers.length > 0) {
@@ -100,8 +127,8 @@ const MapScreen = ({navigation}) => {
   };
 
   const handleback = () => {
-    return navigation.navigate('Register',{branch:nearestMarker});
-  }
+    return navigation.navigate('Register', {branch: nearestMarker});
+  };
 
   return (
     <View style={styles.container}>
@@ -152,6 +179,5 @@ const MapScreen = ({navigation}) => {
     </View>
   );
 };
-
 
 export default MapScreen;

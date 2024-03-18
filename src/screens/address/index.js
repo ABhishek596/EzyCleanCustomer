@@ -26,7 +26,8 @@
 // import axios from 'axios';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import {RNToasty} from 'react-native-toasty';
-// import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from 'react-native-geolocation-service';
+
 
 // const Address = ({
 //   navigation,
@@ -514,7 +515,7 @@ import Loading from '../../component/loading';
 import Button1 from '../../component/button/Button1';
 import Icons from '../../component/Icons';
 import {RadioButton} from 'react-native-paper';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 
 const Address = ({
   navigation,
